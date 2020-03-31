@@ -6,9 +6,6 @@ from gulags import Campo, setup_inicial
 
 #Inicia os gulags
 lista_gulags = setup_inicial()
-
-for campo in lista_gulags:
-        print (campo)
         
 #Cores
 
@@ -32,7 +29,7 @@ font = pygame.font.SysFont(None, 20)
 #Método para impressão de texto na tela
 def draw_text(text, color, surface,tamanho=30, font=None, x=None, y=None, center=None):
     font = pygame.font.Font(font, tamanho)
-    textobj = font.render(text, 10, color)
+    textobj = font.render(str(text), 10, color)
     textrect = textobj.get_rect()
     
     #Defina caso seja informado centralização
@@ -77,51 +74,25 @@ def menu_selecao():
                     print(num_gulag)
             else:
                 num_gulag += 1
-            print(num_gulag)
         #Reseta o índice caso passe de 6
         if num_gulag >= 6:
             num_gulag = 0
-        
-        """
-        if Trofimovsk.collidepoint((mx, my)):
-            if click:
-                mostrar_info_gulag(Trofimovsk)
-                
-        elif Solovetsky.collidepoint((mx, my)):
-            if click:
-                game(Solovetsky)
-        
-        elif Norilsk.collidepoint((mx, my)):
-            if click:
-                game(Norilsk)
-                
-        elif Sevvostlag.collidepoint((mx, my)):
-            if click:
-                game(Sevvostlag)
-                
-        
-        elif Pechorlag.collidepoint((mx, my)):
-            if click:
-                game(Pechorlag)
-        
-        elif Karlag.collidepoint((mx, my)):
-            if click:
-                game(Karlag)
-                
-        elif Altayskiy.collidepoint((mx, my)):
-            if click:
-                game(Altayskiy)
-        """       
                 
         #Chama a renderização dos botões
         pygame.draw.rect(screen, (255, 0, 0), Trofimovsk)
         draw_text('Trofimovsk',branco, screen, center =Trofimovsk.center)
         pygame.draw.rect(screen, (0, 255, 0), Solovetsky)
+        draw_text('Solovetsky',branco, screen, center =Solovetsky.center)
         pygame.draw.rect(screen, (255, 0, 0), Norilsk)
+        draw_text('Norilsk',branco, screen, center =Norilsk.center)
         pygame.draw.rect(screen, (0, 255, 0), Sevvostlag)
+        draw_text('Sevvostlag',branco, screen, center =Sevvostlag.center)
         pygame.draw.rect(screen, (255, 0, 0), Pechorlag)
+        draw_text('Pechorlag',branco, screen, center =Pechorlag.center)
         pygame.draw.rect(screen, (0, 255, 0), Karlag)
+        draw_text('Karlag',branco, screen, center =Karlag.center)
         pygame.draw.rect(screen, (255, 0, 0), Altayskiy)
+        draw_text('Altayskiy',branco, screen, center =Altayskiy.center)
  
         click = False
         
@@ -146,7 +117,68 @@ def mostrar_info_gulag(gulag):
     while running:
         screen.fill((0,0,0))
        
-        draw_text(gulag.nome,(255, 255, 255), screen, x=50, y=30)
+        #Painel lateral esquerda
+        ret_esq = pygame.Rect(10, 10, 700, 880)
+        pygame.draw.rect(screen, azul, ret_esq)
+        #Cálcula da altura da representação do r_detec    max = 400px   cada ponto de 0 até 50 = 8
+        altura_detec = gulag.r_detec*8
+        #Risco de detcção baixo
+        if gulag.r_detec < 3 :
+            visual_detec = pygame.Rect(80, 480, 100, -altura_detec)
+            pygame.draw.rect(screen, verde, visual_detec)
+        #Risco de detcção alto
+        if gulag.r_detec >= 3 :
+            visual_detec = pygame.Rect(80, 480, 100, -altura_detec)
+            pygame.draw.rect(screen, vermelho, visual_detec)
+        draw_text(gulag.r_detec, branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
+        draw_text("Risco de detecção", branco, screen, x=40, y=500)
+        
+        
+        #Cálcula da altura da representação do r_nevasca    max = 400px   cada ponto de 0 até 5 
+        altura_nevasca = gulag.r_nevasca*80
+        #Risco de nevasca baixo
+        if gulag.r_nevasca < 3 :
+            visual_nevasca = pygame.Rect(290, 480, 100, -altura_nevasca)
+            pygame.draw.rect(screen, verde, visual_nevasca)
+        #Risco de nevasca alto
+        if gulag.r_nevasca >= 3 :
+            visual_nevasca = pygame.Rect(290, 480, 100, -altura_nevasca)
+            pygame.draw.rect(screen, vermelho, visual_nevasca)
+        draw_text(gulag.r_nevasca, branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
+        draw_text("Risco de nevasca", branco, screen, x=250, y=500)
+        
+        
+        #Cálcula da altura da representação de aces_rec    max = 400px   cada ponto de 0 até 10
+        altura_rec = gulag.r_nevasca*40
+        #Risco de nevasca baixo
+        if gulag.r_nevasca < 5 :
+            visual_rec = pygame.Rect(510, 480, 100, -altura_rec)
+            pygame.draw.rect(screen, verde, visual_rec)
+        #Risco de nevasca alto
+        if gulag.r_nevasca >= 5 :
+            visual_rec = pygame.Rect(510, 480, 100, -altura_rec)
+            pygame.draw.rect(screen, vermelho, r_nevasca)
+        draw_text(gulag.r_nevasca, branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
+        draw_text("Risco de nevasca", branco, screen, x=480, y=500)
+        
+        #Mostrar clima
+        draw_text("Clima: "+str(gulag.clima), branco, screen, x=40, y=600, tamanho=30)
+        
+        #Mostrar tipo de extração
+        draw_text("Tipo de extração: "+str(gulag.extracao), branco, screen, x=40, y=700, tamanho=30)
+        
+        #Painel lateral direita
+        ret_dir = pygame.Rect(720, 10, 870, 880)
+        pygame.draw.rect(screen, verde, ret_dir)
+        
+        #Mostrar a imagem do Gulag
+        foto_gulag = pygame.image.load('imgs/'+str(gulag.foto))
+        foto_gulag = pygame.transform.scale(foto_gulag, (850, 600))
+        screen.blit(foto_gulag, (730,20))
+        
+        #Mostrar o nome do Gulag
+        draw_text("Nome: "+str(gulag.nome),branco, screen, x=730, y=640, tamanho= 60)
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -165,6 +197,7 @@ def game():
         screen.fill((0,0,0))
        
         draw_text('game', (255, 255, 255), screen,  x= 20, y=20)
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()

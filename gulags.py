@@ -4,7 +4,7 @@
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,r_detec,recursos,extracao,r_nevasca,clima):
+    def __init__(self,nome,r_detec,recursos,extracao,r_nevasca,clima, foto="arnold.png"):
         
         #Infor básica - imutável
         self.nome = nome
@@ -24,6 +24,9 @@ class Campo():
         self.felicidade = 50
         self.prod_mensal = 0
         self.medo = 0   #Alterado por eventos especiais
+        
+        #Nome da foto
+        self.foto = foto
     
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -38,13 +41,13 @@ def setup_inicial():
     lista_gulags = []
 
     #Criação dos dados dos gulags
-    Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante")
-    Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio")
-    Norilsk = Campo("Norilsk",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio")
-    Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio")
-    Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio")
-    Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio")
-    Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio")
+    Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante", foto="arnold.png")
+    Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio", foto="cash.jpg")
+    Norilsk = Campo("Norilsk",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",foto="cash.jpg")
+    Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio",foto="arnold.png")
+    Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio",foto="jo.jpg")
+    Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio", foto="cash.jpg")
+    Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio", foto="jo.jpg")
     
     lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ])
     
