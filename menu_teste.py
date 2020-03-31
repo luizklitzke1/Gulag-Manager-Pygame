@@ -28,8 +28,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE)
  
 font = pygame.font.SysFont(None, 20)
 
-
-
 #Método para impressão de texto na tela
 def draw_text(text, color, surface,tamanho=30, font=None, x=None, y=None, center=None):
     font = pygame.font.Font(font, tamanho)
@@ -130,18 +128,17 @@ while True:
                     if event.button == 1:
                         click = True
     
-                
             pygame.display.update()
             mainClock.tick(60)
     
-    def mostrar_info_gulag(gulag):
+    def mostrar_info_gulag(self):
         
         running = True
         while running:
             screen.fill((0,0,0))
         
             #Painel lateral esquerda
-            ret_esq = pygame.Rect(10, 10, 700, 880)
+            ret_esq = pygame.Rect(10, 10, screen.get_width()*0.45-10, screen.get_height()-20)
             pygame.draw.rect(screen, azul, ret_esq)
             #Cálcula da altura da representação do r_detec    max = 400px   cada ponto de 0 até 50 = 8
             altura_detec = gulag.r_detec*8
@@ -191,16 +188,16 @@ while True:
             draw_text("Tipo de extração: "+str(gulag.extracao), branco, screen, x=40, y=700, tamanho=30)
             
             #Painel lateral direita
-            ret_dir = pygame.Rect(720, 10, 870, 880)
+            ret_dir = pygame.Rect(screen.get_width()*0.45+10,10, screen.get_width()*0.55-20, 880)
             pygame.draw.rect(screen, verde, ret_dir)
             
             #Mostrar a imagem do Gulag
             foto_gulag = pygame.image.load('imgs/'+str(gulag.foto))
-            foto_gulag = pygame.transform.scale(foto_gulag, (850, 600))
-            screen.blit(foto_gulag, (730,20))
+            foto_gulag = pygame.transform.scale(foto_gulag, (int(screen.get_width()*0.55-40), 600))
+            screen.blit(foto_gulag, (screen.get_width()*0.45+20,20))
             
             #Mostrar o nome do Gulag
-            draw_text("Nome: "+str(gulag.nome),branco, screen, x=730, y=640, tamanho= 60)
+            draw_text("Nome: "+str(gulag.nome),branco, screen, x=screen.get_width()*0.45+20, y=640, tamanho= 60)
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -211,7 +208,7 @@ while True:
                         running = False
         
             pygame.display.update()
-            mainClock.tick(60)
+            mainClock.tick(30)
     
     def game():
         running = True
