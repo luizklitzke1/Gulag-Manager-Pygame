@@ -44,7 +44,7 @@ def setup_inicial():
     Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio")
     Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio")
     Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio")
-    Altayskiy  = Campo("ALTAYSKIY",10,0,"Não",0,"Frio")
+    Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio")
     
     lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ])
     
