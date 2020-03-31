@@ -1,14 +1,4 @@
-import pygame 
 
-
-pygame.init()
-
-S_WIDHT = 500
-S_HEIGHT = 500
-
-win = pygame.display.set_mode((S_WIDHT,S_HEIGHT))
-
-pygame.display.set_caption("Gulag Simulator")
 
 #Classe básica para um campo
 class Campo():
@@ -54,9 +44,9 @@ def setup_inicial():
     Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio")
     Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio")
     Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio")
-    ALTAYSKIY  = Campo("ALTAYSKIY",10,0,"Não",0,"Frio")
+    Altayskiy  = Campo("ALTAYSKIY",10,0,"Não",0,"Frio")
     
-    lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, ALTAYSKIY ])
+    lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ])
     
     return lista_gulags
 
