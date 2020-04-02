@@ -57,6 +57,10 @@ while True:
             #Definição dos botões para os Gulags
             
             Trofimovsk = pygame.Rect(50, 150, 200, 50)
+            
+            teste = button(branco,50,850,300,100,"Teste")
+            teste.draw(screen)
+            
             Solovetsky = pygame.Rect(50, 250, 200, 50)
             Norilsk = pygame.Rect(50, 350, 200, 50)
             Sevvostlag = pygame.Rect(50, 450, 200, 50)
