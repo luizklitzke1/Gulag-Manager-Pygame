@@ -4,6 +4,7 @@ import pygame, sys
 from pygame.locals import *
 from gulags import Campo, setup_inicial
 import general_functions as gf
+from general_functions import *
 
 #Inicia os gulags
 lista_gulags = setup_inicial()
@@ -48,20 +49,20 @@ while True:
         while True:
     
             screen.fill((0,0,0))
-            gf.draw_text('Selecione um Gulag', (255, 255, 255), screen, tamanho=50, x=50, y=30)
+            draw_text('Selecione um Gulag', (255, 255, 255), screen, tamanho=50, x=50, y=30)
     
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
     
             #Definição dos botões para os Gulags
             
-            Trofimovsk = pygame.Rect(50, 100, 200, 50)
-            Solovetsky = pygame.Rect(50, 200, 200, 50)
-            Norilsk = pygame.Rect(50, 300, 200, 50)
-            Sevvostlag = pygame.Rect(50, 400, 200, 50)
-            Pechorlag = pygame.Rect(50, 500, 200, 50)
-            Karlag = pygame.Rect(50, 600, 200, 50)
-            Altayskiy = pygame.Rect(50, 700, 200, 50)
+            Trofimovsk = pygame.Rect(50, 150, 200, 50)
+            Solovetsky = pygame.Rect(50, 250, 200, 50)
+            Norilsk = pygame.Rect(50, 350, 200, 50)
+            Sevvostlag = pygame.Rect(50, 450, 200, 50)
+            Pechorlag = pygame.Rect(50, 550, 200, 50)
+            Karlag = pygame.Rect(50, 650, 200, 50)
+            Altayskiy = pygame.Rect(50, 750, 200, 50)
             
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
             
@@ -76,22 +77,27 @@ while True:
             #Reseta o índice caso passe de 6
             if num_gulag >= 6:
                 num_gulag = 0    
+                
+            #Mostrar a imagem do mapa
+            desenhar_img(screen,'map.png',(int(screen.get_width()*0.70-20),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.15)))
             
             #Chama a renderização dos botões
             pygame.draw.rect(screen, (255, 0, 0), Trofimovsk)
-            gf.draw_text('Trofimovsk',gf.branco, screen, center =Trofimovsk.center)
+            draw_text('Trofimovsk',branco, screen, center =Trofimovsk.center)
             pygame.draw.rect(screen, (0, 255, 0), Solovetsky)
-            gf.draw_text('Solovetsky',gf.branco, screen, center =Solovetsky.center)
+            draw_text('Solovetsky',branco, screen, center =Solovetsky.center)
             pygame.draw.rect(screen, (255, 0, 0), Norilsk)
-            gf.draw_text('Norilsk',gf.branco, screen, center =Norilsk.center)
+            draw_text('Norilsk',branco, screen, center =Norilsk.center)
             pygame.draw.rect(screen, (0, 255, 0), Sevvostlag)
-            gf.draw_text('Sevvostlag',gf.branco, screen, center =Sevvostlag.center)
+            draw_text('Sevvostlag',branco, screen, center =Sevvostlag.center)
             pygame.draw.rect(screen, (255, 0, 0), Pechorlag)
-            gf.draw_text('Pechorlag',gf.branco, screen, center =Pechorlag.center)
+            draw_text('Pechorlag',branco, screen, center =Pechorlag.center)
             pygame.draw.rect(screen, (0, 255, 0), Karlag)
-            gf.draw_text('Karlag',gf.branco, screen, center =Karlag.center)
+            draw_text('Karlag',branco, screen, center =Karlag.center)
             pygame.draw.rect(screen, (255, 0, 0), Altayskiy)
-            gf.draw_text('Altayskiy',gf.branco, screen, center =Altayskiy.center)
+            draw_text('Altayskiy',branco, screen, center =Altayskiy.center)
+            
+            
     
             click = False
             
@@ -116,7 +122,7 @@ while True:
         while running:
             screen.fill((0,0,0))
         
-            gf.draw_text('game', (255, 255, 255), screen,  x= 20, y=20)
+            draw_text('game', (255, 255, 255), screen,  x= 20, y=20)
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -136,7 +142,7 @@ while True:
         while running:
             screen.fill((0,0,0))
     
-            gf.draw_text('options', font, (255, 255, 255), screen, (20,20))
+            draw_text('options', font, (255, 255, 255), screen, (20,20))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
