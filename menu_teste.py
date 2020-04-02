@@ -56,17 +56,13 @@ while True:
     
             #Definição dos botões para os Gulags
             
-            Trofimovsk = pygame.Rect(50, 150, 200, 50)
-            
-            teste = button(branco,50,850,300,100,"Teste")
-            teste.draw(screen)
-            
-            Solovetsky = pygame.Rect(50, 250, 200, 50)
-            Norilsk = pygame.Rect(50, 350, 200, 50)
-            Sevvostlag = pygame.Rect(50, 450, 200, 50)
-            Pechorlag = pygame.Rect(50, 550, 200, 50)
-            Karlag = pygame.Rect(50, 650, 200, 50)
-            Altayskiy = pygame.Rect(50, 750, 200, 50)
+            Trofimovsk = desenhar_botao(screen, vermelho,200,50,50,150,"Trofimovsk")
+            Solovetsky = desenhar_botao(screen, azul,200,50,50,250,"Solovetsky")
+            Norilsk = desenhar_botao(screen, vermelho,200,50,50,350,"Norilsk")
+            Sevvostlag = desenhar_botao(screen, azul,200,50,50,450,"Sevvostlag")
+            Pechorlag = desenhar_botao(screen, vermelho,200,50,50,550,"Norilsk")
+            Karlag = desenhar_botao(screen, azul,200,50,50,650,"Karlag")
+            Altayskiy = desenhar_botao(screen, vermelho,200,50,50,750,"Altayskiy")
             
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
             
@@ -84,24 +80,6 @@ while True:
                 
             #Mostrar a imagem do mapa
             desenhar_img(screen,'map.png',(int(screen.get_width()*0.70-20),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.15)))
-            
-            #Chama a renderização dos botões
-            pygame.draw.rect(screen, (255, 0, 0), Trofimovsk)
-            draw_text('Trofimovsk',branco, screen, center =Trofimovsk.center)
-            pygame.draw.rect(screen, (0, 255, 0), Solovetsky)
-            draw_text('Solovetsky',branco, screen, center =Solovetsky.center)
-            pygame.draw.rect(screen, (255, 0, 0), Norilsk)
-            draw_text('Norilsk',branco, screen, center =Norilsk.center)
-            pygame.draw.rect(screen, (0, 255, 0), Sevvostlag)
-            draw_text('Sevvostlag',branco, screen, center =Sevvostlag.center)
-            pygame.draw.rect(screen, (255, 0, 0), Pechorlag)
-            draw_text('Pechorlag',branco, screen, center =Pechorlag.center)
-            pygame.draw.rect(screen, (0, 255, 0), Karlag)
-            draw_text('Karlag',branco, screen, center =Karlag.center)
-            pygame.draw.rect(screen, (255, 0, 0), Altayskiy)
-            draw_text('Altayskiy',branco, screen, center =Altayskiy.center)
-            
-            
     
             click = False
             

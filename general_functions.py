@@ -39,33 +39,5 @@ def desenhar_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     draw_text(texto, cor_texto, screen, center =novo_rect.center)
     
     return novo_rect
-
-#Método para desenhar botões - v2
-class button():
-    def __init__(self, cor,x,y, width,height, text='',text_color=branco):
-        self.color = cor
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.text = text
-        self.text_color = text_color
-
-    #Desenha o retângulo na tela
-    def draw(self,screen,outline=None):
-        if outline:
-            pygame.draw.rect(screen, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
-        rect = pygame.Rect(self.x,self.y,self.width,self.height)
-        pygame.draw.rect(screen, self.color, rect)
-        draw_text(self.text,branco,screen,center=rect.center)
-            
-
-    def isOver(self, pos):
-        #Pos is the mouse position or a tuple of (x,y) coordinates
-        if pos[0] > self.x and pos[0] < self.x + self.width:
-            if pos[1] > self.y and pos[1] < self.y + self.height:
-                return True
-            
-        return False 
     
 

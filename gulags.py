@@ -40,7 +40,8 @@ class Campo():
     #Mostra a informação básica do Gulag - Menu Gerla   
     def mostrar_info_gulag(self, screen, mainClock):
     
-        while True:
+        running = True
+        while running == True:
             screen.fill((0,0,0))
              
             #Painel lateral esquerda
