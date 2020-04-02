@@ -81,8 +81,31 @@ while True:
             #Mostrar a imagem do mapa
             desenhar_img(screen,'map.png',(int(screen.get_width()*0.70-20),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.15)))
     
-            click = False
+            #Mostrar as imagens dos gulags no mapa
+            tamanho_mini = (int(screen.get_width()*0.04),int(screen.get_height()*0.07))
             
+            #Trofimovsk
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))))
+            
+            #Solovetsky 
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))))
+            
+            #Norilsk
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))))
+            
+            #Sevvostlag
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))))
+            
+            #Pechorlag
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))))
+            
+            #Karlag 
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))))
+            
+            #ALTAYSKIY 
+            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))))
+            
+            click = False
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
