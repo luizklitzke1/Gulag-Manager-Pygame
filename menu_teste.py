@@ -13,6 +13,8 @@ fullscreen = False
 mainClock = pygame.time.Clock()
 pygame.init()
 pygame.display.set_caption('Gulag Manager')
+icone = pygame.image.load("imgs/icone.png")
+pygame.display.set_icon(icone)
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
