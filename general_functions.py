@@ -1,5 +1,8 @@
 import pygame
 
+pygame.init()
+
+
 #Módulo com as funções gerais utilizadas por todo o código
 #Servem como resumos para outras coisas que acabariam ocupando muito espaço desnecessariamente
 
@@ -8,6 +11,10 @@ verde = (0,255,0)
 azul = (0,0,255)
 preto = (0,0,0)
 branco = (255,255,255)
+
+#Sons dos botões
+btn1 = pygame.mixer.Sound("sounds/btn1.wav")
+btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
 #Método para impressão de texto na tela
 def draw_text(text, color, surface,tamanho=15, font=None, x=None, y=None, center=None):

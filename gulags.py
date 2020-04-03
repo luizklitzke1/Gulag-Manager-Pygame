@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from general_functions import *
 
+pygame.init()
+
 #Classe básica para um campo
 class Campo():
     
@@ -125,6 +127,7 @@ class Campo():
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
+                        btn2.play() 
                         running = False
                         
             pygame.display.update()
