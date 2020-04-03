@@ -15,19 +15,17 @@ pygame.init()
 pygame.display.set_caption('Gulag Manager')
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE)
- 
-font = pygame.font.SysFont(None, 20)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 #Criação dos dados dos gulags
     
-Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante",((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))), foto="arnold.png")
-Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio",((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))), foto="cash.jpg")
-Norilsk = Campo("Norilsk",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))),foto="cash.jpg")
-Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))),foto="arnold.png")
-Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio",((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))),foto="jo.jpg")
-Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio",((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))), foto="cash.jpg")
-Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio",((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))),foto="jo.jpg")
+Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))), foto="arnold.png")
+Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))), foto="cash.jpg")
+Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))),foto="cash.jpg")
+Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))),foto="arnold.png")
+Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))),foto="jo.jpg")
+Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))), foto="cash.jpg")
+Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))),foto="jo.jpg")
     
 lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ]
 
@@ -86,7 +84,7 @@ while True:
             """
             Trofimovsk = desenhar_botao(screen, vermelho,200,50,50,150,"Trofimovsk")
             ma = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))))
-            
+
             Solovetsky = desenhar_botao(screen, azul,200,50,50,250,"Solovetsky")
             mb = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))))
             
@@ -113,13 +111,15 @@ while True:
             #Utiliza o num_gulag para bater a relação entre os índices
             num_gulag= 0
             for botao_gulag in lista_botoes_gulags:
-                pygame.draw.rect(screen, branco, botao_gulag)
+                botao = pygame.draw.rect(screen, branco, botao_gulag)
                 mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
                 if botao_gulag.collidepoint((mx,my)):
+                    draw_text(lista_gulags[num_gulag].nome_r, preto,screen,center = botao.center)
                     mini = pygame.transform.scale(mini, (int(screen.get_width()*0.08),int(screen.get_height()*0.14)))
                     if click:
                         lista_gulags[num_gulag].mostrar_info_gulag(screen,mainClock)
                 else:
+                    draw_text(lista_gulags[num_gulag].nome, preto,screen,center = botao.center)
                     mini = pygame.transform.scale(mini, (int(screen.get_width()*0.04),int(screen.get_height()*0.07)))
                 #Cria um rect com a img para poder reposicionar corretamente
                 mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)

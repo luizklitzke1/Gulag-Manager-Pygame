@@ -6,10 +6,11 @@ import general_functions as gf
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png"):
+    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png"):
         
         #Infor básica - imutável
         self.nome = nome
+        self.nome_r = nome_r
         self.r_detec = r_detec
         self.recursos = recursos
         self.extracao = extracao
