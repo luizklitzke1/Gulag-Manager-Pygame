@@ -6,11 +6,6 @@ from gulags import Campo, setup_inicial
 import general_functions as gf
 from general_functions import *
 
-#Inicia os gulags
-lista_gulags = setup_inicial()
-        
-#Cores
-
 fullscreen = False
 
 # Setup pygame/window ---------------------------------------- #
@@ -23,6 +18,19 @@ SCREEN_HEIGHT = 900
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE)
  
 font = pygame.font.SysFont(None, 20)
+
+#Criação dos dados dos gulags
+    
+Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante",((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))), foto="arnold.png")
+Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio",((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))), foto="cash.jpg")
+Norilsk = Campo("Norilsk",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))),foto="cash.jpg")
+Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))),foto="arnold.png")
+Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio",((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))),foto="jo.jpg")
+Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio",((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))), foto="cash.jpg")
+Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio",((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))),foto="jo.jpg")
+    
+lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ]
+
 
 click = False
 
@@ -47,64 +55,80 @@ while True:
     def menu_selecao():
         
         while True:
-    
+          
             screen.fill((0,0,0))
             draw_text('Selecione um Gulag', (255, 255, 255), screen, tamanho=50, x=50, y=30)
     
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
     
-            #Definição dos botões para os Gulags
+            #Mostrar a imagem do mapa
+            desenhar_img(screen,'map.png',(int(screen.get_width()*0.70),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.15)))
             
-            Trofimovsk = desenhar_botao(screen, vermelho,200,50,50,150,"Trofimovsk")
-            Solovetsky = desenhar_botao(screen, azul,200,50,50,250,"Solovetsky")
-            Norilsk = desenhar_botao(screen, vermelho,200,50,50,350,"Norilsk")
-            Sevvostlag = desenhar_botao(screen, azul,200,50,50,450,"Sevvostlag")
-            Pechorlag = desenhar_botao(screen, vermelho,200,50,50,550,"Norilsk")
-            Karlag = desenhar_botao(screen, azul,200,50,50,650,"Karlag")
-            Altayskiy = desenhar_botao(screen, vermelho,200,50,50,750,"Altayskiy")
+            #Definição dos botões e miniaturas para os Gulags
+            
+            Trofimovsk = pygame.Rect(50,150, 200, 50)
+            
+            Solovetsky = pygame.Rect(50, 250, 200, 50)
+            
+            Norilsk= pygame.Rect(50, 350, 200, 50)
+            
+            Sevvostlag= pygame.Rect(50, 450, 200, 50)
+            
+            Pechorlag= pygame.Rect(50, 550, 200, 50)
+            
+            Karlag= pygame.Rect(50, 650, 200, 50)
+            
+            Altayskiy= pygame.Rect(50, 750, 200, 50)
             
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
             
-            #Loop para definir qual botão for selecionado e enviar os dados caso for
+            """
+            Trofimovsk = desenhar_botao(screen, vermelho,200,50,50,150,"Trofimovsk")
+            ma = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))))
+            
+            Solovetsky = desenhar_botao(screen, azul,200,50,50,250,"Solovetsky")
+            mb = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))))
+            
+            Norilsk = desenhar_botao(screen, vermelho,200,50,50,350,"Norilsk")
+            mc = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))))
+            
+            Sevvostlag = desenhar_botao(screen, azul,200,50,50,450,"Sevvostlag")
+            md = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))))
+            
+            Pechorlag = desenhar_botao(screen, vermelho,200,50,50,550,"Norilsk")
+            me = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))))
+            
+            Karlag = desenhar_botao(screen, azul,200,50,50,650,"Karlag")
+            mf = desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))))
+            
+            Altayskiy = desenhar_botao(screen, vermelho,200,50,50,750,"Altayskiy")
+            mg= desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))))
+            
+            lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
+            lista_mini_gulags = [ma,mb,mc,md,me,mf,mg]
+            """
+            
+            #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
+            #Utiliza o num_gulag para bater a relação entre os índices
             num_gulag= 0
             for botao_gulag in lista_botoes_gulags:
+                pygame.draw.rect(screen, branco, botao_gulag)
+                mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
                 if botao_gulag.collidepoint((mx,my)):
+                    mini = pygame.transform.scale(mini, (int(screen.get_width()*0.08),int(screen.get_height()*0.14)))
                     if click:
                         lista_gulags[num_gulag].mostrar_info_gulag(screen,mainClock)
                 else:
-                    num_gulag += 1
+                    mini = pygame.transform.scale(mini, (int(screen.get_width()*0.04),int(screen.get_height()*0.07)))
+                #Cria um rect com a img para poder reposicionar corretamente
+                mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)
+                screen.blit(mini, mini_rect)
+                num_gulag += 1
             #Reseta o índice caso passe de 6
             if num_gulag >= 6:
                 num_gulag = 0    
-                
-            #Mostrar a imagem do mapa
-            desenhar_img(screen,'map.png',(int(screen.get_width()*0.70-20),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.15)))
     
-            #Mostrar as imagens dos gulags no mapa
-            tamanho_mini = (int(screen.get_width()*0.04),int(screen.get_height()*0.07))
-            
-            #Trofimovsk
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.65),int(screen.get_height()*0.13 ))))
-            
-            #Solovetsky 
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.40),int(screen.get_height()*0.2 ))))
-            
-            #Norilsk
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.54),int(screen.get_height()*0.16 ))))
-            
-            #Sevvostlag
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.83),int(screen.get_height()*0.2 ))))
-            
-            #Pechorlag
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.48),int(screen.get_height()*0.2 ))))
-            
-            #Karlag 
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.55),int(screen.get_height()*0.35 ))))
-            
-            #ALTAYSKIY 
-            desenhar_img(screen,'gulag3.png',(tamanho_mini),((int(screen.get_width()*0.60),int(screen.get_height()*0.32 ))))
-            
             click = False
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -160,3 +184,5 @@ while True:
             mainClock.tick(60)
     
     menu_selecao()
+    
+    

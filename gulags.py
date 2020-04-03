@@ -6,7 +6,7 @@ import general_functions as gf
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,r_detec,recursos,extracao,r_nevasca,clima, foto="arnold.png"):
+    def __init__(self,nome,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png"):
         
         #Infor básica - imutável
         self.nome = nome
@@ -29,6 +29,10 @@ class Campo():
         
         #Nome da foto
         self.foto = foto
+        
+        #Miniaturas
+        self.mini = mini
+        self.minipos = minipos
     
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -48,42 +52,42 @@ class Campo():
             ret_esq = pygame.Rect(10, 10, screen.get_width()*0.45-10, screen.get_height()-20)
             pygame.draw.rect(screen, gf.azul, ret_esq)
             #Cálcula da altura da representação do r_detec    max = 400px   cada ponto de 0 até 50 = 8
-            altura_detec = self.r_detec*8
+            altura_detec = self.r_detec*-8
             #Risco de detcção baixo
             if self.r_detec < 3 :
-                visual_detec = pygame.Rect(80, 480, 100, -altura_detec)
+                visual_detec = pygame.Rect(80, 480, 100, altura_detec)
                 pygame.draw.rect(screen, gf.verde, visual_detec)
             #Risco de detcção alto
             if self.r_detec >= 3 :
-                visual_detec = pygame.Rect(80, 480, 100, -altura_detec)
+                visual_detec = pygame.Rect(80, 480, 100, altura_detec)
                 pygame.draw.rect(screen, gf.vermelho, visual_detec)
             gf.draw_text(self.r_detec, gf.branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
             gf.draw_text("Risco de detecção", gf.branco, screen, x=40, y=500)
             
             
             #Cálcula da altura da representação do r_nevasca    max = 400px   cada ponto de 0 até 5 
-            altura_nevasca = self.r_nevasca*80
+            altura_nevasca = self.r_nevasca*-80
             #Risco de nevasca baixo
             if self.r_nevasca < 3 :
-                visual_nevasca = pygame.Rect(290, 480, 100, -altura_nevasca)
+                visual_nevasca = pygame.Rect(290, 480, 100, altura_nevasca)
                 pygame.draw.rect(screen, gf.verde, visual_nevasca)
             #Risco de nevasca alto
             if self.r_nevasca >= 3 :
-                visual_nevasca = pygame.Rect(290, 480, 100, -altura_nevasca)
+                visual_nevasca = pygame.Rect(290, 480, 100, altura_nevasca)
                 pygame.draw.rect(screen, gf.vermelho, visual_nevasca)
             gf.draw_text(self.r_nevasca, gf.branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
             gf.draw_text("Risco de nevasca", gf.branco, screen, x=250, y=500)
             
             
             #Cálcula da altura da representação de aces_rec    max = 400px   cada ponto de 0 até 10
-            altura_rec = self.r_nevasca*40
+            altura_rec = self.r_nevasca*-40
             #Risco de nevasca baixo
             if self.r_nevasca < 5 :
-                visual_rec = pygame.Rect(510, 480, 100, -altura_rec)
+                visual_rec = pygame.Rect(510, 480, 100, altura_rec)
                 pygame.draw.rect(screen, gf.verde, visual_rec)
             #Risco de nevasca alto
             if self.r_nevasca >= 5 :
-                visual_rec = pygame.Rect(510, 480, 100, -altura_rec)
+                visual_rec = pygame.Rect(510, 480, 100, altura_rec)
                 pygame.draw.rect(screen, gf.vermelho, r_nevasca)
             gf.draw_text(self.r_nevasca, gf.branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
             gf.draw_text("Risco de nevasca", gf.branco, screen, x=480, y=500)
@@ -118,7 +122,7 @@ class Campo():
             mainClock.tick(30)
 
 def setup_inicial():
-
+    
     lista_gulags = []
 
     #Criação dos dados dos gulags
@@ -133,6 +137,7 @@ def setup_inicial():
     lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ])
     
     return lista_gulags
+    
 
 if __name__ == "__main__":
     

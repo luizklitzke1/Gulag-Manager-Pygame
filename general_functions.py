@@ -31,6 +31,9 @@ def desenhar_img(screen,nome,escala,pos):
     img = pygame.transform.scale(img, escala)
     screen.blit(img, pos)
     
+    return img
+    #return img.get_rect(x = escala[0], y= escala[1])
+    
 #Método para desenhar retângulos com texto na tela - Usado nos botões
 def desenhar_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     
@@ -39,5 +42,5 @@ def desenhar_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     draw_text(texto, cor_texto, screen, center =novo_rect.center)
     
     return novo_rect
-    
+
 
