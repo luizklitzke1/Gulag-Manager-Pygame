@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import general_functions as gf
+from general_functions import *
 
 #Classe básica para um campo
 class Campo():
@@ -50,66 +50,74 @@ class Campo():
             screen.fill((0,0,0))
              
             #Painel lateral esquerda
-            ret_esq = pygame.Rect(10, 10, screen.get_width()*0.45-10, screen.get_height()-20)
-            pygame.draw.rect(screen, gf.azul, ret_esq)
-            #Cálcula da altura da representação do r_detec    max = 400px   cada ponto de 0 até 50 = 8
-            altura_detec = self.r_detec*-8
+            #ret_esq = pygame.Rect(10, 10, screen.get_width()*.45-10, screen.get_height()-20)
+            #pygame.draw.rect(screen, azul, ret_esq)
+            ret_esq = desenhar_img(screen,"outline3.png",(int(screen.get_width()*.45-10), int(screen.get_height()-20)),(10,10))
+            
+            w_bar = screen.get_width()*.08
+            
+            #Cálcula da altura da representação do r_detec   0 até 50 
+            altura_detec = -self.r_detec*(screen.get_height()*.4/50)
             #Risco de detcção baixo
             if self.r_detec < 3 :
-                visual_detec = pygame.Rect(80, 480, 100, altura_detec)
-                pygame.draw.rect(screen, gf.verde, visual_detec)
+                visual_detec = pygame.Rect(int(screen.get_width()*.05), 480, w_bar, altura_detec)
+                pygame.draw.rect(screen, verde, visual_detec)
             #Risco de detcção alto
             if self.r_detec >= 3 :
-                visual_detec = pygame.Rect(80, 480, 100, altura_detec)
-                pygame.draw.rect(screen, gf.vermelho, visual_detec)
-            gf.draw_text(self.r_detec, gf.branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
-            gf.draw_text("Risco de detecção", gf.branco, screen, x=40, y=500)
+                visual_detec = pygame.Rect(int(screen.get_width()*.05), 480, w_bar, altura_detec)
+                pygame.draw.rect(screen, vermelho, visual_detec)
+            draw_text(self.r_detec, branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
+            draw_text("Detecção", branco, screen, x=visual_detec.x, y=visual_detec.y+20)
+            draw_text(str(self.r_detec)+"-50", branco, screen, x=visual_detec.x, y=visual_detec.y+40)
             
             
-            #Cálcula da altura da representação do r_nevasca    max = 400px   cada ponto de 0 até 5 
-            altura_nevasca = self.r_nevasca*-80
+            #Cálcula da altura da representação do r_nevasca   de 0 até 5 
+            altura_nevasca = -self.r_nevasca*(screen.get_height()*.4/5)
             #Risco de nevasca baixo
             if self.r_nevasca < 3 :
-                visual_nevasca = pygame.Rect(290, 480, 100, altura_nevasca)
-                pygame.draw.rect(screen, gf.verde, visual_nevasca)
+                visual_nevasca = pygame.Rect(int(screen.get_width()*.05*3.8), 480, w_bar, altura_nevasca)
+                pygame.draw.rect(screen, verde, visual_nevasca)
             #Risco de nevasca alto
             if self.r_nevasca >= 3 :
-                visual_nevasca = pygame.Rect(290, 480, 100, altura_nevasca)
-                pygame.draw.rect(screen, gf.vermelho, visual_nevasca)
-            gf.draw_text(self.r_nevasca, gf.branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
-            gf.draw_text("Risco de nevasca", gf.branco, screen, x=250, y=500)
+                visual_nevasca = pygame.Rect(int(screen.get_width()*.05*3.8), 480, w_bar, altura_nevasca)
+                pygame.draw.rect(screen, vermelho, visual_nevasca)
+            draw_text(self.r_nevasca, branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
+            draw_text("Nevasca", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+20)
+            draw_text(str(self.r_nevasca)+"-5", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+40)
             
-            
-            #Cálcula da altura da representação de aces_rec    max = 400px   cada ponto de 0 até 10
-            altura_rec = self.r_nevasca*-40
-            #Risco de nevasca baixo
+            #Cálcula da altura da representação de aces_rec  0 até 10
+            altura_rec = -self.r_nevasca*(screen.get_height()*.4/10)
+            #Baixos recursos
             if self.r_nevasca < 5 :
-                visual_rec = pygame.Rect(510, 480, 100, altura_rec)
-                pygame.draw.rect(screen, gf.verde, visual_rec)
-            #Risco de nevasca alto
+                visual_rec = pygame.Rect(int(screen.get_width()*.05*6.5), 480, w_bar, altura_rec)
+                pygame.draw.rect(screen, verde, visual_rec)
+            #Altos recursos
             if self.r_nevasca >= 5 :
-                visual_rec = pygame.Rect(510, 480, 100, altura_rec)
-                pygame.draw.rect(screen, gf.vermelho, r_nevasca)
-            gf.draw_text(self.r_nevasca, gf.branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
-            gf.draw_text("Risco de nevasca", gf.branco, screen, x=480, y=500)
+                visual_rec = pygame.Rect(int(screen.get_width()*.05*6.5), 480, w_bar, altura_rec)
+                pygame.draw.rect(screen, vermelho, recursos)
+            draw_text(self.recursos, branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
+            draw_text("Recursos", branco, screen, x=visual_rec.x, y=visual_rec.y+20)
+            draw_text(str(self.recursos)+"-10", branco, screen, x=visual_rec.x, y=visual_rec.y+40)
             
             #Mostrar clima
-            gf.draw_text("Clima: "+str(self.clima), gf.branco, screen, x=40, y=600, tamanho=30)
+            draw_text("Clima: "+str(self.clima), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.7), tamanho=20)
             
             #Mostrar tipo de extração
-            gf.draw_text("Tipo de extração: "+str(self.extracao), gf.branco, screen, x=40, y=700, tamanho=30)
+            draw_text("Tipo de extração: ", branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8), tamanho=20)
+            draw_text(str(self.extracao), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8+40), tamanho=20)
             
             #Painel lateral direita
-            ret_dir = pygame.Rect(screen.get_width()*0.45+10,10, screen.get_width()*0.55-20, 880)
-            pygame.draw.rect(screen, gf.verde, ret_dir)
+            #ret_dir = pygame.Rect(screen.get_width()*.45+10,10, screen.get_width()*.55-20, 880)
+            #pygame.draw.rect(screen, verde, ret_dir)
+            ret_dir = desenhar_img(screen,"outline3.png",(int(screen.get_width()*.55-20), int(screen.get_height()-20)),(int(screen.get_width()*.45+10),10))
             
-            #Mostrar a imagem do self
+            #Mostrar a imagem do Gulag
             foto_gulag = pygame.image.load('imgs/'+str(self.foto))
-            foto_gulag = pygame.transform.scale(foto_gulag, (int(screen.get_width()*0.55-40), 600))
-            screen.blit(foto_gulag, (screen.get_width()*0.45+20,20))
+            foto_gulag = pygame.transform.scale(foto_gulag, (int(screen.get_width()*.55-80), 600))
+            screen.blit(foto_gulag, (screen.get_width()*.45+40,40))
             
             #Mostrar o nome do Gulag
-            gf.draw_text("Nome: "+str(self.nome),gf.branco, screen, x=screen.get_width()*0.45+20, y=640, tamanho= 60)
+            draw_text("Nome: "+str(self.nome),branco, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.75), tamanho= 35)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
@@ -129,7 +137,7 @@ def setup_inicial():
     #Criação dos dados dos gulags
     Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante", foto="arnold.png")
     Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio", foto="cash.jpg")
-    Norilsk = Campo("Norilsk",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",foto="cash.jpg")
+    Norilsk = Campo("Norilsk",15,3,"Mineração / Siderúrgica",3,"Muito Frio",foto="cash.jpg")
     Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio",foto="arnold.png")
     Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio",foto="jo.jpg")
     Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio", foto="cash.jpg")

@@ -5,6 +5,7 @@ from pygame.locals import *
 from gulags import Campo, setup_inicial
 import general_functions as gf
 from general_functions import *
+import random
 
 fullscreen = False
 
@@ -23,7 +24,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
 Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width()*0.7),int(screen.get_height()*0.22 ))), foto="arnold.png")
 Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width()*0.45),int(screen.get_height()*0.27 ))), foto="cash.jpg")
-Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração de Ferro / Trabalho em Siderúrgica",3,"Muito Frio",((int(screen.get_width()*0.63),int(screen.get_height()*0.2 ))),foto="cash.jpg")
+Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração / Siderúrgica",3,"Muito Frio",((int(screen.get_width()*0.63),int(screen.get_height()*0.2 ))),foto="cash.jpg")
 Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width()*0.83),int(screen.get_height()*0.28 ))),foto="arnold.png")
 Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width()*0.5),int(screen.get_height()*0.3 ))),foto="jo.jpg")
 Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width()*0.56),int(screen.get_height()*0.43 ))), foto="cash.jpg")
@@ -58,14 +59,16 @@ while True:
           
             screen.fill((0,0,0))
             margem_x = int(screen.get_width()*0.05)
-            draw_text('Selecione um Gulag', (255, 255, 255), screen, tamanho=30, x=margem_x, y=int(screen.get_height()*0.06))
-            
+            if random.randrange(20) == 2:
+                draw_text('Селеционе ум Гулаг', vermelho, screen, tamanho=30, x=margem_x, y=int(screen.get_height()*0.06))
+            else:
+                draw_text('Selecione um Gulag', vermelho, screen, tamanho=30, x=margem_x, y=int(screen.get_height()*0.06))
     
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
     
             #Mostrar a imagem do mapa
-            desenhar_img(screen,'map.png',(int(screen.get_width()*0.70),int(screen.get_height()*0.70 )),(screen.get_width()*0.25+10,int(screen.get_height()*.2)))
+            desenhar_img(screen,'map.png',(int(screen.get_width()*0.7),int(screen.get_height()*0.7 )),(screen.get_width()*0.25+10,int(screen.get_height()*.2)))
             
             #Definição dos botões e miniaturas para os Gulags
             
@@ -95,6 +98,8 @@ while True:
                     draw_text(lista_gulags[num_gulag].nome_r, preto,screen,center = botao.center, tamanho= 18)
                     mini = pygame.transform.scale(mini, (int(screen.get_width()*0.08),int(screen.get_height()*0.14)))
                     if click:
+                        mixer.music.load('/home/pi/Desktop/doorbell-7.mp3')
+                        mixer.music.play(-1) # -1 = infinite loop
                         lista_gulags[num_gulag].mostrar_info_gulag(screen,mainClock)
                 else:
                     draw_text(lista_gulags[num_gulag].nome, preto,screen,center = botao.center)
