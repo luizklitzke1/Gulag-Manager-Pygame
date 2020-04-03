@@ -10,9 +10,9 @@ preto = (0,0,0)
 branco = (255,255,255)
 
 #Método para impressão de texto na tela
-def draw_text(text, color, surface,tamanho=30, font=None, x=None, y=None, center=None):
-    font = pygame.font.Font("fonts/win_cmd.ttf", tamanho)
-    textobj = font.render(str(text), 10, color)
+def draw_text(text, color, surface,tamanho=15, font=None, x=None, y=None, center=None):
+    font = pygame.font.Font("fonts/cmd2.ttf", tamanho)
+    textobj = font.render(str(text), 20, color)
     textrect = textobj.get_rect()
     
     #Defina caso seja informado centralização
