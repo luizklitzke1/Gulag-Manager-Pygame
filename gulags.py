@@ -100,11 +100,11 @@ class Campo():
             draw_text(str(self.recursos)+"-10", branco, screen, x=visual_rec.x, y=visual_rec.y+40)
             
             #Mostrar clima
-            draw_text("Clima: "+str(self.clima), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.7), tamanho=20)
+            draw_text("Clima: "+str(self.clima), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.7), tamanho=int(screen.get_width()*0.013))
             
             #Mostrar tipo de extração
-            draw_text("Tipo de extração: ", branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8), tamanho=20)
-            draw_text(str(self.extracao), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8+40), tamanho=20)
+            draw_text("Tipo de extração: ", branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8), tamanho=int(screen.get_width()*0.013))
+            draw_text(str(self.extracao), branco, screen, x=int(screen.get_width()*.05), y=int(screen.get_height()*.8+40), tamanho=int(screen.get_width()*0.013))
             
             #Painel lateral direita
             #ret_dir = pygame.Rect(screen.get_width()*.45+10,10, screen.get_width()*.55-20, 880)
@@ -113,11 +113,12 @@ class Campo():
             
             #Mostrar a imagem do Gulag
             foto_gulag = pygame.image.load('imgs/'+str(self.foto))
-            foto_gulag = pygame.transform.scale(foto_gulag, (int(screen.get_width()*.55-80), 600))
+            foto_gulag = pygame.transform.scale(foto_gulag, (int(screen.get_width()*.55-80), int(screen.get_height()*0.6)))
             screen.blit(foto_gulag, (screen.get_width()*.45+40,40))
             
             #Mostrar o nome do Gulag
-            draw_text("Nome: "+str(self.nome),branco, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.75), tamanho= 35)
+            draw_text("Nome: "+str(self.nome),branco, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.7), tamanho= int(screen.get_width()*0.02))
+            draw_text("Номе: "+str(self.nome_r),vermelho, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.75), tamanho= int(screen.get_width()*0.02))
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 

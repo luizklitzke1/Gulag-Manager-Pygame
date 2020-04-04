@@ -9,6 +9,7 @@ import random
 import time
 import os
 
+fullscreen = False
 
 # Setup pygame/window ---------------------------------------- #
 
@@ -17,9 +18,10 @@ pygame.init()
 pygame.display.set_caption('Gulag Manager')
 icone = pygame.image.load("imgs/icone.png")
 pygame.display.set_icon(icone)
-SCREEN_WIDTH = 1600
-SCREEN_HEIGHT = 900
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
+
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#FULLSCREEN | HWSURFACE | DOUBLEBUF)
 
 #Música de fundo
 #music = pygame.mixer.music.load("sounds/katyusha.mp3")
@@ -42,21 +44,7 @@ click = False
 
 while True:
     
-    for event in pygame.event.get():
-        if event.type == VIDEORESIZE:
-                if not fullscreen:
-                    screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-                    
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                pygame.quit()
-                sys.exit()
-            if event.key == K_f:
-                fullscreen = not fullscreen
-                if fullscreen:
-                    screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
-                else:
-                    screen = pygame.display.set_mode((screen.get_width(), screen.get_height()), pygame.RESIZABLE)
+    
                     
     def menu_selecao():
         colisao = []
@@ -65,11 +53,9 @@ while True:
         while True:
           
             screen.fill((0,0,0))
-            margem_x = int(screen.get_width()*0.05)
-            if random.randrange(20) == 2:
-                draw_text('Селеционе ум Гулаг', vermelho, screen, tamanho=30, x=margem_x, y=int(screen.get_height()*0.06))
-            else:
-                draw_text('Selecione um Gulag', vermelho, screen, tamanho=30, x=margem_x, y=int(screen.get_height()*0.06))
+            margem_x = int(screen.get_width()*0.03)
+            draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(screen.get_width()*0.02), x=margem_x, y=int(screen.get_height()*0.06))
+            
     
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
@@ -78,13 +64,15 @@ while True:
             desenhar_img(screen,'map2.png',(int(screen.get_width()*0.7),int(screen.get_height()*0.7 )),(screen.get_width()*0.25+10,int(screen.get_height()*.2)))
             
             #Definição dos botões para os Gulags
-            Trofimovsk = pygame.Rect(margem_x ,int(screen.get_height()*0.20), 200, 50)
-            Solovetsky = pygame.Rect(margem_x , int(screen.get_height()*0.30), 200, 50)
-            Norilsk= pygame.Rect(margem_x , int(screen.get_height()*0.40), 200, 50)
-            Sevvostlag= pygame.Rect(margem_x , int(screen.get_height()*0.50), 200, 50)
-            Pechorlag= pygame.Rect(margem_x , int(screen.get_height()*0.60), 200, 50)
-            Karlag= pygame.Rect(margem_x , int(screen.get_height()*0.70), 200, 50)
-            Altayskiy= pygame.Rect(margem_x , int(screen.get_height()*0.80), 200, 50)
+            w_botao = int(screen.get_width()*0.15)
+            h_botao = int(screen.get_height()*0.05)
+            Trofimovsk = pygame.Rect(margem_x ,int(screen.get_height()*0.20), w_botao, h_botao)
+            Solovetsky = pygame.Rect(margem_x , int(screen.get_height()*0.30), w_botao, h_botao)
+            Norilsk= pygame.Rect(margem_x , int(screen.get_height()*0.40), w_botao, h_botao)
+            Sevvostlag= pygame.Rect(margem_x , int(screen.get_height()*0.50), w_botao, h_botao)
+            Pechorlag= pygame.Rect(margem_x , int(screen.get_height()*0.60), w_botao, h_botao)
+            Karlag= pygame.Rect(margem_x , int(screen.get_height()*0.70), w_botao, h_botao)
+            Altayskiy= pygame.Rect(margem_x , int(screen.get_height()*0.80), w_botao, h_botao)
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
             
             #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados

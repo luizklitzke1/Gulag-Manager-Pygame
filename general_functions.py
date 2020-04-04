@@ -17,7 +17,9 @@ btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
 #Método para impressão de texto na tela
-def draw_text(text, color, surface,tamanho=15, font=None, x=None, y=None, center=None):
+def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, center=None):
+    if not tamanho:
+        tamanho =int(screen.get_width()*0.01)
     font = pygame.font.Font("fonts/cmd2.ttf", tamanho)
     textobj = font.render(str(text), 20, color)
     textrect = textobj.get_rect()
@@ -30,7 +32,7 @@ def draw_text(text, color, surface,tamanho=15, font=None, x=None, y=None, center
         textrect.x = x
         textrect.y = y
         
-    surface.blit(textobj, textrect)
+    screen.blit(textobj, textrect)
 
 #Método para desenhar imagens na tela
 def desenhar_img(screen,nome,escala,pos):
