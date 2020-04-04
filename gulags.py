@@ -2,8 +2,6 @@ import pygame
 from pygame.locals import *
 from general_functions import *
 
-pygame.init()
-
 #Classe básica para um campo
 class Campo():
     
@@ -61,11 +59,11 @@ class Campo():
             #Cálcula da altura da representação do r_detec   0 até 50 
             altura_detec = -self.r_detec*(screen.get_height()*.4/50)
             #Risco de detcção baixo
-            if self.r_detec < 3 :
+            if self.r_detec < 25 :
                 visual_detec = pygame.Rect(int(screen.get_width()*.05), 480, w_bar, altura_detec)
                 pygame.draw.rect(screen, verde, visual_detec)
             #Risco de detcção alto
-            if self.r_detec >= 3 :
+            if self.r_detec >= 25 :
                 visual_detec = pygame.Rect(int(screen.get_width()*.05), 480, w_bar, altura_detec)
                 pygame.draw.rect(screen, vermelho, visual_detec)
             draw_text(self.r_detec, branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
@@ -88,15 +86,15 @@ class Campo():
             draw_text(str(self.r_nevasca)+"-5", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+40)
             
             #Cálcula da altura da representação de aces_rec  0 até 10
-            altura_rec = -self.r_nevasca*(screen.get_height()*.4/10)
+            altura_rec = -self.recursos*(screen.get_height()*.4/10)
             #Baixos recursos
-            if self.r_nevasca < 5 :
+            if self.recursos < 5 :
+                visual_rec = pygame.Rect(int(screen.get_width()*.05*6.5), 480, w_bar, altura_rec)
+                pygame.draw.rect(screen, vermelho, visual_rec)
+            #Altos recursos
+            if self.recursos >= 5 :
                 visual_rec = pygame.Rect(int(screen.get_width()*.05*6.5), 480, w_bar, altura_rec)
                 pygame.draw.rect(screen, verde, visual_rec)
-            #Altos recursos
-            if self.r_nevasca >= 5 :
-                visual_rec = pygame.Rect(int(screen.get_width()*.05*6.5), 480, w_bar, altura_rec)
-                pygame.draw.rect(screen, vermelho, recursos)
             draw_text(self.recursos, branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
             draw_text("Recursos", branco, screen, x=visual_rec.x, y=visual_rec.y+20)
             draw_text(str(self.recursos)+"-10", branco, screen, x=visual_rec.x, y=visual_rec.y+40)

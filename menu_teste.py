@@ -6,9 +6,9 @@ from gulags import Campo, setup_inicial
 import general_functions as gf
 from general_functions import *
 import random
+import time
 import os
 
-fullscreen = False
 
 # Setup pygame/window ---------------------------------------- #
 
@@ -19,11 +19,11 @@ icone = pygame.image.load("imgs/icone.png")
 pygame.display.set_icon(icone)
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
 
 #Música de fundo
-music = pygame.mixer.music.load("sounds/katyusha.mp3")
-pygame.mixer.music.play(-1)
+#music = pygame.mixer.music.load("sounds/katyusha.mp3")
+#pygame.mixer.music.play(-1)
 
 
 
@@ -35,9 +35,8 @@ Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,
 Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width()*0.5),int(screen.get_height()*0.3 ))),foto="jo.jpg")
 Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width()*0.56),int(screen.get_height()*0.43 ))), foto="cash.jpg")
 Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(screen.get_width()*0.6),int(screen.get_height()*0.4 ))),foto="jo.jpg")
-    
-lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ]
 
+lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ]
 
 click = False
 
@@ -60,7 +59,9 @@ while True:
                     screen = pygame.display.set_mode((screen.get_width(), screen.get_height()), pygame.RESIZABLE)
                     
     def menu_selecao():
-        
+        colisao = []
+        contador = 0
+
         while True:
           
             screen.fill((0,0,0))
@@ -74,24 +75,16 @@ while True:
             mx, my = pygame.mouse.get_pos()
     
             #Mostrar a imagem do mapa
-            desenhar_img(screen,'map.png',(int(screen.get_width()*0.7),int(screen.get_height()*0.7 )),(screen.get_width()*0.25+10,int(screen.get_height()*.2)))
+            desenhar_img(screen,'map2.png',(int(screen.get_width()*0.7),int(screen.get_height()*0.7 )),(screen.get_width()*0.25+10,int(screen.get_height()*.2)))
             
-            #Definição dos botões e miniaturas para os Gulags
-            
+            #Definição dos botões para os Gulags
             Trofimovsk = pygame.Rect(margem_x ,int(screen.get_height()*0.20), 200, 50)
-            
             Solovetsky = pygame.Rect(margem_x , int(screen.get_height()*0.30), 200, 50)
-            
             Norilsk= pygame.Rect(margem_x , int(screen.get_height()*0.40), 200, 50)
-            
             Sevvostlag= pygame.Rect(margem_x , int(screen.get_height()*0.50), 200, 50)
-            
             Pechorlag= pygame.Rect(margem_x , int(screen.get_height()*0.60), 200, 50)
-            
             Karlag= pygame.Rect(margem_x , int(screen.get_height()*0.70), 200, 50)
-            
             Altayskiy= pygame.Rect(margem_x , int(screen.get_height()*0.80), 200, 50)
-            
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
             
             #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
@@ -100,23 +93,32 @@ while True:
             for botao_gulag in lista_botoes_gulags:
                 botao = pygame.draw.rect(screen, branco, botao_gulag)
                 mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
+                
+                #Checa colisao com o mouse
                 if botao_gulag.collidepoint((mx,my)):
+                        
                     draw_text(lista_gulags[num_gulag].nome_r, preto,screen,center = botao.center, tamanho= 18)
                     mini = pygame.transform.scale(mini, (int(screen.get_width()*0.08),int(screen.get_height()*0.14)))
                     if click:
                         btn1.play() 
                         lista_gulags[num_gulag].mostrar_info_gulag(screen,mainClock)
+                    
                 else:
+                                 
                     draw_text(lista_gulags[num_gulag].nome, preto,screen,center = botao.center)
                     mini = pygame.transform.scale(mini, (int(screen.get_width()*0.04),int(screen.get_height()*0.07)))
+                    
                 #Cria um rect com a img para poder reposicionar corretamente
                 mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)
                 screen.blit(mini, mini_rect)
                 num_gulag += 1
+            
+            
             #Reseta o índice caso passe de 6
             if num_gulag >= 6:
-                num_gulag = 0    
-    
+                num_gulag = 0  
+                
+                  
             click = False
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -133,7 +135,7 @@ while True:
     
             pygame.display.update()
             mainClock.tick(60)
-    
+            contador +=1 
     
     def game():
         running = True
