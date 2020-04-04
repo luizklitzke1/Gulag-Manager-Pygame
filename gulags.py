@@ -46,8 +46,13 @@ class Campo():
     def mostrar_info_gulag(self, screen, mainClock):
     
         running = True
+        click = False
         while running == True:
+            
             screen.fill((0,0,0))
+            
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
              
             #Painel lateral esquerda
             #ret_esq = pygame.Rect(10, 10, screen.get_width()*.45-10, screen.get_height()-20)
@@ -120,6 +125,18 @@ class Campo():
             draw_text("Nome: "+str(self.nome),branco, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.7), tamanho= int(screen.get_width()*0.02))
             draw_text("Номе: "+str(self.nome_r),vermelho, screen, x=int(screen.get_width()*.45+50), y=int(screen.get_height()*.75), tamanho= int(screen.get_width()*0.02))
             
+            #Botão de escolher
+            btn_iniciar = pygame.Rect(int(screen.get_width()*.77) ,int(screen.get_height()*0.85), int(screen.get_width()*.2), int(screen.get_height()*0.10))
+            btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
+            #Checa colisao com o mouse
+            if btn_iniciar.collidepoint((mx,my)):
+                draw_text("выбирать",branco,screen,tamanho= int(screen.get_width()*0.02),center=btn_iniciar.center)
+                if click:
+                    btn1.play() 
+            else:
+                draw_text("Escolher",branco,screen,tamanho= int(screen.get_width()*0.02),center=btn_iniciar.center)
+            
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
                     pygame.quit()
@@ -128,6 +145,9 @@ class Campo():
                     if event.key == K_ESCAPE:
                         btn2.play() 
                         running = False
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
                         
             pygame.display.update()
             mainClock.tick(30)

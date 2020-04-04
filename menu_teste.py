@@ -18,10 +18,10 @@ pygame.init()
 pygame.display.set_caption('Gulag Manager')
 icone = pygame.image.load("imgs/icone.png")
 pygame.display.set_icon(icone)
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
 
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#FULLSCREEN | HWSURFACE | DOUBLEBUF)
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWSURFACE | DOUBLEBUF)
 
 #Música de fundo
 #music = pygame.mixer.music.load("sounds/katyusha.mp3")
@@ -54,7 +54,7 @@ while True:
           
             screen.fill((0,0,0))
             margem_x = int(screen.get_width()*0.03)
-            draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(screen.get_width()*0.02), x=margem_x, y=int(screen.get_height()*0.06))
+            draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(screen.get_width()*0.02), x=margem_x, y=int(screen.get_height()*0.09))
             
     
             #Pega constantemente a posição do mouse 
