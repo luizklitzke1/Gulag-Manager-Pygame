@@ -9,7 +9,7 @@ import time
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=40):
+    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=20):
         
         #Infor básica - imutável
         self.nome = nome
@@ -51,6 +51,7 @@ class Campo():
             self.ani_rec.sort()
             self.ani_rec_pos = 0
             self.ani_rec_max = len(self.ani_rec)-1
+            self.img_rec = pygame.image.load(self.ani_rec[0])
     
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -60,26 +61,30 @@ class Campo():
                    Felicidade: '{self.felicidade}', Prod_Mensal: '{self.prod_mensal}', Medo: '{self.medo}'\n"""
 
     #Mostra a representação visual animada do campo na tela de gameplay
-    def demo_visual(self,screen):    
+    def demo_visual(self,screen):   
+         
         self.ani_speed -= 1
+        
         print("Speed: ", self.ani_speed)
         
-        if True:
+        if self.ani_speed == 0:
         
             if self.recursos:
+                
                 print("Pos: ", self.ani_rec_pos)
                 print("Img: ", self.ani_rec[self.ani_rec_pos])
-                img_rec = pygame.image.load(self.ani_rec[self.ani_rec_pos])
+                self.img_rec = pygame.image.load(self.ani_rec[self.ani_rec_pos])
+                draw_text(str(self.ani_rec_pos),vermelho,screen,center=(50,50),tamanho=80)
                 
-                screen.blit(img_rec,(250,250))
-                time.sleep(0.5)
                 if self.ani_rec_pos == self.ani_rec_max:
                     self.ani_rec_pos = 0
                 else:
                     self.ani_rec_pos += 1
             
-            print("RESEEEEET")
+            print("RESET")
             self.ani_speed = self.ani_speed_init   
+        
+        screen.blit(self.img_rec,(250,250))    
             
 
 
