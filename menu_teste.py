@@ -22,6 +22,8 @@ SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWSURFACE | DOUBLEBUF)
+sh= screen.get_height()
+sw = screen.get_width() 
 
 #Música de fundo
 #music = pygame.mixer.music.load("sounds/katyusha.mp3")
@@ -31,7 +33,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWS
 
 #Criação dos dados dos gulags
 Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width() *0.7),int(screen.get_height()*0.22 ))), foto="arnold.png")
-Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width() *0.45),int(screen.get_height()*0.27 ))), foto="cash")
+Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width() *0.45),int(screen.get_height()*0.27 ))), foto="cash.jpg")
 Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração / Siderúrgica",3,"Muito Frio",((int(screen.get_width() *0.63),int(screen.get_height()*0.2 ))),foto="cash.jpg")
 Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width() *0.83),int(screen.get_height()*0.28 ))),foto="arnold.png")
 Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width() *0.5),int(screen.get_height()*0.3 ))),foto="jo.jpg")
@@ -47,8 +49,6 @@ while True:
     def menu_selecao():
         colisao = []
         contador = 0
-        sh= screen.get_height()
-        sw = screen.get_width() 
         
         while True:
           
@@ -89,7 +89,7 @@ while True:
                     mini = pygame.transform.scale(mini, (int(sw*0.08),int(sh*0.14)))
                     if click:
                         btn1.play() 
-                        lista_gulags[num_gulag].mostrar_info_gulag(screen,mainClock)
+                        mostrar_info_gulag(lista_gulags[num_gulag])
                     
                 else:
                                  
@@ -125,12 +125,17 @@ while True:
             mainClock.tick(60)
             contador +=1 
     
-    def game():
+    def game(gulag):
         running = True
+
         while running:
-            screen.fill((0,0,0))
-        
-            draw_text('game', (255, 255, 255), screen,  x= 20, y=20)
+            
+            screen.fill((255,255,255))
+            margem_x = int(sw*0.03)
+            
+            draw_text('Teste Gulag', vermelho, screen, tamanho=int(sw*0.02), x=margem_x, y=int(sh*0.09))
+            
+            gulag.demo_visual(screen)
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -143,14 +148,122 @@ while True:
             pygame.display.update()
             mainClock.tick(60)
     
+    #Mostra a informação básica do Gulag - Menu Geral 
+    def mostrar_info_gulag(gulag):
     
+        running = True
+        click = False
+        
+        while running == True:
+            
+            screen.fill((0,0,0))
+            
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
+             
+            #Painel lateral esquerda
+            #ret_esq = pygame.Rect(10, 10, sw*.45-10, screen.get_height()-20)
+            #pygame.draw.rect(screen, azul, ret_esq)
+            ret_esq = desenhar_img(screen,"outline3.png",(int(sw*.45-10), int(sh-20)),(10,10))
+            
+            w_bar = sw*.08
+            
+            #Cálcula da altura da representação do r_detec   0 até 50 
+            altura_detec = -gulag.r_detec*(sh*.4/50)
+            #Risco de detcção baixo
+            if gulag.r_detec < 25 :
+                visual_detec = pygame.Rect(int(sw*.05), 480, w_bar, altura_detec)
+                pygame.draw.rect(screen, verde, visual_detec)
+            #Risco de detcção alto
+            if gulag.r_detec >= 25 :
+                visual_detec = pygame.Rect(int(sw*.05), 480, w_bar, altura_detec)
+                pygame.draw.rect(screen, vermelho, visual_detec)
+            draw_text(gulag.r_detec, branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
+            draw_text("Detecção", branco, screen, x=visual_detec.x, y=visual_detec.y+20)
+            draw_text(str(gulag.r_detec)+"-50", branco, screen, x=visual_detec.x, y=visual_detec.y+40)
+            
+            
+            #Cálcula da altura da representação do r_nevasca   de 0 até 5 
+            altura_nevasca = -gulag.r_nevasca*(sh*.4/5)
+            #Risco de nevasca baixo
+            if gulag.r_nevasca < 3 :
+                visual_nevasca = pygame.Rect(int(sw*.05*3.8), 480, w_bar, altura_nevasca)
+                pygame.draw.rect(screen, verde, visual_nevasca)
+            #Risco de nevasca alto
+            if gulag.r_nevasca >= 3 :
+                visual_nevasca = pygame.Rect(int(sw*.05*3.8), 480, w_bar, altura_nevasca)
+                pygame.draw.rect(screen, vermelho, visual_nevasca)
+            draw_text(gulag.r_nevasca, branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
+            draw_text("Nevasca", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+20)
+            draw_text(str(gulag.r_nevasca)+"-5", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+40)
+            
+            #Cálcula da altura da representação de aces_rec  0 até 10
+            altura_rec = -gulag.recursos*(sh*.4/10)
+            #Baixos recursos
+            if gulag.recursos < 5 :
+                visual_rec = pygame.Rect(int(sw*.05*6.5), 480, w_bar, altura_rec)
+                pygame.draw.rect(screen, vermelho, visual_rec)
+            #Altos recursos
+            if gulag.recursos >= 5 :
+                visual_rec = pygame.Rect(int(sw*.05*6.5), 480, w_bar, altura_rec)
+                pygame.draw.rect(screen, verde, visual_rec)
+            draw_text(gulag.recursos, branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
+            draw_text("Recursos", branco, screen, x=visual_rec.x, y=visual_rec.y+20)
+            draw_text(str(gulag.recursos)+"-10", branco, screen, x=visual_rec.x, y=visual_rec.y+40)
+            
+            #Mostrar clima
+            draw_text("Clima: "+str(gulag.clima), branco, screen, x=int(sw*.05), y=int(sh*.7), tamanho=int(sw*0.013))
+            
+            #Mostrar tipo de extração
+            draw_text("Tipo de extração: ", branco, screen, x=int(sw*.05), y=int(sh*.8), tamanho=int(sw*0.013))
+            draw_text(str(gulag.extracao), branco, screen, x=int(sw*.05), y=int(sh*.8+40), tamanho=int(sw*0.013))
+            
+            #Painel lateral direita
+            #ret_dir = pygame.Rect(sw*.45+10,10, sw*.55-20, 880)
+            #pygame.draw.rect(screen, verde, ret_dir)
+            ret_dir = desenhar_img(screen,"outline3.png",(int(sw*.55-20), int(sh-20)),(int(sw*.45+10),10))
+            
+            #Mostrar a imagem do Gulag
+            foto_gulag = pygame.image.load('imgs/'+str(gulag.foto))
+            foto_gulag = pygame.transform.scale(foto_gulag, (int(sw*.55-80), int(sh*0.6)))
+            screen.blit(foto_gulag, (sw*.45+40,40))
+            
+            #Mostrar o nome do Gulag
+            draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*0.02))
+            draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*0.02))
+            
+            #Botão de escolher
+            btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*0.85), int(sw*.2), int(sh*0.10))
+            btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
+            #Checa colisao com o mouse
+            if btn_iniciar.collidepoint((mx,my)):
+                draw_text("выбирать",branco,screen,tamanho= int(sw*0.02),center=btn_iniciar.center)
+                if click:
+                    btn1.play() 
+                    gulag.load_imgs()
+                    game(gulag)
+            else:
+                draw_text("Escolher",branco,screen,tamanho= int(sw*0.02),center=btn_iniciar.center)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: 
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+                        
+            pygame.display.update()
+            mainClock.tick(30)
     
     def options():
         running = True
         while running:
             screen.fill((0,0,0))
-    
-            draw_text('options', font, (255, 255, 255), screen, (20,20))
+            
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
