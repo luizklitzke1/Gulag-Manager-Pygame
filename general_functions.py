@@ -52,4 +52,8 @@ def desenhar_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     
     return novo_rect
 
-
+def swi(sw,per,dif=0):
+    return int(sw*per)+dif
+    
+def shi(sh,per,dif=0):
+    return int(sh*per)+dif

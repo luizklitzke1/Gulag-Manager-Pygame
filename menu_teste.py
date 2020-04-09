@@ -130,10 +130,9 @@ while True:
 
         while running:
             
-            screen.fill((255,255,255))
-            margem_x = int(sw*0.03)
+            screen.fill((0,0,0))
             
-            draw_text('Teste Gulag', vermelho, screen, tamanho=int(sw*0.02), x=margem_x, y=int(sh*0.09))
+            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.02), y=shi(sh,0.05))
             
             gulag.demo_visual(screen)
             

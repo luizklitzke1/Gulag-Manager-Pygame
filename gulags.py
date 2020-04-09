@@ -46,8 +46,11 @@ class Campo():
     #Redefine as imagens que serão utilizadas para a representação
     #(Apenas chamada quando o campo for inicializado como jogavel)    
     def load_imgs(self):
-        if self.extracao == "Madeira":
-            self.ani_rec = glob.glob("imgs/gulags/recursos/madeira/m_*.png")
+        if self.extracao:
+            if self.extracao == "Madeira":
+                self.ani_rec = glob.glob("imgs/gulags/recursos/madeira/m_*.png")
+            if self.extracao == "Mineração / Siderúrgica":
+                self.ani_rec = glob.glob("imgs/gulags/recursos/mineracao/m_*.png")
             self.ani_rec.sort()
             self.ani_rec_pos = 0
             self.ani_rec_max = len(self.ani_rec)-1
@@ -65,23 +68,15 @@ class Campo():
          
         self.ani_speed -= 1
         
-        print("Speed: ", self.ani_speed)
-        
         if self.ani_speed == 0:
         
             if self.recursos:
-                
-                print("Pos: ", self.ani_rec_pos)
-                print("Img: ", self.ani_rec[self.ani_rec_pos])
                 self.img_rec = pygame.image.load(self.ani_rec[self.ani_rec_pos])
-                draw_text(str(self.ani_rec_pos),vermelho,screen,center=(50,50),tamanho=80)
                 
                 if self.ani_rec_pos == self.ani_rec_max:
                     self.ani_rec_pos = 0
                 else:
                     self.ani_rec_pos += 1
-            
-            print("RESET")
             self.ani_speed = self.ani_speed_init   
         
         screen.blit(self.img_rec,(250,250))    
