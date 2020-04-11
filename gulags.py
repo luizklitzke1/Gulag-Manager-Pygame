@@ -9,7 +9,7 @@ import time
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=20):
+    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=10):
         
         #Infor básica - imutável
         self.nome = nome
@@ -22,7 +22,7 @@ class Campo():
         
         #Valores a serem alterados com upgrades
         self.aquecedor = 0
-        self.seguranca = 1
+        self.seguranca = 3
         self.medica = 1
         self.lazer = 0
              
@@ -67,10 +67,7 @@ class Campo():
         
         #Médico
         if self.medica != 0:
-            if self.medica == 1:
-                self.ani_med = glob.glob("imgs/gulags/medico/lvl1/m_*.png")
-            else:
-                self.ani_med = glob.glob("imgs/gulags/medico/lvl2/m_*.png")
+            self.ani_med = glob.glob("imgs/gulags/medico/lvl"+str(self.medica)+"/m_*.png")
             self.ani_med.sort()
             self.ani_med_pos = 0
             self.ani_med_max = len(self.ani_med)-1
@@ -78,10 +75,7 @@ class Campo():
         
         #Segurança
         if self.seguranca != 0:
-            if self.seguranca == 1:
-                self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl1/s_*.png")
-            elif self.seguranca == 2:
-                self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl2/s_*.png")
+            self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl"+str(self.seguranca)+"/s_*.png")
             self.ani_seg.sort()
             self.ani_seg_pos = 0
             self.ani_seg_max = len(self.ani_seg)-1
