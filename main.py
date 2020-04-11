@@ -26,8 +26,8 @@ sh= screen.get_height()
 sw = screen.get_width() 
 
 #Música de fundo
-#music = pygame.mixer.music.load("sounds/katyusha.mp3")
-#pygame.mixer.music.play(-1)
+music = pygame.mixer.music.load("sounds/katyusha.mp3")
+pygame.mixer.music.play(-1)
 
 
 
@@ -47,8 +47,6 @@ click = False
 while True:
                     
     def menu_selecao():
-        colisao = []
-        contador = 0
         
         while True:
           
@@ -108,6 +106,7 @@ while True:
                 
                   
             click = False
+            
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -117,14 +116,18 @@ while True:
                         btn2.play() 
                         pygame.quit()
                         sys.exit()
+                    if event.key == K_m:
+                        if pygame.mixer.music.get_volume()==0:
+                            pygame.mixer.music.set_volume(1)
+                        else:
+                            pygame.mixer.music.set_volume(0)
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
                         click = True
     
             pygame.display.update()
             mainClock.tick(60)
-            contador +=1 
-    
+            
     def game(gulag):
         running = True
 
@@ -146,6 +149,11 @@ while True:
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         running = False
+                    if event.key == K_m:
+                        if pygame.mixer.music.get_volume()==0:
+                            pygame.mixer.music.set_volume(1)
+                        else:
+                            pygame.mixer.music.set_volume(0)
         
             pygame.display.update()
             mainClock.tick(60)
@@ -256,6 +264,11 @@ while True:
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         running = False
+                    if event.key == K_m:
+                        if pygame.mixer.music.get_volume()==0:
+                            pygame.mixer.music.set_volume(1)
+                        else:
+                            pygame.mixer.music.set_volume(0)
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
                         click = True
