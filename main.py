@@ -132,9 +132,12 @@ while True:
             
             screen.fill((0,0,0))
             
-            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.02), y=shi(sh,0.05))
+            #draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.02), y=shi(sh,0.05))
             
-            gulag.demo_visual(screen)
+            #Quadro do preview visual do campo
+            sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.05),swi(sw,.75),shi(sh,.68),8)
+            
+            gulag.demo_visual(screen,sw,sh)
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -264,6 +267,8 @@ while True:
         running = True
         while running:
             screen.fill((0,0,0))
+            
+    
             
             for event in pygame.event.get():
                 if event.type == QUIT:
