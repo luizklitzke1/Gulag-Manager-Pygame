@@ -46,9 +46,11 @@ class Campo():
     #Redefine as imagens que serão utilizadas para a representação
     #(Apenas chamada quando o campo for inicializado como jogavel)    
     def load_imgs(self):
+        
         if self.extracao:
             if self.extracao == "Madeira":
                 self.ani_rec = glob.glob("imgs/gulags/recursos/madeira/m_*.png")
+                print(self.ani_rec)
             if self.extracao == "Mineração / Siderúrgica":
                 self.ani_rec = glob.glob("imgs/gulags/recursos/mineracao/m_*.png")
             self.ani_rec.sort()

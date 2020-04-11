@@ -61,7 +61,7 @@ while True:
             mx, my = pygame.mouse.get_pos()
     
             #Mostrar a imagem do mapa
-            desenhar_img(screen,'map2.png',(int(sw*0.7),int(sh*0.7 )),(sw*0.25+10,int(sh*.2)))
+            draw_img(screen,'map2.png',(int(sw*0.7),int(sh*0.7 )),(sw*0.25+10,int(sh*.2)))
             
             #Definição dos botões para os Gulags
             w_botao = int(sw*0.15)
@@ -163,7 +163,8 @@ while True:
             #Painel lateral esquerda
             #ret_esq = pygame.Rect(10, 10, sw*.45-10, screen.get_height()-20)
             #pygame.draw.rect(screen, azul, ret_esq)
-            ret_esq = desenhar_img(screen,"outline3.png",(int(sw*.45-10), int(sh-20)),(10,10))
+            #ret_esq = draw_img(screen,"outline3.png",(int(sw*.45-10), int(sh-20)),(10,10))
+            sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
             
             w_bar = sw*.08
             
@@ -220,7 +221,8 @@ while True:
             #Painel lateral direita
             #ret_dir = pygame.Rect(sw*.45+10,10, sw*.55-20, 880)
             #pygame.draw.rect(screen, verde, ret_dir)
-            ret_dir = desenhar_img(screen,"outline3.png",(int(sw*.55-20), int(sh-20)),(int(sw*.45+10),10))
+            #ret_dir = draw_img(screen,"outline3.png",(int(sw*.55-20), int(sh-20)),(int(sw*.45+10),10))
+            sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
             
             #Mostrar a imagem do Gulag
             foto_gulag = pygame.image.load('imgs/'+str(gulag.foto))

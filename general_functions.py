@@ -16,6 +16,15 @@ branco = (255,255,255)
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
+#Facilitar cálculo de largura relativa a tela
+def swi(sw,per,dif=0):
+    return int(sw*per)+dif
+
+
+#Facilitar cálculo de altura relativa a tela  
+def shi(sh,per,dif=0):
+    return int(sh*per)+dif
+
 #Método para impressão de texto na tela
 def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, center=None):
     if not tamanho:
@@ -35,7 +44,7 @@ def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, cente
     screen.blit(textobj, textrect)
 
 #Método para desenhar imagens na tela
-def desenhar_img(screen,nome,escala,pos):
+def draw_img(screen,nome,escala,pos):
     img = pygame.image.load('imgs/'+nome)
     img = pygame.transform.scale(img, escala)
     screen.blit(img, pos)
@@ -44,16 +53,19 @@ def desenhar_img(screen,nome,escala,pos):
     #return img.get_rect(x = escala[0], y= escala[1])
     
 #Método para desenhar retângulos com texto na tela - Usado nos botões
-def desenhar_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
-    
+def draw_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     novo_rect = pygame.Rect(x, y, larg, alt)
     pygame.draw.rect(screen, cor, novo_rect)
     draw_text(texto, cor_texto, screen, center =novo_rect.center)
     
     return novo_rect
 
-def swi(sw,per,dif=0):
-    return int(sw*per)+dif
+#Método para desenhar uma seção preta com um contorno branco
+def draw_section(screen,x,y,larg,alt,esp,cor1=preto,cor2=branco):
+    contorno = pygame.Rect(x-esp, y-esp, larg+esp*2, alt+esp*2)
+    pygame.draw.rect(screen, cor2, contorno)
+    preenchimento = pygame.Rect(x, y, larg, alt)
+    pygame.draw.rect(screen, cor1, preenchimento)
     
-def shi(sh,per,dif=0):
-    return int(sh*per)+dif
+
+
