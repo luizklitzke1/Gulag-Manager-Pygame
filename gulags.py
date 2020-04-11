@@ -9,7 +9,7 @@ import time
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=10):
+    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=20):
         
         #Infor básica - imutável
         self.nome = nome
@@ -22,8 +22,8 @@ class Campo():
         
         #Valores a serem alterados com upgrades
         self.aquecedor = 0
-        self.seguranca = 0
-        self.medica = 2
+        self.seguranca = 1
+        self.medica = 1
         self.lazer = 0
              
         #Status do campo
@@ -47,6 +47,7 @@ class Campo():
     #(Apenas chamada quando o campo for inicializado como jogavel)    
     def load_imgs(self):
         
+        #Extração
         if self.extracao:
             if self.extracao == "Madeira":
                 self.ani_rec = glob.glob("imgs/gulags/recursos/madeira/m_*.png")
@@ -57,12 +58,14 @@ class Campo():
             self.ani_rec_max = len(self.ani_rec)-1
             self.img_rec = pygame.image.load(self.ani_rec[0])
             
+        #Alojamento
         self.ani_alo = glob.glob("imgs/gulags/alojamento/a_*.png")
         self.ani_alo.sort()
         self.ani_alo_pos = 0
         self.ani_alo_max = len(self.ani_alo)-1 
         self.img_alo =  pygame.image.load(self.ani_alo[0]) 
         
+        #Médico
         if self.medica != 0:
             if self.medica == 1:
                 self.ani_med = glob.glob("imgs/gulags/medico/lvl1/m_*.png")
@@ -72,6 +75,17 @@ class Campo():
             self.ani_med_pos = 0
             self.ani_med_max = len(self.ani_med)-1
             self.img_med = pygame.image.load(self.ani_med[0])
+        
+        #Segurança
+        if self.seguranca != 0:
+            if self.seguranca == 1:
+                self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl1/s_*.png")
+            elif self.seguranca == 2:
+                self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl2/s_*.png")
+            self.ani_seg.sort()
+            self.ani_seg_pos = 0
+            self.ani_seg_max = len(self.ani_seg)-1
+            self.img_seg = pygame.image.load(self.ani_seg[0])
         
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -112,7 +126,15 @@ class Campo():
                     self.ani_med_pos = 0
                 else:
                     self.ani_med_pos += 1
-                    
+                   
+            #Img da seguranca
+            if self.seguranca != 0:
+                self.img_seg = pygame.image.load(self.ani_seg[self.ani_seg_pos])
+                if self.ani_seg_pos == self.ani_seg_max:
+                    self.ani_seg_pos = 0
+                else:
+                    self.ani_seg_pos += 1
+                     
             #Reset do contador
             self.ani_speed = self.ani_speed_init 
             
@@ -122,9 +144,14 @@ class Campo():
         self.img_alo = pygame.transform.scale(self.img_alo, escala_geral)
         screen.blit(self.img_alo,(swi(sw,.22,20),shi(sh,0.06))) 
         
-        self.img_med = pygame.transform.scale(self.img_med, escala_geral)
-        screen.blit(self.img_med,(swi(sw,.22,20),shi(sh,0.06))) 
-        
+        if self.medica != 0:
+            self.img_med = pygame.transform.scale(self.img_med, escala_geral)
+            screen.blit(self.img_med,(swi(sw,.22,20),shi(sh,0.06))) 
+            
+        if self.seguranca != 0:
+            self.img_seg = pygame.transform.scale(self.img_seg, escala_geral)
+            screen.blit(self.img_seg,(swi(sw,.22,20),shi(sh,0.06)))
+            
         
 
 
