@@ -50,36 +50,33 @@ class Campo():
         #Extração
         if self.extracao:
             if self.extracao == "Madeira":
-                self.ani_rec = glob.glob("imgs/gulags/recursos/madeira/m_*.png")
+                path = ("imgs/gulags/recursos/madeira/m_*.png")
             if self.extracao == "Mineração / Siderúrgica":
-                self.ani_rec = glob.glob("imgs/gulags/recursos/mineracao/m_*.png")
-            self.ani_rec.sort()
+                path = ("imgs/gulags/recursos/mineracao/m_*.png")
+            self.ani_rec = load_frames(path)
             self.ani_rec_pos = 0
             self.ani_rec_max = len(self.ani_rec)-1
-            self.img_rec = pygame.image.load(self.ani_rec[0])
+            self.img_rec = self.ani_rec[0]
             
         #Alojamento
-        self.ani_alo = glob.glob("imgs/gulags/alojamento/a_*.png")
-        self.ani_alo.sort()
+        self.ani_alo = load_frames("imgs/gulags/alojamento/a_*.png")
         self.ani_alo_pos = 0
         self.ani_alo_max = len(self.ani_alo)-1 
-        self.img_alo =  pygame.image.load(self.ani_alo[0]) 
+        self.img_alo =  self.ani_alo[0] 
         
         #Médico
         if self.medica != 0:
-            self.ani_med = glob.glob("imgs/gulags/medico/lvl"+str(self.medica)+"/m_*.png")
-            self.ani_med.sort()
+            self.ani_med = load_frames("imgs/gulags/medico/lvl"+str(self.medica)+"/m_*.png")
             self.ani_med_pos = 0
             self.ani_med_max = len(self.ani_med)-1
-            self.img_med = pygame.image.load(self.ani_med[0])
+            self.img_med = self.ani_med[0]
         
         #Segurança
         if self.seguranca != 0:
-            self.ani_seg = glob.glob("imgs/gulags/seguranca/lvl"+str(self.seguranca)+"/s_*.png")
-            self.ani_seg.sort()
+            self.ani_seg = load_frames("imgs/gulags/seguranca/lvl"+str(self.seguranca)+"/s_*.png")
             self.ani_seg_pos = 0
             self.ani_seg_max = len(self.ani_seg)-1
-            self.img_seg = pygame.image.load(self.ani_seg[0])
+            self.img_seg = self.ani_seg[0]
         
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -99,7 +96,7 @@ class Campo():
         
             #Img dos rescuros
             if self.recursos:
-                self.img_rec = pygame.image.load(self.ani_rec[self.ani_rec_pos])
+                self.img_rec = self.ani_rec[self.ani_rec_pos]
                 
                 if self.ani_rec_pos == self.ani_rec_max:
                     self.ani_rec_pos = 0
@@ -107,7 +104,7 @@ class Campo():
                     self.ani_rec_pos += 1
             
             #Img do alojamento
-            self.img_alo = pygame.image.load(self.ani_alo[self.ani_alo_pos])
+            self.img_alo = self.ani_alo[self.ani_alo_pos]
             if self.ani_alo_pos == self.ani_alo_max:
                 self.ani_alo_pos = 0
             else:
@@ -115,7 +112,7 @@ class Campo():
 
             #Img do medico
             if self.medica != 0:
-                self.img_med = pygame.image.load(self.ani_med[self.ani_med_pos])
+                self.img_med = self.ani_med[self.ani_med_pos]
                 if self.ani_med_pos == self.ani_med_max:
                     self.ani_med_pos = 0
                 else:
@@ -123,7 +120,7 @@ class Campo():
                    
             #Img da seguranca
             if self.seguranca != 0:
-                self.img_seg = pygame.image.load(self.ani_seg[self.ani_seg_pos])
+                self.img_seg = self.ani_seg[self.ani_seg_pos]
                 if self.ani_seg_pos == self.ani_seg_max:
                     self.ani_seg_pos = 0
                 else:
@@ -131,7 +128,7 @@ class Campo():
                      
             #Reset do contador
             self.ani_speed = self.ani_speed_init 
-            
+        
         self.img_rec = pygame.transform.scale(self.img_rec, escala_geral)
         screen.blit(self.img_rec,(swi(sw,.22,20),shi(sh,0.06)))    
         

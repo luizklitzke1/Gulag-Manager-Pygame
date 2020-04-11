@@ -1,4 +1,5 @@
 import pygame
+import glob 
 
 pygame.init()
 
@@ -16,10 +17,20 @@ branco = (255,255,255)
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
+#Função pra pre-carregar os frames das animações
+def load_frames(path):
+    frames = []
+    lista = glob.glob(path)
+    lista.sort()
+    for frame in lista:
+        novo_frame = pygame.image.load(frame)
+        frames.append(novo_frame)
+    
+    return frames
+
 #Facilitar cálculo de largura relativa a tela
 def swi(sw,per,dif=0):
     return int(sw*per)+dif
-
 
 #Facilitar cálculo de altura relativa a tela  
 def shi(sh,per,dif=0):
