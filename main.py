@@ -27,8 +27,8 @@ sw = screen.get_width()
 
 
 #Música de fundo
-music = pygame.mixer.music.load("sounds/katyusha.mp3")
-pygame.mixer.music.play(-1)
+#music = pygame.mixer.music.load("sounds/katyusha.mp3")
+#pygame.mixer.music.play(-1)
 
 #Criação dos dados dos gulags
 Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width() *0.7),int(screen.get_height()*0.22 ))), foto="arnold.png")
@@ -39,23 +39,11 @@ Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(scre
 Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width() *0.56),int(screen.get_height()*0.43 ))), foto="cash.jpg")
 Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(screen.get_width() *0.6),int(screen.get_height()*0.4 ))),foto="jo.jpg")
 
-lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ]
+lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy]
 
 #Definição dos botões para os Gulags
-w_botao = int(sw*0.15)
-h_botao = int(sh*0.05)
-
-margem_x = int(sw*0.03)
-
-btn_Trofimovsk = Button(branco,margem_x,int(sh*0.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
-btn_Solovetsky = Button(branco,margem_x,int(sh*0.3),w_botao,h_botao,"Solovetsky","Трофимовск")
-btn_Norilsk = Button(branco,margem_x,int(sh*0.4),w_botao,h_botao,"Norilsk","Трофимовск")
-btn_Sevvostlag = Button(branco,margem_x,int(sh*0.5),w_botao,h_botao,"Sevvostlag","Трофимовск")
-btn_Pechorlag = Button(branco,margem_x,int(sh*0.6),w_botao,h_botao,"Pechorlag","Трофимовск")
-btn_Karlag = Button(branco,margem_x,int(sh*0.7),w_botao,h_botao,"Karlag","Трофимовск")
-btn_Altayskiy = Button(branco,margem_x,int(sh*0.8),w_botao,h_botao,"Altayskiy","Трофимовск")
-
-lista_botoes_gulags = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
+margem_x = int(sw*.03)
+lista_botoes_gulags = setup_botoes(sh,sw)
 
 click = False
 
@@ -69,7 +57,6 @@ while True:
             
             draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*0.02), x=margem_x, y=int(sh*0.09))
             
-    
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
     
