@@ -17,7 +17,7 @@ class Button():
         self.height = height
         self.text = text
         self.text_rus = text_rus
-        self.hover = 0
+        self.hover = False
 
     #Desenha o botão na tela
     def draw(self,screen,rus=False,outline=None):
@@ -35,23 +35,13 @@ class Button():
 
     #Testa colisão 
     def isOver(self, pos):
-        
-            
-        
-        
         if pos[0] > self.x and pos[0] < self.x + self.width:
             if pos[1] > self.y and pos[1] < self.y + self.height:
-                
-                if self.hover == 0:
+                if self.hover == False:
                     btn2.play()
-                    self.hover = 1
-                    
-                print(self.hover)
+                    self.hover = True
                 return True
-        
-        self.hover = 0
-        
-        print(self.hover)
+        self.hover = False
         return False
     
 #Setup separado dos botões utilizados na tela de seleção inicial
