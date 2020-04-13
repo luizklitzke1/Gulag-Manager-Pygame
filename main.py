@@ -3,8 +3,8 @@
 import pygame, sys
 from pygame.locals import *
 from gulags import Campo, setup_inicial
-import general_functions as gf
 from general_functions import *
+from general_classes import *
 import random
 import time
 import os
@@ -73,6 +73,7 @@ while True:
             Karlag= pygame.Rect(margem_x , int(sh*0.70), w_botao, h_botao)
             Altayskiy= pygame.Rect(margem_x , int(sh*0.80), w_botao, h_botao)
             lista_botoes_gulags = [Trofimovsk,Solovetsky,Norilsk,Sevvostlag,Pechorlag,Karlag,Altayskiy]
+            
             
             #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
             #Utiliza o num_gulag para bater a relação entre os índices
@@ -173,55 +174,15 @@ while True:
             mx, my = pygame.mouse.get_pos()
              
             #Painel lateral esquerda
-            #ret_esq = pygame.Rect(10, 10, sw*.45-10, screen.get_height()-20)
-            #pygame.draw.rect(screen, azul, ret_esq)
-            #ret_esq = draw_img(screen,"outline3.png",(int(sw*.45-10), int(sh-20)),(10,10))
             sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
-            
+        
             w_bar = sw*.08
-            
-            #Cálcula da altura da representação do r_detec   0 até 50 
-            altura_detec = -gulag.r_detec*(sh*.4/50)
-            #Risco de detcção baixo
-            if gulag.r_detec < 25 :
-                visual_detec = pygame.Rect(int(sw*.05), 480, w_bar, altura_detec)
-                pygame.draw.rect(screen, verde, visual_detec)
-            #Risco de detcção alto
-            if gulag.r_detec >= 25 :
-                visual_detec = pygame.Rect(int(sw*.05), 480, w_bar, altura_detec)
-                pygame.draw.rect(screen, vermelho, visual_detec)
-            draw_text(gulag.r_detec, branco, screen, center=(visual_detec.centerx, visual_detec.bottom-20))   
-            draw_text("Detecção", branco, screen, x=visual_detec.x, y=visual_detec.y+20)
-            draw_text(str(gulag.r_detec)+"-50", branco, screen, x=visual_detec.x, y=visual_detec.y+40)
-            
-            
-            #Cálcula da altura da representação do r_nevasca   de 0 até 5 
-            altura_nevasca = -gulag.r_nevasca*(sh*.4/5)
-            #Risco de nevasca baixo
-            if gulag.r_nevasca < 3 :
-                visual_nevasca = pygame.Rect(int(sw*.05*3.8), 480, w_bar, altura_nevasca)
-                pygame.draw.rect(screen, verde, visual_nevasca)
-            #Risco de nevasca alto
-            if gulag.r_nevasca >= 3 :
-                visual_nevasca = pygame.Rect(int(sw*.05*3.8), 480, w_bar, altura_nevasca)
-                pygame.draw.rect(screen, vermelho, visual_nevasca)
-            draw_text(gulag.r_nevasca, branco, screen, center=(visual_nevasca.centerx, visual_nevasca.bottom-20))   
-            draw_text("Nevasca", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+20)
-            draw_text(str(gulag.r_nevasca)+"-5", branco, screen, x=visual_nevasca.x, y=visual_nevasca.y+40)
-            
-            #Cálcula da altura da representação de aces_rec  0 até 10
-            altura_rec = -gulag.recursos*(sh*.4/10)
-            #Baixos recursos
-            if gulag.recursos < 5 :
-                visual_rec = pygame.Rect(int(sw*.05*6.5), 480, w_bar, altura_rec)
-                pygame.draw.rect(screen, vermelho, visual_rec)
-            #Altos recursos
-            if gulag.recursos >= 5 :
-                visual_rec = pygame.Rect(int(sw*.05*6.5), 480, w_bar, altura_rec)
-                pygame.draw.rect(screen, verde, visual_rec)
-            draw_text(gulag.recursos, branco, screen, center=(visual_rec.centerx, visual_rec.bottom-20))   
-            draw_text("Recursos", branco, screen, x=visual_rec.x, y=visual_rec.y+20)
-            draw_text(str(gulag.recursos)+"-10", branco, screen, x=visual_rec.x, y=visual_rec.y+40)
+            #Gráfico para a detecção
+            draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),480,"dec","Detecção")
+            #Gráfico para a nevasca
+            draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,int(sw*.05*3.8),480,"dec","Nevasca")
+            #Gráfico para os recursos
+            draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,int(sw*.05*6.5),480,"cres","Recursos")
             
             #Mostrar clima
             draw_text("Clima: "+str(gulag.clima), branco, screen, x=int(sw*.05), y=int(sh*.7), tamanho=int(sw*0.013))
@@ -231,15 +192,10 @@ while True:
             draw_text(str(gulag.extracao), branco, screen, x=int(sw*.05), y=int(sh*.8+40), tamanho=int(sw*0.013))
             
             #Painel lateral direita
-            #ret_dir = pygame.Rect(sw*.45+10,10, sw*.55-20, 880)
-            #pygame.draw.rect(screen, verde, ret_dir)
-            #ret_dir = draw_img(screen,"outline3.png",(int(sw*.55-20), int(sh-20)),(int(sw*.45+10),10))
             sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
             
             #Mostrar a imagem do Gulag
-            foto_gulag = pygame.image.load('imgs/'+str(gulag.foto))
-            foto_gulag = pygame.transform.scale(foto_gulag, (int(sw*.55-80), int(sh*0.6)))
-            screen.blit(foto_gulag, (sw*.45+40,40))
+            draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
             
             #Mostrar o nome do Gulag
             draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*0.02))

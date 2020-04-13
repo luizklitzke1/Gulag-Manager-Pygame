@@ -1,12 +1,12 @@
+#Módulo com as funções gerais utilizadas por todo o código
+#Servem como resumos para outras coisas que acabariam ocupando muito espaço desnecessariamente
+
 import pygame
 import glob 
 
 pygame.init()
 
-
-#Módulo com as funções gerais utilizadas por todo o código
-#Servem como resumos para outras coisas que acabariam ocupando muito espaço desnecessariamente
-
+#Cores padrão
 vermelho = (255,0,0)
 verde = (0,255,0)
 azul = (0,0,255)
@@ -17,6 +17,26 @@ branco = (255,255,255)
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
+#Gerar os gráficos de progresso verticais
+def draw_graf_vert(screen,val_min,val_max,mid,val,maxh,width,x,y,tipo,text):
+    altura = -(val*(maxh/val_max))
+    visual= pygame.Rect(x, y, width, altura)
+            
+    if val < mid:
+        if tipo == "cres":
+            pygame.draw.rect(screen, vermelho, visual)
+        else:
+            pygame.draw.rect(screen, verde, visual)
+    if val >= mid:
+        if tipo == "cres":
+            pygame.draw.rect(screen, verde, visual)
+        else:
+            pygame.draw.rect(screen, vermelho, visual)
+            
+    draw_text(val, branco, screen, center=(visual.centerx, visual.bottom-20))   
+    draw_text(text, branco, screen, x=visual.x, y=visual.y+20)
+    draw_text(str(val)+"-"+str(val_max), branco, screen, x=visual.x, y=visual.y+40)
+        
 #Função pra pre-carregar os frames das animações
 def load_frames(path):
     frames = []
@@ -25,7 +45,6 @@ def load_frames(path):
     for frame in lista:
         novo_frame = pygame.image.load(frame)
         frames.append(novo_frame)
-    
     return frames
 
 #Facilitar cálculo de largura relativa a tela
@@ -43,7 +62,6 @@ def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, cente
     font = pygame.font.Font("fonts/cmd2.ttf", tamanho)
     textobj = font.render(str(text), 20, color)
     textrect = textobj.get_rect()
-    
     #Defina caso seja informado centralização
     if center:
         textrect.center = center
@@ -51,15 +69,13 @@ def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, cente
     else:
         textrect.x = x
         textrect.y = y
-        
     screen.blit(textobj, textrect)
 
 #Método para desenhar imagens na tela
-def draw_img(screen,nome,escala,pos):
-    img = pygame.image.load('imgs/'+nome)
+def draw_img(screen,path,escala,pos):
+    img = pygame.image.load('imgs/'+path)
     img = pygame.transform.scale(img, escala)
     screen.blit(img, pos)
-    
     return img
     #return img.get_rect(x = escala[0], y= escala[1])
     
@@ -68,7 +84,7 @@ def draw_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
     novo_rect = pygame.Rect(x, y, larg, alt)
     pygame.draw.rect(screen, cor, novo_rect)
     draw_text(texto, cor_texto, screen, center =novo_rect.center)
-    
+
     return novo_rect
 
 #Método para desenhar uma seção preta com um contorno branco
