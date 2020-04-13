@@ -19,7 +19,7 @@ class Button():
         self.text_rus = text_rus
 
     #Desenha o botão na tela
-    def draw(self,screen,rus,outline=None):
+    def draw(self,screen,rus=False,outline=None):
         
         if outline:
             pygame.draw.rect(screen, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
