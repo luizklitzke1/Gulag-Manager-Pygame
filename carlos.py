@@ -1,15 +1,6 @@
-jorge  = "a"
-print (jorge)
+a = 3
+b = 2
 
-def a():
-    
-    global jorge
-    if  jorge == "a":
-        
-        print("A")
-        
-    else: 
-         jorge = "b"
-        
-a()
-print (jorge)
+c = (a+b)//2
+
+print(c)

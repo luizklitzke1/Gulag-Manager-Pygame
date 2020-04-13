@@ -25,6 +25,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWS
 sh= screen.get_height()
 sw = screen.get_width() 
 
+
 #Música de fundo
 music = pygame.mixer.music.load("sounds/katyusha.mp3")
 pygame.mixer.music.play(-1)
