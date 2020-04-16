@@ -143,8 +143,6 @@ class Campo():
             self.img_seg = pygame.transform.scale(self.img_seg, escala_geral)
             screen.blit(self.img_seg,(swi(sw,.22,20),shi(sh,0.06)))
             
-        
-
 
 def setup_inicial():
     

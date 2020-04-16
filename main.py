@@ -12,7 +12,6 @@ import os
 fullscreen = False
 
 # Setup pygame/window ---------------------------------------- #
-
 mainClock = pygame.time.Clock()
 pygame.init()
 pygame.display.set_caption('Gulag Manager')
