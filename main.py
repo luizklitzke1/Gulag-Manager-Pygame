@@ -2,7 +2,7 @@
 # Setup Python ----------------------------------------------- #
 import pygame, sys
 from pygame.locals import *
-from gulags import Campo, setup_inicial
+from gulags import Campo
 from general_functions import *
 from general_classes import *
 import random

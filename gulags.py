@@ -142,32 +142,6 @@ class Campo():
         if self.seguranca != 0:
             self.img_seg = pygame.transform.scale(self.img_seg, escala_geral)
             screen.blit(self.img_seg,(swi(sw,.22,20),shi(sh,0.06)))
-            
-
-def setup_inicial():
     
-    lista_gulags = []
-
-    #Criação dos dados dos gulags
-    Trofimovsk = Campo("Trofimovsk",0,6,"Madeira",4,"Congelante", foto="arnold.png")
-    Solovetsky = Campo("Solovetsky",35,8,"Madeira",0,"Frio", foto="cash.jpg")
-    Norilsk = Campo("Norilsk",15,3,"Mineração / Siderúrgica",3,"Muito Frio",foto="cash.jpg")
-    Sevvostlag = Campo("Sevvostlag",30,10,"Ouro e estanho",1,"Frio",foto="arnold.png")
-    Pechorlag = Campo("Pechorlag",25,6,"Não",2,"Frio",foto="jo.jpg")
-    Karlag  = Campo("Karlag ",20,0,"Não",1,"Frio", foto="cash.jpg")
-    Altayskiy  = Campo("Altayskiy",10,0,"Não",0,"Frio", foto="jo.jpg")
-    
-    lista_gulags.extend([Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy ])
-    
-    return lista_gulags
-    
-
-if __name__ == "__main__":
-    
-    lista_gulags = setup_inicial()
-    
-    for campo in lista_gulags:
-        print (campo)
-        
         
     
