@@ -86,7 +86,7 @@ class Campo():
                    Felicidade: '{self.felicidade}', Prod_Mensal: '{self.prod_mensal}', Medo: '{self.medo}'\n"""
 
     #Mostra a representação visual animada do campo na tela de gameplay
-    def demo_visual(self,screen,sw,sh):   
+    def demo_visual(self,screen,sw,sh,pos):   
          
         self.ani_speed -= 1
         
@@ -130,18 +130,18 @@ class Campo():
             self.ani_speed = self.ani_speed_init 
         
         self.img_rec = pygame.transform.scale(self.img_rec, escala_geral)
-        screen.blit(self.img_rec,(swi(sw,.22,20),shi(sh,0.06)))    
+        screen.blit(self.img_rec,pos)    
         
         self.img_alo = pygame.transform.scale(self.img_alo, escala_geral)
-        screen.blit(self.img_alo,(swi(sw,.22,20),shi(sh,0.06))) 
+        screen.blit(self.img_alo,pos) 
         
         if self.medica != 0:
             self.img_med = pygame.transform.scale(self.img_med, escala_geral)
-            screen.blit(self.img_med,(swi(sw,.22,20),shi(sh,0.06))) 
+            screen.blit(self.img_med,pos) 
             
         if self.seguranca != 0:
             self.img_seg = pygame.transform.scale(self.img_seg, escala_geral)
-            screen.blit(self.img_seg,(swi(sw,.22,20),shi(sh,0.06)))
+            screen.blit(self.img_seg,pos)
     
         
     

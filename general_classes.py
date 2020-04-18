@@ -9,7 +9,7 @@ pygame.init()
 from general_functions import *
 
 class Button():
-    def __init__(self,color,x,y,width,height,text,text_rus,text_size=None):
+    def __init__(self,color,x,y,width,height,text,text_rus,text_size=None,text_color=branco):
         self.color = color
         self.x = x
         self.y = y
@@ -17,6 +17,7 @@ class Button():
         self.height = height
         self.text = text
         self.text_rus = text_rus
+        self.text_size = text_size
         self.hover = False
 
     #Desenha o botão na tela
@@ -28,9 +29,9 @@ class Button():
         rect = pygame.draw.rect(screen, self.color, (self.x,self.y,self.width,self.height),0)
         
         if rus:
-            draw_text(self.text_rus,preto,screen,center=rect.center)
+            draw_text(self.text_rus,preto,screen,center=rect.center,tamanho=self.text_size)
         else:
-            draw_text(self.text,preto,screen,center=rect.center)
+            draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
             
 
     #Testa colisão 

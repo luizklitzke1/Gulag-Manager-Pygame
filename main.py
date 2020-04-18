@@ -5,6 +5,7 @@ from pygame.locals import *
 from gulags import Campo
 from general_functions import *
 from general_classes import *
+from calendario import Calendario
 import random
 import time
 import os
@@ -44,6 +45,9 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 margem_x = int(sw*.03)
 lista_botoes_gulags = setup_botoes(sh,sw)
 
+#Criação do calendário
+calendario = Calendario()
+
 click = False
 
 while True:
@@ -68,7 +72,6 @@ while True:
             for botao_gulag in lista_botoes_gulags:
                 mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
                 
-                
                 #Checa colisao com o mouse
                 if botao_gulag.isOver((mx,my)):
                     
@@ -92,6 +95,7 @@ while True:
             if num_gulag >= 6:
                 num_gulag = 0  
                 
+                
                   
             click = False
             
@@ -101,7 +105,6 @@ while True:
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        btn2.play() 
                         pygame.quit()
                         sys.exit()
                     if event.key == K_m:
@@ -123,12 +126,13 @@ while True:
             
             screen.fill((0,0,0))
             
-            #draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.02), y=shi(sh,0.05))
+            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.015), x=swi(sw,0.02), y=shi(sh,0.05))
             
             #Quadro do preview visual do campo
-            sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.05),swi(sw,.75),shi(sh,.68),8)
-            
-            gulag.demo_visual(screen,sw,sh)
+            sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
+            gulag.demo_visual(screen,sw,sh,(swi(sw,.22,10),shi(sh,.15)))
+            calendario.update()
+            print(calendario)
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -188,18 +192,23 @@ while True:
             draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*0.02))
             
             #Botão de escolher
-            btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*0.85), int(sw*.2), int(sh*0.10))
-            btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
+            #btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*0.85), int(sw*.2), int(sh*0.10))
+            #btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
+            btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),"Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
+            
             #Checa colisao com o mouse
-            if btn_iniciar.collidepoint((mx,my)):
-                draw_text("выбирать",branco,screen,tamanho= int(sw*0.02),center=btn_iniciar.center)
-                if click:
+            if btn_iniciar.isOver((mx,my)):
+                btn_iniciar.draw(screen,rus=True) 
+                
+                if click == True:
                     btn1.play() 
                     gulag.load_imgs()
                     game(gulag)
+                    
             else:
-                draw_text("Escolher",branco,screen,tamanho= int(sw*0.02),center=btn_iniciar.center)
+                btn_iniciar.draw(screen) 
             
+            click = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
                     pygame.quit()
