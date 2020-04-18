@@ -51,21 +51,20 @@ class Calendario():
         
         img_calend = draw_img(screen,"calend1.png",(swi(sw,.2),int(swi(sw,.2)*.853)),(swi(sw,.01),shi(sh,.54)))
         
-        print(swi(sw,.2),int(swi(sw,.2)*.85))
-        
         draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.565))
         
         x_dia=swi(sw,.0245) + swi(sw,.026)*self.dia_pos
         y_dia = shi(sh,.62)  + shi(sw,.022)*self.semana 
         
-        draw_img(screen,"select.png",(swi(sw,.0198),shi(sh,.03)),(x_dia,y_dia))
+        draw_text("O",verde,screen,x=x_dia,y=y_dia,tamanho=swi(sw,.019))
         
-        self.lista_x.append((x_dia,y_dia))
+        if len(self.lista_x)== 0 or self.lista_x[-1] != (x_dia,y_dia):
+            self.lista_x.append((x_dia,y_dia))
 
-        for x in self.lista_x:
+        for x in self.lista_x[0:-1]:
             draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))
         
-        draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.020),y=shi(sh,.79))
+        draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.79))
         
     #Print dos valores atuais            
     def __repr__(self):
