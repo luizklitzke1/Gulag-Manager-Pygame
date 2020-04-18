@@ -131,8 +131,11 @@ while True:
             #Quadro do preview visual do campo
             sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
             gulag.demo_visual(screen,sw,sh,(swi(sw,.22,10),shi(sh,.15)))
+            
+            #Atualização do calendário
             calendario.update()
-            print(calendario)
+            calendario.rep_visual(screen,sw,sh)
+
             
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -246,6 +249,8 @@ while True:
             pygame.display.update()
             mainClock.tick(60)
     
-    menu_selecao()
+    #menu_selecao()
+    lista_gulags[0].load_imgs()
+    game(lista_gulags[0])
     
     
