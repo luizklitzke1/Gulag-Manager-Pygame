@@ -46,7 +46,7 @@ class Button():
         return False
     
 #Setup separado dos botões utilizados na tela de seleção inicial
-def setup_botoes(sh,sw):
+def setup_botoes_inicial(sh,sw):
     margem_x = int(sw*0.03)
     w_botao = int(sw*0.15)
     h_botao = int(sh*0.05)
@@ -59,3 +59,17 @@ def setup_botoes(sh,sw):
     btn_Altayskiy = Button(branco,margem_x,int(sh*0.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
     
     return [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
+
+def setup_botoes_game(sh,sw):
+
+    #Setup separado dos botões utilizados na tela do jogo em si
+    margem_x = int(sw*0.03)
+    w_botao = int(sw*0.15)
+    h_botao = int(sh*0.05)
+    btn_Trofimovsk = Button(branco,margem_x,int(sh*0.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
+    btn_Solovetsky = Button(branco,margem_x,int(sh*0.3),w_botao,h_botao,"Solovetsky","Соловетскы")
+    btn_Norilsk = Button(branco,margem_x,int(sh*0.4),w_botao,h_botao,"Norilsk","Норилск")
+    
+    lista_btns = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk]
+    
+    return lista_btns

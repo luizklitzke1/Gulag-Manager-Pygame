@@ -43,7 +43,7 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 
 #Definição dos botões para os Gulags
 margem_x = int(sw*.03)
-lista_botoes_gulags = setup_botoes(sh,sw)
+lista_botoes_gulags = setup_botoes_inicial(sh,sw)
 
 #Criação do calendário
 calendario = Calendario()
@@ -121,6 +121,7 @@ while True:
             
     def game(gulag):
         running = True
+        lista_btns = setup_botoes_game(sh,sw)
 
         while running:
             
@@ -136,7 +137,11 @@ while True:
             calendario.update()
             calendario.rep_visual(screen,sw,sh)
 
-            
+            #Botões de ação da tela
+            for btn in lista_btns:
+                btn.draw(screen)
+                
+                
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -252,5 +257,4 @@ while True:
     #menu_selecao()
     lista_gulags[0].load_imgs()
     game(lista_gulags[0])
-    
     
