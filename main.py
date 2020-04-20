@@ -4,7 +4,7 @@ import pygame, sys
 from pygame.locals import *
 from gulags import Campo
 from general_functions import *
-from general_classes import *
+from buttons import *
 from calendario import Calendario
 import random
 import time
@@ -125,9 +125,12 @@ while True:
 
         while running:
             
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
+            
             screen.fill((0,0,0))
             
-            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.015), x=swi(sw,0.02), y=shi(sh,0.05))
+            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.01), y=shi(sh,0.05))
             
             #Quadro do preview visual do campo
             sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
@@ -139,8 +142,10 @@ while True:
 
             #Botões de ação da tela
             for btn in lista_btns:
-                btn.draw(screen)
-                
+                if btn.isOver((mx,my)):
+                    btn.draw(screen,rus=True)
+                else:
+                    btn.draw(screen)
                 
             for event in pygame.event.get():
                 if event.type == QUIT:

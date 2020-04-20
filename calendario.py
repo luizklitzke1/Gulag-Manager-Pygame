@@ -49,12 +49,12 @@ class Calendario():
     #Representação visual do calendário na tela
     def rep_visual(self,screen,sw,sh):
         
-        img_calend = draw_img(screen,"calend1.png",(swi(sw,.2),int(swi(sw,.2)*.853)),(swi(sw,.01),shi(sh,.54)))
+        img_calend = draw_img(screen,"calend2.png",(swi(sw,.205),int(swi(sw,.2)*1.036)),(swi(sw,.01),shi(sh,.47)))
         
-        draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.565))
+        draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.495))
         
-        x_dia=swi(sw,.0245) + swi(sw,.026)*self.dia_pos
-        y_dia = shi(sh,.62)  + shi(sw,.022)*self.semana 
+        x_dia=swi(sw,.025) + swi(sw,.0265)*self.dia_pos
+        y_dia = shi(sh,.556)  + shi(sw,.023)*self.semana 
         
         draw_text("O",verde,screen,x=x_dia,y=y_dia,tamanho=swi(sw,.019))
         
@@ -64,7 +64,9 @@ class Calendario():
         for x in self.lista_x[0:-1]:
             draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))
         
-        draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.79))
+        draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.73))
+        
+        draw_text("Velocidade - "+str(self.ciclo),branco,screen,x=swi(sw,.023),y=shi(sh,.795))
         
     #Print dos valores atuais            
     def __repr__(self):

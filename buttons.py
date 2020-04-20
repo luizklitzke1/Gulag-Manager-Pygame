@@ -47,28 +47,28 @@ class Button():
     
 #Setup separado dos botões utilizados na tela de seleção inicial
 def setup_botoes_inicial(sh,sw):
-    margem_x = int(sw*0.03)
-    w_botao = int(sw*0.15)
-    h_botao = int(sh*0.05)
-    btn_Trofimovsk = Button(branco,margem_x,int(sh*0.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
-    btn_Solovetsky = Button(branco,margem_x,int(sh*0.3),w_botao,h_botao,"Solovetsky","Соловетскы")
-    btn_Norilsk = Button(branco,margem_x,int(sh*0.4),w_botao,h_botao,"Norilsk","Норилск")
-    btn_Sevvostlag = Button(branco,margem_x,int(sh*0.5),w_botao,h_botao,"Sevvostlag","Севвостлаг")
-    btn_Pechorlag = Button(branco,margem_x,int(sh*0.6),w_botao,h_botao,"Pechorlag","Печорлаг")
-    btn_Karlag = Button(branco,margem_x,int(sh*0.7),w_botao,h_botao,"Karlag","Карлаг")
-    btn_Altayskiy = Button(branco,margem_x,int(sh*0.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
+    margem_x = swi(sw,.03)
+    w_botao = swi(sw,.15)
+    h_botao = shi(sh,.05)
+    btn_Trofimovsk = Button(branco,margem_x,shi(sh,.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
+    btn_Solovetsky = Button(branco,margem_x,shi(sh,.3),w_botao,h_botao,"Solovetsky","Соловетскы")
+    btn_Norilsk = Button(branco,margem_x,shi(sh,.4),w_botao,h_botao,"Norilsk","Норилск")
+    btn_Sevvostlag = Button(branco,margem_x,shi(sh,.5),w_botao,h_botao,"Sevvostlag","Севвостлаг")
+    btn_Pechorlag = Button(branco,margem_x,shi(sh,.6),w_botao,h_botao,"Pechorlag","Печорлаг")
+    btn_Karlag = Button(branco,margem_x,shi(sh,.7),w_botao,h_botao,"Karlag","Карлаг")
+    btn_Altayskiy = Button(branco,margem_x,shi(sh,.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
     
     return [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
 
 def setup_botoes_game(sh,sw):
 
     #Setup separado dos botões utilizados na tela do jogo em si
-    margem_x = int(sw*0.03)
-    w_botao = int(sw*0.15)
-    h_botao = int(sh*0.05)
-    btn_Trofimovsk = Button(branco,margem_x,int(sh*0.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
-    btn_Solovetsky = Button(branco,margem_x,int(sh*0.3),w_botao,h_botao,"Solovetsky","Соловетскы")
-    btn_Norilsk = Button(branco,margem_x,int(sh*0.4),w_botao,h_botao,"Norilsk","Норилск")
+    margem_x = swi(sw,.0205)
+    w_botao = swi(sw,.17)
+    h_botao = shi(sh,.08)
+    btn_Trofimovsk = Button(branco,margem_x,shi(sh,.15)-8,w_botao,h_botao,"Status","Статус")
+    btn_Solovetsky = Button(branco,margem_x,shi(sh,.25)-8,w_botao,h_botao,"Recursos","Рецурсос")
+    btn_Norilsk = Button(branco,margem_x,shi(sh,.35)-8,w_botao,h_botao,"Upgrades","Упградес")
     
     lista_btns = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk]
     
