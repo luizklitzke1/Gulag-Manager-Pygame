@@ -9,7 +9,7 @@ pygame.init()
 from general_functions import *
 
 class Button():
-    def __init__(self,color,x,y,width,height,text,text_rus,text_size=None,text_color=branco):
+    def __init__(self,color,x,y,width,height,text,text_rus=None,text_size=None,text_color=branco):
         self.color = color
         self.x = x
         self.y = y
@@ -66,10 +66,24 @@ def setup_botoes_game(sh,sw):
     margem_x = swi(sw,.015)
     w_botao = swi(sw,.17)
     h_botao = shi(sh,.08)
-    btn_Trofimovsk = Button(branco,margem_x,shi(sh,.15)-8,w_botao,h_botao,"Status","Статус")
-    btn_Solovetsky = Button(branco,margem_x,shi(sh,.25)-8,w_botao,h_botao,"Recursos","Рецурсос")
-    btn_Norilsk = Button(branco,margem_x,shi(sh,.35)-8,w_botao,h_botao,"Upgrades","Упградес")
+    btn_status= Button(branco,margem_x,shi(sh,.15)-8,w_botao,h_botao,"Status","Статус")
+    btn_recursos = Button(branco,margem_x,shi(sh,.25)-8,w_botao,h_botao,"Recursos","Рецурсос")
+    btn_upgrades= Button(branco,margem_x,shi(sh,.35)-8,w_botao,h_botao,"Upgrades","Упградес")
     
-    lista_btns = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk]
+    lista_btns = [btn_status,btn_recursos,btn_upgrades]
     
     return lista_btns
+
+def setup_botoes_vel(sh,sw):
+    margem_x = swi(sw,.76)
+    margem_y = shi(sh,.85)
+    w_botao = swi(sw,.07)
+    h_botao = shi(sh,.08)
+    btn_1x = Button(branco,margem_x,margem_y,w_botao,h_botao,"1x",text_size=swi(sw,.013))
+    btn_2x = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"2x",text_size=swi(sw,.013))
+    btn_5x = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"5x",text_size=swi(sw,.013))
+    
+    lista_btns = [btn_1x,btn_2x,btn_5x]
+    
+    return lista_btns
+    

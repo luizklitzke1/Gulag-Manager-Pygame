@@ -78,7 +78,7 @@ while True:
                     botao_gulag.draw(screen,rus=True)    
                     mini = pygame.transform.scale(mini, (swi(sw,.08),shi(sh,.14)))
                     
-                    if click:
+                    if click == True:
                         btn1.play() 
                         mostrar_info_gulag(lista_gulags[num_gulag])
                 else:
@@ -122,6 +122,7 @@ while True:
     def game(gulag):
         running = True
         lista_btns = setup_botoes_game(sh,sw)
+        lista_vel = setup_botoes_vel(sh,sw)
 
         while running:
             
@@ -130,7 +131,7 @@ while True:
             
             screen.fill((0,0,0))
             
-            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.01), y=shi(sh,.05))
+            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.013), y=shi(sh,.05))
             
             #Quadro do preview visual do campo
             sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
@@ -160,6 +161,16 @@ while True:
                     btn.draw(screen,rus=True)
                 else:
                     btn.draw(screen)
+                    
+            #Botões de velocidade
+            for btn in lista_vel:
+                btn.draw(screen)
+                
+                if btn.isOver((mx,my)):
+                    
+                    if click:
+                        btn2.play()
+                
                 
             for event in pygame.event.get():
                 if event.type == QUIT:
