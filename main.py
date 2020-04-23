@@ -123,6 +123,7 @@ while True:
         running = True
         lista_btns = setup_botoes_game(sh,sw)
         lista_vel = setup_botoes_vel(sh,sw)
+        click = False
 
         while running:
             
@@ -164,14 +165,25 @@ while True:
                     
             #Botões de velocidade
             for btn in lista_vel:
-                btn.draw(screen)
-                
+                btn.draw(screen,outline=True)
+        
                 if btn.isOver((mx,my)):
-                    
-                    if click:
-                        btn2.play()
-                
-                
+                    if click == True:
+                        if btn.text == "1x":
+                            gulag.set_vel(1)
+                            calendario.set_vel(1)
+                            print("1")
+                        elif btn.text == "2x":
+                            gulag.set_vel(2)
+                            calendario.set_vel(2)
+                            print("2")
+                        else:
+                            gulag.set_vel(5)
+                            calendario.set_vel(5)
+                            print("5")
+                        btn1.play()    
+                                 
+            click = False 
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -184,7 +196,10 @@ while True:
                             pygame.mixer.music.set_volume(1)
                         else:
                             pygame.mixer.music.set_volume(0)
-        
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+                        
             pygame.display.update()
             mainClock.tick(60)
     

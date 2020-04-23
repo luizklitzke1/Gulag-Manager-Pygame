@@ -46,6 +46,11 @@ class Campo():
         self.ani_speed = self.ani_speed_init
         self.ani_pos = 0
     
+    #Define a velocidad de atualização:
+    def set_vel(self,vel):
+        self.ani_speed_init = 10/vel
+        
+    
     #Redefine as imagens que serão utilizadas para a representação
     #(Apenas chamada quando o campo for inicializado como jogavel)    
     def load_imgs(self):
