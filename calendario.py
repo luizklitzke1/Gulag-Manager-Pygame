@@ -23,8 +23,6 @@ class Calendario():
     #Define a velocidad de atualização:
     def set_vel(self,vel):
         self.ciclo = 10/vel
-        print("Pimba")
-        print(self.ciclo)
         
     #Atualização dos dados a cada frame
     def update(self):

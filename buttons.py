@@ -24,7 +24,7 @@ class Button():
     def draw(self,screen,rus=False,outline=None):
         
         if outline:
-            pygame.draw.rect(screen, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
+            pygame.draw.rect(screen, outline, (self.x-4,self.y-4,self.width+8,self.height+8),0)
             
         rect = pygame.draw.rect(screen, self.color, (self.x,self.y,self.width,self.height),0)
         

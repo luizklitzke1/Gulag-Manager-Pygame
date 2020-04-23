@@ -165,22 +165,27 @@ while True:
                     
             #Botões de velocidade
             for btn in lista_vel:
-                btn.draw(screen,outline=True)
-        
+    
+                #Verifica se a vel do btn está selecionada
+                if ((calendario.ciclo==10 and btn.text=="1x")or
+                    (calendario.ciclo==5 and btn.text=="2x") or 
+                    (calendario.ciclo==2 and btn.text=="5x")):
+                    btn.draw(screen,outline=vermelho)
+                    
+                else:
+                    btn.draw(screen)
+                    
                 if btn.isOver((mx,my)):
                     if click == True:
                         if btn.text == "1x":
                             gulag.set_vel(1)
                             calendario.set_vel(1)
-                            print("1")
                         elif btn.text == "2x":
                             gulag.set_vel(2)
                             calendario.set_vel(2)
-                            print("2")
                         else:
                             gulag.set_vel(5)
                             calendario.set_vel(5)
-                            print("5")
                         btn1.play()    
                                  
             click = False 
