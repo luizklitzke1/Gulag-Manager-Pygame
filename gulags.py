@@ -30,6 +30,9 @@ class Campo():
         self.felicidade = 50
         self.prod_mensal = 0
         self.medo = 0   #Alterado por eventos especiais
+        self.populacao = 0
+        self.machucados = 0
+        self.dinheiro = 0
         
         #Nome da foto do camp na tela de seleção
         self.foto = foto
@@ -46,6 +49,11 @@ class Campo():
     #Redefine as imagens que serão utilizadas para a representação
     #(Apenas chamada quando o campo for inicializado como jogavel)    
     def load_imgs(self):
+        
+        #Imgs gerais para display de info
+        self.img_pop = pygame.image.load("imgs/pop1.png")
+        self.img_hurt = pygame.image.load("imgs/hurt1.png")
+        self.img_mon = pygame.image.load("imgs/mon1.png")
         
         #Extração
         if self.extracao:

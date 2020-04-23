@@ -63,7 +63,7 @@ def setup_botoes_inicial(sh,sw):
 def setup_botoes_game(sh,sw):
 
     #Setup separado dos botões utilizados na tela do jogo em si
-    margem_x = swi(sw,.0205)
+    margem_x = swi(sw,.015)
     w_botao = swi(sw,.17)
     h_botao = shi(sh,.08)
     btn_Trofimovsk = Button(branco,margem_x,shi(sh,.15)-8,w_botao,h_botao,"Status","Статус")

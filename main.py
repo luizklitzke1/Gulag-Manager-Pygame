@@ -31,13 +31,13 @@ sw = screen.get_width()
 #pygame.mixer.music.play(-1)
 
 #Criação dos dados dos gulags
-Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width() *0.7),int(screen.get_height()*0.22 ))), foto="arnold.png")
-Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width() *0.45),int(screen.get_height()*0.27 ))), foto="cash.jpg")
-Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração / Siderúrgica",3,"Muito Frio",((int(screen.get_width() *0.63),int(screen.get_height()*0.2 ))),foto="cash.jpg")
-Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width() *0.83),int(screen.get_height()*0.28 ))),foto="arnold.png")
-Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width() *0.5),int(screen.get_height()*0.3 ))),foto="jo.jpg")
-Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width() *0.56),int(screen.get_height()*0.43 ))), foto="cash.jpg")
-Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(screen.get_width() *0.6),int(screen.get_height()*0.4 ))),foto="jo.jpg")
+Trofimovsk = Campo("Trofimovsk","Трофимовск",0,6,"Madeira",4,"Congelante",((int(screen.get_width() *.7),int(screen.get_height()*.22 ))), foto="arnold.png")
+Solovetsky = Campo("Solovetsky","Соловетскы",35,8,"Madeira",0,"Frio",((int(screen.get_width() *.45),int(screen.get_height()*.27 ))), foto="cash.jpg")
+Norilsk = Campo("Norilsk","Норилск",15,3,"Mineração / Siderúrgica",3,"Muito Frio",((int(screen.get_width() *.63),int(screen.get_height()*.2 ))),foto="cash.jpg")
+Sevvostlag = Campo("Sevvostlag","Севвостлаг",30,10,"Ouro e estanho",1,"Frio",((int(screen.get_width() *.83),int(screen.get_height()*.28 ))),foto="arnold.png")
+Pechorlag = Campo("Pechorlag","Печорлаг",25,6,"Não",2,"Frio",((int(screen.get_width() *.5),int(screen.get_height()*.3 ))),foto="jo.jpg")
+Karlag  = Campo("Karlag ","Карлаг",20,0,"Não",1,"Frio",((int(screen.get_width() *.56),int(screen.get_height()*.43 ))), foto="cash.jpg")
+Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(screen.get_width() *.6),int(screen.get_height()*.4 ))),foto="jo.jpg")
 
 lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy]
 
@@ -58,13 +58,13 @@ while True:
           
             screen.fill((0,0,0))
             
-            draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*0.02), x=margem_x, y=int(sh*0.09))
+            draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*.02), x=margem_x, y=int(sh*.09))
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
     
             #Mostrar a imagem do mapa
-            draw_img(screen,'map2.png',(int(sw*0.7),int(sh*0.7 )),(sw*0.25+10,int(sh*.2)))
+            draw_img(screen,'map2.png',(int(sw*.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
             
             #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
             #Utiliza o num_gulag para bater a relação entre os índices
@@ -76,14 +76,14 @@ while True:
                 if botao_gulag.isOver((mx,my)):
                     
                     botao_gulag.draw(screen,rus=True)    
-                    mini = pygame.transform.scale(mini, (swi(sw,.08),shi(sh,0.14)))
+                    mini = pygame.transform.scale(mini, (swi(sw,.08),shi(sh,.14)))
                     
                     if click:
                         btn1.play() 
                         mostrar_info_gulag(lista_gulags[num_gulag])
                 else:
                     botao_gulag.draw(screen)
-                    mini = pygame.transform.scale(mini, (swi(sw,.04),shi(sh,0.07)))
+                    mini = pygame.transform.scale(mini, (swi(sw,.04),shi(sh,.07)))
                     
                 #Cria um rect com a img para poder reposicionar corretamente
                 mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)
@@ -130,7 +130,7 @@ while True:
             
             screen.fill((0,0,0))
             
-            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,0.02), x=swi(sw,0.01), y=shi(sh,0.05))
+            draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.01), y=shi(sh,.05))
             
             #Quadro do preview visual do campo
             sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
@@ -139,6 +139,20 @@ while True:
             #Atualização do calendário
             calendario.update()
             calendario.rep_visual(screen,sw,sh)
+            
+            #Display dos dados de dinheiros e populacao
+            tamanho_icones = (swi(sw,.045),swi(sw,.035))
+            img_hurt = pygame.transform.scale(gulag.img_hurt,tamanho_icones)
+            screen.blit(img_hurt,(swi(sw,.53),shi(sh,.05)))
+            draw_text(gulag.machucados, branco, screen, tamanho=swi(sw,.017), x=swi(sw,.59), y=shi(sh,.07))
+            
+            img_pop = pygame.transform.scale(gulag.img_pop,tamanho_icones)
+            screen.blit(img_pop,(swi(sw,.65), shi(sh,.05)))
+            draw_text(gulag.populacao, branco, screen, tamanho=swi(sw,.017),x=swi(sw,.71), y=shi(sh,.07))
+            
+            img_mon = pygame.transform.scale(gulag.img_mon,tamanho_icones)
+            screen.blit(img_mon,(swi(sw,.78), shi(sh,.05)))
+            draw_text(str(gulag.dinheiro)+"коп", amarelo, screen,tamanho=swi(sw,.017), x=swi(sw,.84), y=shi(sh,.07))
 
             #Botões de ação da tela
             for btn in lista_btns:
@@ -187,25 +201,21 @@ while True:
             #Gráfico para os recursos
             draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,int(sw*.05*6.5),480,"cres","Recursos")
             
-            #Mostrar clima
-            draw_text("Clima: "+str(gulag.clima), branco, screen, x=int(sw*.05), y=int(sh*.7), tamanho=int(sw*0.013))
+            draw_text("Clima: "+str(gulag.clima), branco, screen, x=int(sw*.05), y=int(sh*.7), tamanho=int(sw*.013))
             
-            #Mostrar tipo de extração
-            draw_text("Tipo de extração: ", branco, screen, x=int(sw*.05), y=int(sh*.8), tamanho=int(sw*0.013))
-            draw_text(str(gulag.extracao), branco, screen, x=int(sw*.05), y=int(sh*.8+40), tamanho=int(sw*0.013))
+            draw_text("Tipo de extração: ", branco, screen, x=int(sw*.05), y=int(sh*.8), tamanho=int(sw*.013))
+            draw_text(str(gulag.extracao), branco, screen, x=int(sw*.05), y=int(sh*.8+40), tamanho=int(sw*.013))
             
             #Painel lateral direita
             sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
             
-            #Mostrar a imagem do Gulag
             draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
             
-            #Mostrar o nome do Gulag
-            draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*0.02))
-            draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*0.02))
+            draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*.02))
+            draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*.02))
             
             #Botão de escolher
-            #btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*0.85), int(sw*.2), int(sh*0.10))
+            #btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*.85), int(sw*.2), int(sh*.10))
             #btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
             btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),"Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
             
