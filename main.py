@@ -50,7 +50,7 @@ calendario = Calendario()
 
 click = False
 
-while True:
+if True:
                     
     def menu_selecao():
         
@@ -195,7 +195,7 @@ while True:
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        running = False
+                        pause(screen)
                     if event.key == K_m:
                         if pygame.mixer.music.get_volume()==0:
                             pygame.mixer.music.set_volume(1)
@@ -207,7 +207,48 @@ while True:
                         
             pygame.display.update()
             mainClock.tick(60)
+    #Tela de pause
+    def pause(screen):
+        lista_btn_pause = setup_botoes_pause(sh,sw)
+        paused = True 
+        click = False
+        
+        while paused:
+            
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
+            
+            screen.fill((0,0,255))   
+            draw_text("Pause",vermelho,screen,tamanho=swi(sw,.05),center=(swi(sw,.5),shi(sh,.15))) 
     
+            for btn in lista_btn_pause:
+                btn.draw(screen)
+                
+                if btn.isOver((mx,my)):
+                    if click == True:
+                        
+                        if btn.text == "Resume":
+                            paused = False
+                    
+                       
+            draw_text("Precione ESCAPE para voltar ao jogo",branco,screen,tamanho=swi(sw,.015),center=(swi(sw,.5),shi(sh,.85)))  
+            
+            click = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: 
+                    pygame.quit()
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        paused = False
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+                        
+            pygame.display.update()
+            mainClock.tick(60)
+                        
+            
+            
     #Mostra a informação básica do Gulag - Menu Geral 
     def mostrar_info_gulag(gulag):
     
@@ -281,7 +322,7 @@ while True:
                         
             pygame.display.update()
             mainClock.tick(30)
-    
+
     def options():
         running = True
         while running:

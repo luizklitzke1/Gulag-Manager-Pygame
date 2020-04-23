@@ -62,7 +62,6 @@ def setup_botoes_inicial(sh,sw):
 
 def setup_botoes_game(sh,sw):
 
-    #Setup separado dos botões utilizados na tela do jogo em si
     margem_x = swi(sw,.015)
     w_botao = swi(sw,.17)
     h_botao = shi(sh,.08)
@@ -84,6 +83,22 @@ def setup_botoes_vel(sh,sw):
     btn_5x = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"5x",text_size=swi(sw,.013))
     
     lista_btns = [btn_1x,btn_2x,btn_5x]
+    
+    return lista_btns
+
+def setup_botoes_pause(sh,sw):
+    margem_x = swi(sw,.31)
+    margem_y = shi(sh,.3)
+    w_botao = swi(sw,.18)
+    h_botao = shi(sh,.1)
+    tamanho = swi(sw,.012)
+    btn_resume = Button(branco,margem_x,margem_y,w_botao,h_botao,"Resume",text_size=tamanho)
+    btn_save = Button(branco,margem_x+w_botao+20,margem_y,w_botao,h_botao,"Salvar",text_size=tamanho)
+    btn_opt = Button(branco,margem_x,margem_y+h_botao*1+20,w_botao,h_botao,"Opções",text_size=tamanho)
+    btn_menu = Button(branco,margem_x+w_botao+20,margem_y+h_botao*1+20,w_botao,h_botao,"Menu inicial",text_size=tamanho)
+    btn_quit = Button(branco,swi(sw,.4),margem_y+int(h_botao*2.5),w_botao,h_botao,"Sair do jogo",text_size=tamanho)
+    
+    lista_btns = [btn_resume,btn_save,btn_opt,btn_menu,btn_quit]
     
     return lista_btns
     
