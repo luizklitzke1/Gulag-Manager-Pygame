@@ -50,7 +50,6 @@ def setup_botoes_geral(sw,sh):
     global lista_btn_pause
     global lista_btns
     global lista_vel
-    global checkbox_fc
     global lista_botoes_gulags
     global btn_bk
     global btn_iniciar
@@ -61,7 +60,6 @@ def setup_botoes_geral(sw,sh):
     lista_btn_pause = setup_botoes_pause(sh,sw)
     lista_btns = setup_botoes_game(sh,sw)
     lista_vel = setup_botoes_vel(sh,sw)
-    checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
     lista_botoes_gulags = setup_botoes_inicial(sh,sw)
     btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
     
@@ -289,8 +287,12 @@ if True:
     def options():
         running = True
         click = False
+        sw = screen.get_width()
+        sh = screen.get_height()
+        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
         
         while running:
+            
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
@@ -339,7 +341,8 @@ if True:
                         sh = screen.get_height()
                         setup_botoes_geral(sw,sh)
                         calendario.reload_x(screen,sw,sh)
-                        checkbox_fc.checked = True
+                        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
+                                               swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
 
             pygame.display.flip()
                             
