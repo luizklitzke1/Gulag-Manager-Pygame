@@ -43,14 +43,29 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 #Definição dos botões para os Gulags
 margem_x = int(sw*.03)
 
-#Setup das listas de todos os botoes - Feita aqui como global para adaptar melhor as res
-#Alteras posteriormente durante a execução do código
-lista_btn_res = setup_botoes_res(sh,sw)
-lista_btn_pause = setup_botoes_pause(sh,sw)
-lista_btns = setup_botoes_game(sh,sw)
-lista_vel = setup_botoes_vel(sh,sw)
-checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
-lista_botoes_gulags = setup_botoes_inicial(sh,sw)
+#Criação dos botões usados ao longo do jogo - Feito aqui devido a mudanças de res
+#Apenas chamados pelas telas posteriormente
+def setup_botoes_geral(sw,sh):
+    global lista_btn_res
+    global lista_btn_pause
+    global lista_btns
+    global lista_vel
+    global checkbox_fc
+    global lista_botoes_gulags
+    global btn_bk
+    global btn_iniciar
+    
+    btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                         "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
+    lista_btn_res = setup_botoes_res(sh,sw)
+    lista_btn_pause = setup_botoes_pause(sh,sw)
+    lista_btns = setup_botoes_game(sh,sw)
+    lista_vel = setup_botoes_vel(sh,sw)
+    checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
+    lista_botoes_gulags = setup_botoes_inicial(sh,sw)
+    btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
+    
+setup_botoes_geral(sw,sh)
 
 #Criação do calendário
 calendario = Calendario()
@@ -274,12 +289,6 @@ if True:
     def options():
         running = True
         click = False
-        global lista_btn_res
-        global lista_btn_pause
-        global lista_btns
-        global lista_vel
-        global checkbox_fc
-        global lista_botoes_gulags
         
         while running:
             
@@ -328,14 +337,9 @@ if True:
                             pygame.display.set_mode((int(res[0]),int(res[1])))
                         sw = screen.get_width()
                         sh = screen.get_height()
-                        lista_botoes_gulags = setup_botoes_inicial(sh,sw)
-                        lista_btn_res = setup_botoes_res(sh,sw)
-                        lista_btn_pause = setup_botoes_pause(sh,sw)
-                        lista_btns = setup_botoes_game(sh,sw)
-                        lista_vel = setup_botoes_vel(sh,sw)
+                        setup_botoes_geral(sw,sh)
                         calendario.reload_x(screen,sw,sh)
-                        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),
-                                               swi(sw,0.019),checked=checkbox_fc.checked)
+                        checkbox_fc.checked = True
 
             pygame.display.flip()
                             
@@ -373,6 +377,13 @@ if True:
             #Painel lateral esquerda
             sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
         
+            if btn_bk.isOver((mx,my)):
+                btn_bk.draw(screen,rus=True)
+                if click == True:  
+                    btn1.play()
+                    running = False
+            else:
+                btn_bk.draw(screen)
             w_bar = sw*.08
             #Gráfico para a detecção
             draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),480,"dec","Detecção")
@@ -397,17 +408,14 @@ if True:
             #Botão de escolher
             #btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*.85), int(sw*.2), int(sh*.10))
             #btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
-            btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),"Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
             
             #Checa colisao com o mouse
             if btn_iniciar.isOver((mx,my)):
                 btn_iniciar.draw(screen,rus=True) 
-                
                 if click == True:
-                    btn1.play() 
+                    btn2.play() 
                     gulag.load_imgs()
                     game(gulag)
-                    
             else:
                 btn_iniciar.draw(screen) 
             
