@@ -130,9 +130,6 @@ if True:
         running = True
         click = False
         
-        global lista_btns
-        global lista_vel
-
         while running:
             
             sw = screen.get_width()
@@ -316,6 +313,7 @@ if True:
                         lista_btn_pause = setup_botoes_pause(sh,sw)
                         lista_btns = setup_botoes_game(sh,sw)
                         lista_vel = setup_botoes_vel(sh,sw)
+                        calendario.reload_x(screen,sw,sh)
 
             pygame.display.flip()
                             

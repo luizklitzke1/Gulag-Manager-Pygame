@@ -49,7 +49,26 @@ class Calendario():
                 self.mes = 1
             
             self.ciclo_pos = self.ciclo
-           
+    
+    #Recarrega a posição do X no calend - caso ocorra mudança de res
+    def reload_x(self,screen,sw,sh):
+        
+        temp = []
+        
+        if len(self.lista_x) > 0:
+            for x in self.lista_x:
+                semana = self.lista_x.index(x)//7
+                dia_pos = self.lista_x.index(x)-semana*7
+                x_dia=swi(sw,.025) + swi(sw,.0265)*dia_pos
+                y_dia = shi(sh,.556)  + shi(sw,.023)*semana 
+                
+                temp.append((x_dia,y_dia))
+        
+            self.lista_x = temp
+        
+        for x in self.lista_x[0:-1]:
+            draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))  
+                
     #Representação visual do calendário na tela
     def rep_visual(self,screen,sw,sh):
         
