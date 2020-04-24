@@ -280,6 +280,13 @@ if True:
             #screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
             for btn in lista_btn_res:
                 
+                res = btn.text.split("x")
+                if screen.get_width() == int(res[0]):
+                    
+                    btn.draw(screen,outline=vermelho)
+                else:
+                    btn.draw(screen)
+                
                 if btn.isOver((mx,my)):
                     if click == True:
                         
@@ -297,13 +304,10 @@ if True:
                         elif btn.text == "1600x900":
                             pygame.display.set_mode((1600,900))
                             pygame.display.flip()
-                        
+                    
                         elif btn.text == "1920x1080":
-                            pygame.display.set_mode((1920,1080),FULLSCREEN)
+                            pygame.display.set_mode((1920,1080))
                             pygame.display.flip()
-                        
-                        
-                btn.draw(screen)
             
             click = False
             for event in pygame.event.get():
