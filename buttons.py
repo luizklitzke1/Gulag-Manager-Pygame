@@ -104,14 +104,14 @@ def setup_botoes_pause(sh,sw):
 
 def setup_botoes_res(sh,sw):
     margem_x = swi(sw,.07)
-    margem_y = shi(sh,.38)
+    margem_y = shi(sh,.4)
     w_botao = swi(sw,.13)
     h_botao = shi(sh,.08)
-    btn_1 = Button(branco,margem_x,margem_y,w_botao,h_botao,"852x480",text_size=swi(sw,.013))
-    btn_2 = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"1280x720",text_size=swi(sw,.013))
-    btn_3 = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"1365x768",text_size=swi(sw,.013))
-    btn_4 = Button(branco,margem_x+w_botao*3+30,margem_y,w_botao,h_botao,"1600x900",text_size=swi(sw,.013))
-    btn_5 = Button(branco,margem_x+w_botao*4+40,margem_y,w_botao,h_botao,"1920x1080",text_size=swi(sw,.013))
+    btn_1 = Button(branco,margem_x,margem_y,w_botao,h_botao,"1280x720",text_size=swi(sw,.013))
+    btn_2 = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"1365x768",text_size=swi(sw,.013))
+    btn_3 = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"1600x900",text_size=swi(sw,.013))
+    btn_4 = Button(branco,margem_x+w_botao*3+30,margem_y,w_botao,h_botao,"1920x1080",text_size=swi(sw,.013))
+    btn_5 = Button(branco,margem_x+w_botao*4+40,margem_y,w_botao,h_botao,"2560x1080",text_size=swi(sw,.013))
 
     lista_btns = [btn_1,btn_2,btn_3,btn_4,btn_5]
     

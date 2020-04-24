@@ -25,7 +25,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWS
 sh= screen.get_height()
 sw = screen.get_width() 
 
-
 #Música de fundo
 #music = pygame.mixer.music.load("sounds/katyusha.mp3")
 #pygame.mixer.music.play(-1)
@@ -44,6 +43,14 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 #Definição dos botões para os Gulags
 margem_x = int(sw*.03)
 lista_botoes_gulags = setup_botoes_inicial(sh,sw)
+
+#Setup das listas de todos os botoes - Feita aqui como global para adaptar melhor as res
+#Alteras posteriormente durante a execução do código
+lista_btn_res = setup_botoes_res(sh,sw)
+lista_btn_pause = setup_botoes_pause(sh,sw)
+lista_btns = setup_botoes_game(sh,sw)
+lista_vel = setup_botoes_vel(sh,sw)
+
 
 #Criação do calendário
 calendario = Calendario()
@@ -121,11 +128,15 @@ if True:
             
     def game(gulag):
         running = True
-        lista_btns = setup_botoes_game(sh,sw)
-        lista_vel = setup_botoes_vel(sh,sw)
         click = False
+        
+        global lista_btns
+        global lista_vel
 
         while running:
+            
+            sw = screen.get_width()
+            sh = screen.get_height()
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
@@ -209,11 +220,13 @@ if True:
             mainClock.tick(60)
     #Tela de pause
     def pause():
-        lista_btn_pause = setup_botoes_pause(sh,sw)
         paused = True 
         click = False
         
         while paused:
+            
+            sw = screen.get_width()
+            sh = screen.get_height()
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
@@ -258,16 +271,21 @@ if True:
     #Tela de opções    
     def options():
         running = True
-        lista_btn_res = setup_botoes_res(sh,sw)
         click = False
+        global lista_btn_res
+        global lista_btn_pause
+        global lista_btns
+        global lista_vel
         
         while running:
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
             
-            screen.fill((0,255,0))
-
+            sw = screen.get_width()
+            sh = screen.get_height()
+            
+            screen.fill((0,0,0))
             margem_x = swi(sw,.07)
             draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
             
@@ -281,6 +299,7 @@ if True:
             for btn in lista_btn_res:
                 
                 res = btn.text.split("x")
+                    
                 if screen.get_width() == int(res[0]):
                     
                     btn.draw(screen,outline=vermelho)
@@ -290,25 +309,16 @@ if True:
                 if btn.isOver((mx,my)):
                     if click == True:
                         
-                        if btn.text == "852x480":
-                            pygame.display.set_mode((852,480))
-                        
-                        elif btn.text == "1280x720":
-                            pygame.display.set_mode((1280,720))
-                            pygame.display.flip()
-                        
-                        elif btn.text == "1365x768":
-                            pygame.display.set_mode((1365,768))
-                            pygame.display.flip()
+                        pygame.display.set_mode((int(res[0]),int(res[1])))
+                        sw = screen.get_width()
+                        sh = screen.get_height()
+                        lista_btn_res = setup_botoes_res(sh,sw)
+                        lista_btn_pause = setup_botoes_pause(sh,sw)
+                        lista_btns = setup_botoes_game(sh,sw)
+                        lista_vel = setup_botoes_vel(sh,sw)
+
+            pygame.display.flip()
                             
-                        elif btn.text == "1600x900":
-                            pygame.display.set_mode((1600,900))
-                            pygame.display.flip()
-                    
-                        elif btn.text == "1920x1080":
-                            pygame.display.set_mode((1920,1080))
-                            pygame.display.flip()
-            
             click = False
             for event in pygame.event.get():
                 if event.type == QUIT:
