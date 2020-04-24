@@ -64,10 +64,7 @@ class Calendario():
                 
                 temp.append((x_dia,y_dia))
         
-            self.lista_x = temp
-        
-        for x in self.lista_x[0:-1]:
-            draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))  
+            self.lista_x = temp 
                 
     #Representação visual do calendário na tela
     def rep_visual(self,screen,sw,sh):

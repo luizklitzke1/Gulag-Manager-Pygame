@@ -8,6 +8,7 @@ pygame.init()
 
 from general_functions import *
 
+#Botões em geral
 class Button():
     def __init__(self,color,x,y,width,height,text,text_rus=None,text_size=None,text_color=branco):
         self.color = color
@@ -34,6 +35,37 @@ class Button():
             draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
             
 
+    #Testa colisão 
+    def isOver(self, pos):
+        if pos[0] > self.x and pos[0] < self.x + self.width:
+            if pos[1] > self.y and pos[1] < self.y + self.height:
+                if self.hover == False:
+                    btn2.play()
+                    self.hover = True
+                return True
+        self.hover = False
+        return False
+    
+#Checkboxes - True or False
+class Checkbox():
+    def __init__(self,x,y,width,height,checked=False):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.hover = False
+        self.checked = checked
+
+    #Desenha o botão na tela
+    def draw(self,screen):
+        
+        pygame.draw.rect(screen, branco, (self.x-4,self.y-4,self.width+8,self.height+8),0)
+        pygame.draw.rect(screen, preto, (self.x,self.y,self.width,self.height),0)
+        
+        if self.checked:
+            draw_text("V",verde,screen,center=(self.x+self.width*.58,self.y+self.height*.58),tamanho=self.width)
+        else:
+            draw_text("X",vermelho,screen,center=(self.x+self.width*.58,self.y+self.height*.58),tamanho=self.width)
     #Testa colisão 
     def isOver(self, pos):
         if pos[0] > self.x and pos[0] < self.x + self.width:

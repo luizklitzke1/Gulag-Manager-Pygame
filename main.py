@@ -50,7 +50,7 @@ lista_btn_res = setup_botoes_res(sh,sw)
 lista_btn_pause = setup_botoes_pause(sh,sw)
 lista_btns = setup_botoes_game(sh,sw)
 lista_vel = setup_botoes_vel(sh,sw)
-
+checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
 
 #Criação do calendário
 calendario = Calendario()
@@ -228,7 +228,7 @@ if True:
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
             
-            screen.fill((0,0,255))   
+            screen.fill((0,0,0))   
             draw_text("Pause",vermelho,screen,tamanho=swi(sw,.05),center=(swi(sw,.5),shi(sh,.15))) 
     
             for btn in lista_btn_pause:
@@ -273,6 +273,7 @@ if True:
         global lista_btn_pause
         global lista_btns
         global lista_vel
+        global checkbox_fc
         
         while running:
             
@@ -287,6 +288,16 @@ if True:
             draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
             
             draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
+            checkbox_fc.draw(screen)
+            
+            if checkbox_fc.isOver((mx,my)):
+                if click == True:
+                    checkbox_fc.checked = not(checkbox_fc.checked)
+                    if checkbox_fc.checked == True:
+                        pygame.display.set_mode((sw,sh),FULLSCREEN)
+                    else:
+                        pygame.display.set_mode((sw,sh))
+                    
             
             draw_text("Resolução da tela: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.34)) 
             
@@ -298,7 +309,6 @@ if True:
                 res = btn.text.split("x")
                     
                 if screen.get_width() == int(res[0]):
-                    
                     btn.draw(screen,outline=vermelho)
                 else:
                     btn.draw(screen)
@@ -306,7 +316,10 @@ if True:
                 if btn.isOver((mx,my)):
                     if click == True:
                         
-                        pygame.display.set_mode((int(res[0]),int(res[1])))
+                        if checkbox_fc.checked == True:
+                            pygame.display.set_mode((int(res[0]),int(res[1])),FULLSCREEN)
+                        else:
+                            pygame.display.set_mode((int(res[0]),int(res[1])))
                         sw = screen.get_width()
                         sh = screen.get_height()
                         lista_btn_res = setup_botoes_res(sh,sw)
@@ -314,6 +327,8 @@ if True:
                         lista_btns = setup_botoes_game(sh,sw)
                         lista_vel = setup_botoes_vel(sh,sw)
                         calendario.reload_x(screen,sw,sh)
+                        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),
+                                               swi(sw,0.019),checked=checkbox_fc.checked)
 
             pygame.display.flip()
                             
