@@ -22,7 +22,7 @@ class Calendario():
         
     #Define a velocidad de atualização:
     def set_vel(self,vel):
-        self.ciclo = 10/vel
+        self.ciclo = 10//vel
         
     #Atualização dos dados a cada frame
     def update(self):
@@ -70,7 +70,7 @@ class Calendario():
         
         draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.73))
         
-        draw_text("Velocidade - "+str(self.ciclo),branco,screen,x=swi(sw,.023),y=shi(sh,.795))
+        draw_text("Velocidade - "+str(self.ciclo)+"tpd",branco,screen,x=swi(sw,.023),y=shi(sh,.795))
         
     #Print dos valores atuais            
     def __repr__(self):

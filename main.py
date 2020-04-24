@@ -195,7 +195,7 @@ if True:
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        pause(screen)
+                        pause()
                     if event.key == K_m:
                         if pygame.mixer.music.get_volume()==0:
                             pygame.mixer.music.set_volume(1)
@@ -208,7 +208,7 @@ if True:
             pygame.display.update()
             mainClock.tick(60)
     #Tela de pause
-    def pause(screen):
+    def pause():
         lista_btn_pause = setup_botoes_pause(sh,sw)
         paused = True 
         click = False
@@ -227,10 +227,18 @@ if True:
                 if btn.isOver((mx,my)):
                     if click == True:
                         
+                        btn1.play()
                         if btn.text == "Resume":
                             paused = False
+                            
+                        if btn.text == "Opções":
+                            options()
+                        
+                        if btn.text == "Sair do jogo":
+                            pygame.quit()
+                            sys.exit()
+                        
                     
-                       
             draw_text("Precione ESCAPE para voltar ao jogo",branco,screen,tamanho=swi(sw,.015),center=(swi(sw,.5),shi(sh,.85)))  
             
             click = False
@@ -247,7 +255,70 @@ if True:
             pygame.display.update()
             mainClock.tick(60)
                         
+    #Tela de opções    
+    def options():
+        running = True
+        lista_btn_res = setup_botoes_res(sh,sw)
+        click = False
+        
+        while running:
             
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
+            
+            screen.fill((0,255,0))
+
+            margem_x = swi(sw,.07)
+            draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
+            
+            draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
+            
+            draw_text("Resolução da tela: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.34)) 
+            
+            draw_text("Resolução da tela: " + str(screen.get_width()) +" X " +str(screen.get_height()),branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.8)) 
+            
+            #screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+            for btn in lista_btn_res:
+                
+                if btn.isOver((mx,my)):
+                    if click == True:
+                        
+                        if btn.text == "852x480":
+                            pygame.display.set_mode((852,480))
+                        
+                        elif btn.text == "1280x720":
+                            pygame.display.set_mode((1280,720))
+                            pygame.display.flip()
+                        
+                        elif btn.text == "1365x768":
+                            pygame.display.set_mode((1365,768))
+                            pygame.display.flip()
+                            
+                        elif btn.text == "1600x900":
+                            pygame.display.set_mode((1600,900))
+                            pygame.display.flip()
+                        
+                        elif btn.text == "1920x1080":
+                            pygame.display.set_mode((1920,1080),FULLSCREEN)
+                            pygame.display.flip()
+                        
+                        
+                btn.draw(screen)
+            
+            click = False
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+        
+            pygame.display.flip()
+            mainClock.tick(60)
             
     #Mostra a informação básica do Gulag - Menu Geral 
     def mostrar_info_gulag(gulag):
@@ -322,24 +393,6 @@ if True:
                         
             pygame.display.update()
             mainClock.tick(30)
-
-    def options():
-        running = True
-        while running:
-            screen.fill((0,0,0))
-            
-    
-            
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        running = False
-        
-            pygame.display.update()
-            mainClock.tick(60)
     
     #menu_selecao()
     lista_gulags[0].load_imgs()
