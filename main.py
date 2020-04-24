@@ -42,7 +42,6 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 
 #Definição dos botões para os Gulags
 margem_x = int(sw*.03)
-lista_botoes_gulags = setup_botoes_inicial(sh,sw)
 
 #Setup das listas de todos os botoes - Feita aqui como global para adaptar melhor as res
 #Alteras posteriormente durante a execução do código
@@ -51,6 +50,7 @@ lista_btn_pause = setup_botoes_pause(sh,sw)
 lista_btns = setup_botoes_game(sh,sw)
 lista_vel = setup_botoes_vel(sh,sw)
 checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
+lista_botoes_gulags = setup_botoes_inicial(sh,sw)
 
 #Criação do calendário
 calendario = Calendario()
@@ -64,6 +64,9 @@ if True:
         while True:
           
             screen.fill((0,0,0))
+            
+            sw = screen.get_width()
+            sh = screen.get_height()
             
             draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*.02), x=margem_x, y=int(sh*.09))
             
@@ -112,8 +115,7 @@ if True:
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
+                        pause()
                     if event.key == K_m:
                         if pygame.mixer.music.get_volume()==0:
                             pygame.mixer.music.set_volume(1)
@@ -241,10 +243,13 @@ if True:
                         if btn.text == "Resume":
                             paused = False
                             
-                        if btn.text == "Opções":
+                        elif btn.text == "Opções":
                             options()
                         
-                        if btn.text == "Sair do jogo":
+                        if btn.text == "Menu inicial":
+                            menu_selecao()
+                        
+                        elif btn.text == "Sair do jogo":
                             pygame.quit()
                             sys.exit()
                         
@@ -274,6 +279,7 @@ if True:
         global lista_btns
         global lista_vel
         global checkbox_fc
+        global lista_botoes_gulags
         
         while running:
             
@@ -322,6 +328,7 @@ if True:
                             pygame.display.set_mode((int(res[0]),int(res[1])))
                         sw = screen.get_width()
                         sh = screen.get_height()
+                        lista_botoes_gulags = setup_botoes_inicial(sh,sw)
                         lista_btn_res = setup_botoes_res(sh,sw)
                         lista_btn_pause = setup_botoes_pause(sh,sw)
                         lista_btns = setup_botoes_game(sh,sw)
@@ -359,6 +366,9 @@ if True:
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()
+            
+            sw = screen.get_width()
+            sh = screen.get_height()
              
             #Painel lateral esquerda
             sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
