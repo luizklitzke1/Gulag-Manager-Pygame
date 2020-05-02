@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from general_functions import *
+from structures import Estrutura
 import glob
 import time
 
@@ -45,6 +46,24 @@ class Campo():
         self.ani_speed_init = anim_speed
         self.ani_speed = self.ani_speed_init
         self.ani_pos = 0
+        
+        #Criação das estruturas do campo
+        if self.extracao == "Madeira":
+            rec = "madeira"
+        else:
+            rec = "mineracao"
+        self.est_Recursos = Estrutura("recursos",0,("recursos/"+rec),1)
+        self.est_Aloj = Estrutura("alojamento",0,"alojamento",1)
+        self.est_Medic = Estrutura("medico",0,"medico",1)
+        self.est_Segur = Estrutura("seguranca",0,"seguranca",3)
+    
+    #Print dos dados de cada campo  
+    def __repr__(self):
+        return f"""\nNome: '{self.nome}', R. deteção: '{self.r_detec}', Recursos: '{self.recursos}'
+                   Extração: '{self.extracao}', R. Nevasca: '{self.r_nevasca}', Clima: '{self.clima}'
+                   Aquecedor: '{self.aquecedor}', Segurança: '{self.seguranca}', Medica: '{self.medica}', Lazer: '{self.lazer}'
+                   Felicidade: '{self.felicidade}', Prod_Mensal: '{self.prod_mensal}', Medo: '{self.medo}'\n"""
+
     
     #Define a velocidad de atualização:
     def set_vel(self,vel):
@@ -60,44 +79,12 @@ class Campo():
         self.img_hurt = pygame.image.load("imgs/hurt1.png")
         self.img_mon = pygame.image.load("imgs/mon1.png")
         
-        #Extração
-        if self.extracao:
-            if self.extracao == "Madeira":
-                path = ("imgs/gulags/recursos/madeira/m_*.png")
-            if self.extracao == "Mineração / Siderúrgica":
-                path = ("imgs/gulags/recursos/mineracao/m_*.png")
-            self.ani_rec = load_frames(path)
-            self.ani_rec_pos = 0
-            self.ani_rec_max = len(self.ani_rec)-1
-            self.img_rec = self.ani_rec[0]
-            
-        #Alojamento
-        self.ani_alo = load_frames("imgs/gulags/alojamento/a_*.png")
-        self.ani_alo_pos = 0
-        self.ani_alo_max = len(self.ani_alo)-1 
-        self.img_alo =  self.ani_alo[0] 
+        #Texturas das estruturas
+        self.est_Recursos.load_textures()
+        self.est_Aloj.load_textures()
+        self.est_Medic.load_textures()
+        self.est_Segur.load_textures()
         
-        #Médico
-        if self.medica != 0:
-            self.ani_med = load_frames("imgs/gulags/medico/lvl"+str(self.medica)+"/m_*.png")
-            self.ani_med_pos = 0
-            self.ani_med_max = len(self.ani_med)-1
-            self.img_med = self.ani_med[0]
-        
-        #Segurança
-        if self.seguranca != 0:
-            self.ani_seg = load_frames("imgs/gulags/seguranca/lvl"+str(self.seguranca)+"/s_*.png")
-            self.ani_seg_pos = 0
-            self.ani_seg_max = len(self.ani_seg)-1
-            self.img_seg = self.ani_seg[0]
-        
-    #Print dos dados de cada campo  
-    def __repr__(self):
-        return f"""\nNome: '{self.nome}', R. deteção: '{self.r_detec}', Recursos: '{self.recursos}'
-                   Extração: '{self.extracao}', R. Nevasca: '{self.r_nevasca}', Clima: '{self.clima}'
-                   Aquecedor: '{self.aquecedor}', Segurança: '{self.seguranca}', Medica: '{self.medica}', Lazer: '{self.lazer}'
-                   Felicidade: '{self.felicidade}', Prod_Mensal: '{self.prod_mensal}', Medo: '{self.medo}'\n"""
-
     #Mostra a representação visual animada do campo na tela de gameplay
     def demo_visual(self,screen,sw,sh,pos):   
          
@@ -107,54 +94,17 @@ class Campo():
         
         if self.ani_speed == 0:
         
-            #Img dos rescuros
-            if self.recursos:
-                self.img_rec = self.ani_rec[self.ani_rec_pos]
-                
-                if self.ani_rec_pos == self.ani_rec_max:
-                    self.ani_rec_pos = 0
-                else:
-                    self.ani_rec_pos += 1
+            self.est_Aloj.update_frame()
+            self.est_Recursos.update_frame()
+            self.est_Medic.update_frame()
+            self.est_Segur.update_frame()
             
-            #Img do alojamento
-            self.img_alo = self.ani_alo[self.ani_alo_pos]
-            if self.ani_alo_pos == self.ani_alo_max:
-                self.ani_alo_pos = 0
-            else:
-                self.ani_alo_pos += 1
-
-            #Img do medico
-            if self.medica != 0:
-                self.img_med = self.ani_med[self.ani_med_pos]
-                if self.ani_med_pos == self.ani_med_max:
-                    self.ani_med_pos = 0
-                else:
-                    self.ani_med_pos += 1
-                   
-            #Img da seguranca
-            if self.seguranca != 0:
-                self.img_seg = self.ani_seg[self.ani_seg_pos]
-                if self.ani_seg_pos == self.ani_seg_max:
-                    self.ani_seg_pos = 0
-                else:
-                    self.ani_seg_pos += 1
-                     
             #Reset do contador
             self.ani_speed = self.ani_speed_init 
         
-        self.img_rec = pygame.transform.scale(self.img_rec, escala_geral)
-        screen.blit(self.img_rec,pos)    
-        
-        self.img_alo = pygame.transform.scale(self.img_alo, escala_geral)
-        screen.blit(self.img_alo,pos) 
-        
-        if self.medica != 0:
-            self.img_med = pygame.transform.scale(self.img_med, escala_geral)
-            screen.blit(self.img_med,pos) 
-            
-        if self.seguranca != 0:
-            self.img_seg = pygame.transform.scale(self.img_seg, escala_geral)
-            screen.blit(self.img_seg,pos)
-    
+        self.est_Aloj.rep_visual(screen,escala_geral,pos)
+        self.est_Recursos.rep_visual(screen,escala_geral,pos)
+        self.est_Medic.rep_visual(screen,escala_geral,pos)
+        self.est_Segur.rep_visual(screen,escala_geral,pos)
         
     

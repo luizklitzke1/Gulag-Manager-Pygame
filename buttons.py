@@ -148,20 +148,3 @@ def setup_botoes_res(sh,sw):
     lista_btns = [btn_1,btn_2,btn_3,btn_4,btn_5]
     
     return lista_btns
-
-def setup_botoes_geral(sw,sh):
-    global lista_btn_res
-    global lista_btn_pause
-    global lista_btns
-    global lista_vel
-    global checkbox_fc
-    global lista_botoes_gulags
-    global btn_bk
-    
-    lista_btn_res = setup_botoes_res(sh,sw)
-    lista_btn_pause = setup_botoes_pause(sh,sw)
-    lista_btns = setup_botoes_game(sh,sw)
-    lista_vel = setup_botoes_vel(sh,sw)
-    checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
-    lista_botoes_gulags = setup_botoes_inicial(sh,sw)
-    btn_bk = Button(branco,swi(sw,.05),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
