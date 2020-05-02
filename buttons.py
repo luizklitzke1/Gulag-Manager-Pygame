@@ -110,11 +110,12 @@ def setup_botoes_vel(sh,sw):
     margem_y = shi(sh,.85)
     w_botao = swi(sw,.07)
     h_botao = shi(sh,.08)
+    btn_0x = Button(branco,margem_x-w_botao-10,margem_y,w_botao,h_botao,"0x",text_size=swi(sw,.013))
     btn_1x = Button(branco,margem_x,margem_y,w_botao,h_botao,"1x",text_size=swi(sw,.013))
     btn_2x = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"2x",text_size=swi(sw,.013))
     btn_5x = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"5x",text_size=swi(sw,.013))
     
-    lista_btns = [btn_1x,btn_2x,btn_5x]
+    lista_btns = [btn_0x,btn_1x,btn_2x,btn_5x]
     
     return lista_btns
 

@@ -3,8 +3,6 @@ import pygame
 from pygame.locals import *
 from general_functions import *
 import glob
-import time
-
 
 #Classe para a base de uma estrutura de um gulag
 class Estrutura():

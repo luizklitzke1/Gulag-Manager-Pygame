@@ -190,7 +190,8 @@ if True:
             for btn in lista_vel:
     
                 #Verifica se a vel do btn está selecionada
-                if ((calendario.ciclo==10 and btn.text=="1x")or
+                if ((calendario.pause==True and btn.text=="0x") or
+                    (calendario.ciclo==10 and btn.text=="1x")or
                     (calendario.ciclo==5 and btn.text=="2x") or 
                     (calendario.ciclo==2 and btn.text=="5x")):
                     btn.draw(screen,outline=vermelho)
@@ -200,7 +201,10 @@ if True:
                     
                 if btn.isOver((mx,my)):
                     if click == True:
-                        if btn.text == "1x":
+                        if btn.text == "0x":
+                            gulag.set_vel(0)
+                            calendario.set_vel(0)
+                        elif btn.text == "1x":
                             gulag.set_vel(1)
                             calendario.set_vel(1)
                         elif btn.text == "2x":
@@ -292,7 +296,6 @@ if True:
         checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
         
         while running:
-            
             
             #Pega constantemente a posição do mouse 
             mx, my = pygame.mouse.get_pos()

@@ -46,6 +46,7 @@ class Campo():
         self.ani_speed_init = anim_speed
         self.ani_speed = self.ani_speed_init
         self.ani_pos = 0
+        self.pause = False
         
         #Criação das estruturas do campo
         if self.extracao == "Madeira":
@@ -67,7 +68,12 @@ class Campo():
     
     #Define a velocidad de atualização:
     def set_vel(self,vel):
-        self.ani_speed_init = 10/vel
+        if vel > 0:
+            self.pause = False
+            self.ani_speed_init = 10/vel
+        else:
+            self.pause = True
+            self.ani_speed_init = 0
         
     
     #Redefine as imagens que serão utilizadas para a representação
@@ -87,24 +93,25 @@ class Campo():
         
     #Mostra a representação visual animada do campo na tela de gameplay
     def demo_visual(self,screen,sw,sh,pos):   
-         
-        self.ani_speed -= 1
         
         escala_geral = (swi(sw,.75),shi(sh,.68))
-        
-        if self.ani_speed == 0:
-        
-            self.est_Aloj.update_frame()
-            self.est_Recursos.update_frame()
-            self.est_Medic.update_frame()
-            self.est_Segur.update_frame()
+         
+        if self.pause == False:
+            self.ani_speed -= 1
             
-            #Reset do contador
-            self.ani_speed = self.ani_speed_init 
-        
+            if self.ani_speed == 0:
+            
+                self.est_Aloj.update_frame()
+                self.est_Recursos.update_frame()
+                self.est_Medic.update_frame()
+                self.est_Segur.update_frame()
+                
+                #Reset do contador
+                self.ani_speed = self.ani_speed_init 
+            
         self.est_Aloj.rep_visual(screen,escala_geral,pos)
         self.est_Recursos.rep_visual(screen,escala_geral,pos)
         self.est_Medic.rep_visual(screen,escala_geral,pos)
         self.est_Segur.rep_visual(screen,escala_geral,pos)
-        
+            
     
