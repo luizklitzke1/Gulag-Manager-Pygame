@@ -91,7 +91,7 @@ if True:
             
             #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
             #Utiliza o num_gulag para bater a relação entre os índices
-            num_gulag= 0
+
             for botao_gulag in lista_botoes_gulags:
                 mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
                 
@@ -111,13 +111,12 @@ if True:
                 #Cria um rect com a img para poder reposicionar corretamente
                 mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)
                 screen.blit(mini, mini_rect)
-                num_gulag += 1
+                
             
             
             #Reseta o índice caso passe de 6
             if num_gulag >= 6:
                 num_gulag = 0  
-                
                 
                   
             click = False
@@ -176,8 +175,8 @@ if True:
             draw_text(gulag.populacao, branco, screen, tamanho=swi(sw,.017),x=swi(sw,.71), y=shi(sh,.07))
             
             img_mon = pygame.transform.scale(gulag.img_mon,tamanho_icones)
-            screen.blit(img_mon,(swi(sw,.78), shi(sh,.05)))
-            draw_text(str(gulag.dinheiro)+"коп", amarelo, screen,tamanho=swi(sw,.017), x=swi(sw,.84), y=shi(sh,.07))
+            screen.blit(img_mon,(swi(sw,.75), shi(sh,.05)))
+            draw_text(str(gulag.dinheiro)+"коп", amarelo, screen,tamanho=swi(sw,.017), x=swi(sw,.81), y=shi(sh,.07))
 
             #Botões de ação da tela
             for btn in lista_btns:

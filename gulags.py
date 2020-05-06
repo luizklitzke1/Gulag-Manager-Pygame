@@ -33,7 +33,7 @@ class Campo():
         self.medo = 0   #Alterado por eventos especiais
         self.populacao = 0
         self.machucados = 0
-        self.dinheiro = 0
+        self.dinheiro = 420.69
         
         #Nome da foto do camp na tela de seleção
         self.foto = foto
