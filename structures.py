@@ -44,7 +44,11 @@ class Estrutura():
         self.frame = pygame.transform.scale(self.frame, escala)
         screen.blit(self.frame,pos)  
         
-        
+#Classe para a estrutura médica do campo
+class Est_Medic(Estrutura):
+    
+    def __init__(self,nome,alocados,path,lvl):
+        super().__init__("medico",0,"medico",1)
         
         
         

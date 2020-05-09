@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from general_functions import *
-from structures import Estrutura
+from structures import *
 import glob
 import time
 
@@ -53,9 +53,13 @@ class Campo():
             rec = "madeira"
         else:
             rec = "mineracao"
+            
+        #Estruturas do campo em si    
+            
+        #Estruturas são meramente as representações visuais das partes do campo
         self.est_Recursos = Estrutura("recursos",0,("recursos/"+rec),1)
         self.est_Aloj = Estrutura("alojamento",0,"alojamento",1)
-        self.est_Medic = Estrutura("medico",0,"medico",1)
+        self.est_Medic = Est_Medic("medico",0,"medico",1)
         self.est_Segur = Estrutura("seguranca",0,"seguranca",3)
     
     #Print dos dados de cada campo  
