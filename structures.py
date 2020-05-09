@@ -44,14 +44,38 @@ class Estrutura():
         self.frame = pygame.transform.scale(self.frame, escala)
         screen.blit(self.frame,pos)  
         
-#Classe para a estrutura médica do campo
 class Est_Medic(Estrutura):
     
     def __init__(self,nome,alocados,path,lvl):
         super().__init__("medico",0,"medico",1)
         
+        self.doentes = 0
+        self.chance_morte = .5
+        self.leitos = 5
+        self.vel_atend = 4
         
+class Est_Recur(Estrutura)
+    def __init__(self,path):
+        super().__init__(path)
         
+        self.estoque = 0
+        self.vel_extract = 10
+        self.risc_injur = .2
+        
+class Est_Aloj(Estrutura)
+    def __init__(self,pat):
+        super().__init__(path)
+        
+        self.qual_com = 1
+        self.vel_extract = 10
+        
+class Est_Segur(Estrutura)
+    def __init__(self,pat):
+        super().__init__(path)
+        
+        self.arm = 1
+        self.intimi = 1
+        self.prison = 0   
         
         
         

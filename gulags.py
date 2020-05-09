@@ -57,10 +57,10 @@ class Campo():
         #Estruturas do campo em si    
             
         #Estruturas são meramente as representações visuais das partes do campo
-        self.est_Recursos = Estrutura("recursos",0,("recursos/"+rec),1)
-        self.est_Aloj = Estrutura("alojamento",0,"alojamento",1)
-        self.est_Medic = Est_Medic("medico",0,"medico",1)
-        self.est_Segur = Estrutura("seguranca",0,"seguranca",3)
+        self.est_Recursos = Est_Recur(("recursos/"+rec))
+        self.est_Aloj = Est_Aloj("alojamento")
+        self.est_Medic = Est_Medic("medico")
+        self.est_Segur = Estrutura("seguranca")
     
     #Print dos dados de cada campo  
     def __repr__(self):
