@@ -1,3 +1,6 @@
+#Série de testes para setar e pegar dados baseados em uma str de ref
+#Luiz 12/05/202
+
 class Cobaia():
     
     def __init__(self):
