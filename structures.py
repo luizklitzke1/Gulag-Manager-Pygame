@@ -22,10 +22,7 @@ class Estrutura():
         base_path = "imgs/gulags/" + self.path
         path = base_path + "/lvl" + str(self.nivel) + "/*.png"
         
-        print(path)
-        
         self.ani_list = load_frames(path)
-        print (self.ani_list)
         
         self.ani_max = len(self.ani_list)-1
         self.ani_pos = 0
