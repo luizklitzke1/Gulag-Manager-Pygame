@@ -18,6 +18,27 @@ amarelo = (255,255,0)
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
+#Split do texto em mais linhas
+def split_text(text,width,max_width):
+    
+    per_line = max_width//width-1
+    print("\n Per_line = ", per_line)
+    converted = []
+    
+    nova_linha = ""
+    for char in text:
+        print(nova_linha)
+        if char == ".":
+            converted.append(nova_linha)
+        elif len(nova_linha) <= per_line:
+            nova_linha += (char)
+        else:
+            converted.append(nova_linha)
+            nova_linha = char
+            
+    print(converted)
+    return converted
+
 #Gerar os gráficos de progresso verticais
 def draw_graf_vert(screen,val_min,val_max,mid,val,maxh,width,x,y,tipo,text):
     altura = -(val*(maxh/val_max))

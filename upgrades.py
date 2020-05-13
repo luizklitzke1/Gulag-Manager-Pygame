@@ -38,10 +38,13 @@ class Upgrade():
         draw_text(self.name,color,screen,swi(sw,.013),
                   x=margem_x+dif,y=margem_y+dif)
         
+        #Quebra a descrição em mais linhas
+        text_split = split_text(self.desc,swi(sw,.009),swi(sw,.28))
         
-        
-        draw_text(self.desc,branco,screen,swi(sw,.009),
-                  x=margem_x+dif,y=margem_y+dif*4)
+        for linha in text_split:   
+            margem_y_linha = (margem_y+dif*4)+swi(sw,.01)*text_split.index(linha)
+            draw_text(linha,branco,screen,swi(sw,.009),
+                      x=margem_x+dif,y=margem_y_linha)
         
     
     #Representação em string
@@ -55,24 +58,24 @@ class Upgrade():
 ##---------------------[Declaração dos upgrades em si] ---------------------##
 
 upg_Analgesicos=Upgrade("Analgésicos","medico",
-                        "Redução no tempo de recuperação de feridos",500,
+                        "Redução no tempo de recuperação de feridos.",500,
                         (("vel_atend",3)),
                         (("-20% tempo de recuperação",1),
                          ("+10% custo mensal",0))
                         )    
 upg_MaisCamas=Upgrade("Mais camas","medico",
-                        "Mais camas - leitos",420,
+                        "Mais camas - leitos.",420,
                         (("leitos",3)),
                         (("+3 leitos",1),
                          ("- 2 vel. atendimento",0))
                       )    
 upg_MelhoresMachados=Upgrade("Melhores Machados","recursos",
-                        "Aumenta velocidade do corte de árvores",150,
+                        "Aumenta velocidade do corte de árvores.",150,
                         (("vel_extract",3)),
                         (("+2 vel. extração",1))
                         )    
 upg_Metralhadoras=Upgrade("Metralhadoras","seguranca",
-                        "Mais tiros, mais erros, porém mais chance de acertar!",500,
+                        "Mais tiros, mais erros, porém mais chance de acertar!.",500,
                         (("arm",2)),
                         (("+1 armamento",1),
                          ("+300 custo mensal",0))
