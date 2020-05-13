@@ -213,6 +213,20 @@ if True:
                             gulag.set_vel(5)
                             calendario.set_vel(5)
                         btn1.play()    
+                        
+            #Botões de gameplay
+            for btn in lista_btns:
+                    
+                btn.draw(screen)
+                    
+                if btn.isOver((mx,my)):
+                    if click == True:
+                        if btn.text == "Status":
+                            pass
+                        elif btn.text == "Recursos":
+                            pass
+                        elif btn.text == "Upgrades":
+                             upgrades()
                                  
             click = False 
             for event in pygame.event.get():
@@ -287,7 +301,7 @@ if True:
             mainClock.tick(60)
     
     #Tela de upgrades    
-    def options():
+    def upgrades():
         running = True
         click = False
         sw = screen.get_width()
@@ -303,11 +317,9 @@ if True:
             sh = screen.get_height()
             
             screen.fill((0,0,0))
-            margem_x = swi(sw,.07)
+            margem_x = swi(sw,.04)
             draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
-            
-            draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
-            checkbox_fc.draw(screen)
+
 
                         
                             

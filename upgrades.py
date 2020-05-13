@@ -8,3 +8,9 @@ class Upgrade():
         self.desc = desc
         self.price = price
         self.effec = effec
+        
+##---------------------[Declaração dos upgrades em si] ---------------------##
+
+def upg_Analgesicos(Upgrade):
+    
+    def __init__(self):
