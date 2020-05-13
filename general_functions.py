@@ -73,9 +73,9 @@ def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, cente
     screen.blit(textobj, textrect)
 
 #Método para desenhar imagens na tela
-def draw_img(screen,path,escala,pos):
+def draw_img(screen,path,dimensoes,pos):
     img = pygame.image.load('imgs/'+path)
-    img = pygame.transform.scale(img, escala)
+    img = pygame.transform.scale(img, dimensoes)
     screen.blit(img, pos)
     return img
     #return img.get_rect(x = escala[0], y= escala[1])

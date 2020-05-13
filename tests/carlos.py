@@ -1,4 +1,4 @@
-#Arquivo de base para os testes
+#Arquivo oficial de base para os testes
 
 class teste():
     def __init__(self,a,b,c):

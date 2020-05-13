@@ -6,6 +6,7 @@ from gulags import Campo
 from general_functions import *
 from buttons import *
 from calendario import Calendario
+from upgrades import upg_list
 import random
 import time
 import os
@@ -18,8 +19,8 @@ pygame.init()
 pygame.display.set_caption('Gulag Manager')
 icone = pygame.image.load("imgs/icone.png")
 pygame.display.set_icon(icone)
-SCREEN_WIDTH = 1600
-SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWSURFACE | DOUBLEBUF)
 sh= screen.get_height()
@@ -318,9 +319,22 @@ if True:
             
             screen.fill((0,0,0))
             margem_x = swi(sw,.04)
-            draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
+            draw_text("Upgrades",vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
 
-
+            margem_y = shi(sh,.15)
+            for upgrade in upg_list:
+                
+                if upg_list.index(upgrade) %2 != 0:
+                    margem_x_up = margem_x
+                else:
+                    margem_x_up = margem_x + swi(sw,.34)
+                    
+                if upg_list.index(upgrade) <2:
+                    margem_y_up = margem_y
+                else:
+                    margem_y_up = margem_y + shi(sh,.4)
+                    
+                upgrade.rep_visual(screen,sw,sh,margem_x_up,margem_y_up)
                         
                             
             click = False
@@ -357,7 +371,7 @@ if True:
             
             screen.fill((0,0,0))
             margem_x = swi(sw,.07)
-            draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
+            draw_text("Opções",vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.1)) 
             
             draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
             checkbox_fc.draw(screen)
