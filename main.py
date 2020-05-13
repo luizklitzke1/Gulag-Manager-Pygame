@@ -285,7 +285,48 @@ if True:
                         
             pygame.display.update()
             mainClock.tick(60)
+    
+    #Tela de upgrades    
+    def options():
+        running = True
+        click = False
+        sw = screen.get_width()
+        sh = screen.get_height()
+        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
+        
+        while running:
+            
+            #Pega constantemente a posição do mouse 
+            mx, my = pygame.mouse.get_pos()
+            
+            sw = screen.get_width()
+            sh = screen.get_height()
+            
+            screen.fill((0,0,0))
+            margem_x = swi(sw,.07)
+            draw_text("Opções",vermelho,screen,tamanho=swi(sw,.025),x= margem_x, y = shi(sh,.1)) 
+            
+            draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
+            checkbox_fc.draw(screen)
+
                         
+                            
+            click = False
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+        
+            pygame.display.flip()
+            mainClock.tick(60)
+            
+                
     #Tela de opções    
     def options():
         running = True

@@ -60,7 +60,7 @@ class Campo():
         self.est_Recursos = Est_Recur(("recursos/"+rec))
         self.est_Aloj = Est_Aloj("alojamento")
         self.est_Medic = Est_Medic("medico")
-        self.est_Segur = Estrutura("seguranca")
+        self.est_Segur = Est_Segur("seguranca")
     
     #Print dos dados de cada campo  
     def __repr__(self):
