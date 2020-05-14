@@ -19,8 +19,8 @@ pygame.init()
 pygame.display.set_caption('Gulag Manager')
 icone = pygame.image.load("imgs/icone.png")
 pygame.display.set_icon(icone)
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWSURFACE | DOUBLEBUF)
 sh= screen.get_height()
@@ -318,7 +318,7 @@ if True:
             sh = screen.get_height()
             
             screen.fill((0,0,0))
-            margem_x = swi(sw,.04)
+            margem_x = swi(sw,.03)
             draw_text("Upgrades",vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
 
             margem_y = shi(sh,.15)

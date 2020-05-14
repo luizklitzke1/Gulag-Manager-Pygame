@@ -33,20 +33,36 @@ class Upgrade():
         elif self.div == "recursos":
             color = (0,255,0)
             
-        dif = swi(sw,.012)
+        dif = swi(sw,.015)
             
         draw_text(self.name,color,screen,swi(sw,.013),
                   x=margem_x+dif,y=margem_y+dif)
         
-        font = pygame.font.Font("fonts/cmd2.ttf", swi(sw,.009))
         #Quebra a descrição em mais linhas
+        font = pygame.font.Font("fonts/cmd2.ttf", swi(sw,.009))
         text_split = wrapline(self.desc,font,swi(sw,.28))
         
         for linha in text_split:   
             margem_y_linha = (margem_y+dif*4)+swi(sw,.01)*text_split.index(linha)
             draw_text(linha,branco,screen,swi(sw,.009),
                       x=margem_x+dif,y=margem_y_linha)
+            
+        #Beneficios e maleficios do upgrade
+        bottom = margem_y + shi(sh,.28) - dif
         
+        for effect in self.effects_txt_list:
+            
+            effects_txt_list = self.effects_txt_list[::-1]
+            
+            if effect[1] == 0:
+                cor = vermelho
+            else:
+                cor = verde
+            
+            draw_text(effect[0],cor,screen,swi(sw,.009),
+                      x=margem_x+dif,
+                      y=bottom-effects_txt_list.index(effect)*swi(sw,.012)
+                      )
     
     #Representação em string
     def __repr__(self):
@@ -64,21 +80,24 @@ upg_Analgesicos=Upgrade("Analgésicos","medico",
                         (("-20% tempo de recuperação",1),
                          ("+10% custo mensal",0))
                         )    
+
 upg_MaisCamas=Upgrade("Mais camas","medico",
                         "Mais camas - leitos.",420,
                         (("leitos",3)),
                         (("+3 leitos",1),
                          ("- 2 vel. atendimento",0))
-                      )    
-upg_MelhoresMachados=Upgrade("Melhores Machados","recursos",
-                        "Aumenta velocidade do corte de árvores.",150,
-                        (("vel_extract",3)),
-                        (("+2 vel. extração",1))
-                        )    
+                      )     
 upg_Metralhadoras=Upgrade("Metralhadoras","seguranca",
                         "Mais tiros, mais erros, porém mais chance de acertar!.",500,
                         (("arm",2)),
                         (("+1 armamento",1),
                          ("+300 custo mensal",0))
                         )    
-upg_list = [upg_Analgesicos,upg_MaisCamas,upg_MelhoresMachados,upg_Metralhadoras]
+upg_Metralhadoras2=Upgrade("Metralhadoras","seguranca",
+                        "Mais tiros, mais erros, porém mais chance de acertar!.",500,
+                        (("arm",2)),
+                        (("+1 armamento",1),
+                         ("+300 custo mensal",0))
+                        )  
+ 
+upg_list = [upg_Analgesicos,upg_MaisCamas,upg_Metralhadoras,upg_Metralhadoras2]
