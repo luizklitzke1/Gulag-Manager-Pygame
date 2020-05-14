@@ -1,6 +1,7 @@
 #Módulo com as funções gerais utilizadas por todo o código
 #Servem como resumos para outras coisas que acabariam ocupando muito espaço desnecessariamente
 
+from itertools import chain
 import pygame
 import glob 
 
@@ -19,25 +20,42 @@ btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 
 #Split do texto em mais linhas
-def split_text(text,width,max_width):
-    
-    per_line = max_width//width-1
-    print("\n Per_line = ", per_line)
-    converted = []
-    
-    nova_linha = ""
-    for char in text:
-        print(nova_linha)
-        if char == ".":
-            converted.append(nova_linha)
-        elif len(nova_linha) <= per_line:
-            nova_linha += (char)
-        else:
-            converted.append(nova_linha)
-            nova_linha = char
-            
-    print(converted)
-    return converted
+
+def truncline(text, font, maxwidth):
+        real=len(text)       
+        stext=text           
+        l=font.size(text)[0]
+        cut=0
+        a=0                  
+        done=1
+        old = None
+        while l > maxwidth:
+            a=a+1
+            n=text.rsplit(None, a)[0]
+            if stext == n:
+                cut += 1
+                stext= n[:-cut]
+            else:
+                stext = n
+            l=font.size(stext)[0]
+            real=len(stext)               
+            done=0                        
+        return real, done, stext             
+        
+def wrapline(text, font, maxwidth): 
+    done=0                      
+    wrapped=[]                  
+                               
+    while not done:             
+        nl, done, stext=truncline(text, font, maxwidth) 
+        wrapped.append(stext.strip())                  
+        text=text[nl:]                                 
+    return wrapped
+
+def wrap_multi_line(text, font, maxwidth):
+    lines = chain(*(wrapline(line, font, maxwidth) for line in text.splitlines()))
+    return list(lines)
+
 
 #Gerar os gráficos de progresso verticais
 def draw_graf_vert(screen,val_min,val_max,mid,val,maxh,width,x,y,tipo,text):

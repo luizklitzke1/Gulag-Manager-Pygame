@@ -38,8 +38,9 @@ class Upgrade():
         draw_text(self.name,color,screen,swi(sw,.013),
                   x=margem_x+dif,y=margem_y+dif)
         
+        font = pygame.font.Font("fonts/cmd2.ttf", swi(sw,.009))
         #Quebra a descrição em mais linhas
-        text_split = split_text(self.desc,swi(sw,.009),swi(sw,.28))
+        text_split = wrapline(self.desc,font,swi(sw,.28))
         
         for linha in text_split:   
             margem_y_linha = (margem_y+dif*4)+swi(sw,.01)*text_split.index(linha)
