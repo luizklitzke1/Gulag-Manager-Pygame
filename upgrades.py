@@ -24,7 +24,7 @@ class Upgrade():
     #Representação visual na tela de compra
     def rep_visual(self,screen,sw,sh,margem_x,margem_y):
         
-        draw_img(screen,"outline.png",(swi(sw,.3),shi(sh,.3)),(margem_x,margem_y))
+        draw_img(screen,"outline.png",(swi(sw,.32),shi(sh,.32)),(margem_x,margem_y))
         
         if self.div == "medico":
             color = (255,0,255)
@@ -54,6 +54,9 @@ class Upgrade():
             
             effects_txt_list = self.effects_txt_list[::-1]
             
+            print("\n",self.effects_txt_list)
+            print(effect)
+            print(effect[1])
             if effect[1] == 0:
                 cor = vermelho
             else:
@@ -93,11 +96,11 @@ upg_Metralhadoras=Upgrade("Metralhadoras","seguranca",
                         (("+1 armamento",1),
                          ("+300 custo mensal",0))
                         )    
-upg_Metralhadoras2=Upgrade("Metralhadoras","seguranca",
-                        "Mais tiros, mais erros, porém mais chance de acertar!.",500,
-                        (("arm",2)),
-                        (("+1 armamento",1),
-                         ("+300 custo mensal",0))
+upg_MelhoresMachados=Upgrade("Melhores Machados","recursos",
+                        "Machados mais resistentes e afiados!.",150,
+                        (("vel_extract",3)),
+                        (("+2 vel. extração",1),
+                         ("-.1 risco de machucados",1))
                         )  
  
-upg_list = [upg_Analgesicos,upg_MaisCamas,upg_Metralhadoras,upg_Metralhadoras2]
+upg_list = [upg_Analgesicos,upg_MaisCamas,upg_Metralhadoras,upg_MelhoresMachados]

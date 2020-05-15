@@ -321,7 +321,7 @@ if True:
             margem_x = swi(sw,.03)
             draw_text("Upgrades",vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
 
-            margem_y = shi(sh,.15)
+            margem_y = shi(sh,.18)
             for upgrade in upg_list:
                 
                 if upg_list.index(upgrade) %2 != 0:
@@ -332,7 +332,7 @@ if True:
                 if upg_list.index(upgrade) <2:
                     margem_y_up = margem_y
                 else:
-                    margem_y_up = margem_y + shi(sh,.4)
+                    margem_y_up = margem_y + shi(sh,.35)
                     
                 upgrade.rep_visual(screen,sw,sh,margem_x_up,margem_y_up)
                         
