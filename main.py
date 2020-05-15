@@ -339,6 +339,8 @@ if True:
                     if click == True:
                         upgrade.botao.color = verde
                         upgrade.apply_effec(gulag)
+                        btn3.play()
+                        upg_list.remove(upgrade)
                             
             click = False
             for event in pygame.event.get():

@@ -18,6 +18,7 @@ amarelo = (255,255,0)
 #Sons dos botões
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
+btn3 = pygame.mixer.Sound("sounds/btn3.wav")
 
 #Split do texto em mais linhas
 
