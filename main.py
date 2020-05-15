@@ -227,7 +227,7 @@ if True:
                         elif btn.text == "Recursos":
                             pass
                         elif btn.text == "Upgrades":
-                             upgrades()
+                             upgrades(gulag)
                                  
             click = False 
             for event in pygame.event.get():
@@ -245,9 +245,9 @@ if True:
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
                         click = True
-                        
             pygame.display.update()
             mainClock.tick(60)
+            
     #Tela de pause
     def pause():
         paused = True 
@@ -302,12 +302,11 @@ if True:
             mainClock.tick(60)
     
     #Tela de upgrades    
-    def upgrades():
+    def upgrades(gulag):
         running = True
         click = False
         sw = screen.get_width()
         sh = screen.get_height()
-        checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
         
         while running:
             
@@ -324,7 +323,7 @@ if True:
             margem_y = shi(sh,.18)
             for upgrade in upg_list:
                 
-                if upg_list.index(upgrade) %2 != 0:
+                if upg_list.index(upgrade) %2 == 0:
                     margem_x_up = margem_x
                 else:
                     margem_x_up = margem_x + swi(sw,.34)
@@ -335,7 +334,11 @@ if True:
                     margem_y_up = margem_y + shi(sh,.35)
                     
                 upgrade.rep_visual(screen,sw,sh,margem_x_up,margem_y_up)
-                        
+                
+                if upgrade.botao.isOver((mx,my)):
+                    if click == True:
+                        upgrade.botao.color = verde
+                        upgrade.apply_effec(gulag)
                             
             click = False
             for event in pygame.event.get():

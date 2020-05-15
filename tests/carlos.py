@@ -56,8 +56,6 @@ def wrapline(text, font, maxwidth):
 
 
 def wrap_multi_line(text, font, maxwidth):
-    """ returns text taking new lines into account.
-    """
     lines = chain(*(wrapline(line, font, maxwidth) for line in text.splitlines()))
     return list(lines)
 

@@ -1,4 +1,5 @@
 from general_functions import *
+from buttons import Button
 
 #Classe geral para os upgrades
 class Upgrade():
@@ -13,24 +14,28 @@ class Upgrade():
         self.effects_list = effects_list
         #Lista dos textos dos efeitos  ->  [ [ef1,0 ou 1 (ruim ou bom)] ]
         self.effects_txt_list = effects_txt_list
+        #Botão para adquirir
+        self.botao = Button(branco,0,0,0,0,"Comprar","")
         
     #Aplica o efeito do upgrade
-    def apply_effec(self,est,effects_list):
+    def apply_effec(self,gulag):
         
-        for effect in effects_list:
+        est = getattr(gulag,self.div)
+        for effect in self.effects_list:
+            
             new_value = getattr(est,effect[0]) + effect[1]
-            setattr(est,effect[0],new)
+            setattr(est,effect[0],new_value)
     
     #Representação visual na tela de compra
     def rep_visual(self,screen,sw,sh,margem_x,margem_y):
         
         draw_img(screen,"outline.png",(swi(sw,.32),shi(sh,.32)),(margem_x,margem_y))
         
-        if self.div == "medico":
+        if self.div == "Est_Medic":
             color = (255,0,255)
-        elif self.div == "seguranca":
+        elif self.div == "Est_Segur":
             color = (255,0,0)
-        elif self.div == "recursos":
+        elif self.div == "Est_Recur":
             color = (0,255,0)
             
         dif = swi(sw,.015)
@@ -53,10 +58,7 @@ class Upgrade():
         for effect in self.effects_txt_list:
             
             effects_txt_list = self.effects_txt_list[::-1]
-            
-            print("\n",self.effects_txt_list)
-            print(effect)
-            print(effect[1])
+
             if effect[1] == 0:
                 cor = vermelho
             else:
@@ -66,6 +68,13 @@ class Upgrade():
                       x=margem_x+dif,
                       y=bottom-effects_txt_list.index(effect)*swi(sw,.012)
                       )
+            
+        #Botão para adquirir
+        self.botao.y = bottom
+        self.botao.x = margem_x + swi(sw,.23)
+        self.botao.width = swi(sw,.08)
+        self.botao.height = shi(sh,.05)
+        self.botao.draw(screen)
     
     #Representação em string
     def __repr__(self):
@@ -77,30 +86,30 @@ class Upgrade():
         
 ##---------------------[Declaração dos upgrades em si] ---------------------##
 
-upg_Analgesicos=Upgrade("Analgésicos","medico",
+upg_Analgesicos=Upgrade("Analgésicos","Est_Medic",
                         "Redução no tempo de recuperação de feridos.",500,
-                        (("vel_atend",3)),
-                        (("-20% tempo de recuperação",1),
+                        (("vel_atend",3),),
+                        (("-20% temp recuperação",1),
                          ("+10% custo mensal",0))
                         )    
 
-upg_MaisCamas=Upgrade("Mais camas","medico",
-                        "Mais camas - leitos.",420,
-                        (("leitos",3)),
+upg_MaisCamas=Upgrade("Mais camas","Est_Medic",
+                        "Mais camas para as falh... pessoas mais fracas no momento.",420,
+                        (("leitos",3),),
                         (("+3 leitos",1),
                          ("- 2 vel. atendimento",0))
                       )     
-upg_Metralhadoras=Upgrade("Metralhadoras","seguranca",
-                        "Mais tiros, mais erros, porém mais chance de acertar!.",500,
-                        (("arm",2)),
+upg_Metralhadoras=Upgrade("Metralhadoras","Est_Segur",
+                        "Mais tiros, mais erros, porém mais chance de acertar!",500,
+                        (("arm",2),),
                         (("+1 armamento",1),
                          ("+300 custo mensal",0))
                         )    
-upg_MelhoresMachados=Upgrade("Melhores Machados","recursos",
-                        "Machados mais resistentes e afiados!.",150,
-                        (("vel_extract",3)),
+upg_MelhoresMachados=Upgrade("Melhores Machados","Est_Recur",
+                        "Machados mais resistentes e afiados!",150,
+                        (("vel_extract",3),),
                         (("+2 vel. extração",1),
-                         ("-.1 risco de machucados",1))
+                         ("-1 riscos",1))
                         )  
  
 upg_list = [upg_Analgesicos,upg_MaisCamas,upg_Metralhadoras,upg_MelhoresMachados]

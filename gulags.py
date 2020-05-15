@@ -57,10 +57,10 @@ class Campo():
         #Estruturas do campo em si    
             
         #Estruturas são meramente as representações visuais das partes do campo
-        self.est_Recursos = Est_Recur(("recursos/"+rec))
-        self.est_Aloj = Est_Aloj("alojamento")
-        self.est_Medic = Est_Medic("medico")
-        self.est_Segur = Est_Segur("seguranca")
+        self.Est_Recur = Est_Recur(("recursos/"+rec))
+        self.Est_Aloj = Est_Aloj("alojamento")
+        self.Est_Medic = Est_Medic("medico")
+        self.Est_Segur = Est_Segur("seguranca")
     
     #Print dos dados de cada campo  
     def __repr__(self):
@@ -90,10 +90,10 @@ class Campo():
         self.img_mon = pygame.image.load("imgs/mon1.png")
         
         #Texturas das estruturas
-        self.est_Recursos.load_textures()
-        self.est_Aloj.load_textures()
-        self.est_Medic.load_textures()
-        self.est_Segur.load_textures()
+        self.Est_Recur.load_textures()
+        self.Est_Aloj.load_textures()
+        self.Est_Medic.load_textures()
+        self.Est_Segur.load_textures()
         
     #Mostra a representação visual animada do campo na tela de gameplay
     def demo_visual(self,screen,sw,sh,pos):   
@@ -105,17 +105,17 @@ class Campo():
             
             if self.ani_speed == 0:
             
-                self.est_Aloj.update_frame()
-                self.est_Recursos.update_frame()
-                self.est_Medic.update_frame()
-                self.est_Segur.update_frame()
+                self.Est_Aloj.update_frame()
+                self.Est_Recur.update_frame()
+                self.Est_Medic.update_frame()
+                self.Est_Segur.update_frame()
                 
                 #Reset do contador
                 self.ani_speed = self.ani_speed_init 
             
-        self.est_Aloj.rep_visual(screen,escala_geral,pos)
-        self.est_Recursos.rep_visual(screen,escala_geral,pos)
-        self.est_Medic.rep_visual(screen,escala_geral,pos)
-        self.est_Segur.rep_visual(screen,escala_geral,pos)
+        self.Est_Aloj.rep_visual(screen,escala_geral,pos)
+        self.Est_Recur.rep_visual(screen,escala_geral,pos)
+        self.Est_Medic.rep_visual(screen,escala_geral,pos)
+        self.Est_Segur.rep_visual(screen,escala_geral,pos)
             
     
