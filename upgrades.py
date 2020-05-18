@@ -21,6 +21,7 @@ class Upgrade():
     def apply_effec(self,gulag):
         
         est = getattr(gulag,self.div)
+        
         for effect in self.effects_list:
             
             new_value = getattr(est,effect[0]) + effect[1]
