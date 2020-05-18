@@ -4,14 +4,14 @@ from general_functions import load_frames
 
 class Animation():
     
-    def __init__(self,path,speed):
+    def __init__(self,path):
         
         self.ani_list = load_frames(path)
         
         self.ani_max = len(self.ani_list)-1
         self.ani_pos = 0
         
-        self.frame = ani_list[0]
+        self.frame = self.ani_list[0]
         
     #Atualizar o frame da animação - Separado para vel 0x funcionar
     def update_frame(self):
@@ -24,9 +24,9 @@ class Animation():
             self.ani_pos += 1
         
     #Representação visual da animação na tela
-    def rep_visual(self,screen,size):
+    def rep_visual(self,screen,size,pos):
         
-        self.frame = pygame.transform.scale(self.frame, escala)
+        self.frame = pygame.transform.scale(self.frame, size)
         screen.blit(self.frame,pos)  
         
         
