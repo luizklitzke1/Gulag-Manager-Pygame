@@ -126,7 +126,7 @@ def menu_selecao():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     pause()
                 if event.key == K_m:
                     if pygame.mixer.music.get_volume()==0:
@@ -234,7 +234,7 @@ def game(gulag):
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     pause()
                 if event.key == K_m:
                     if pygame.mixer.music.get_volume()==0:
@@ -291,7 +291,7 @@ def pause():
             if event.type == pygame.QUIT: 
                 pygame.quit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     paused = False
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -306,7 +306,7 @@ def upgrades(gulag):
     click = False
     sw = screen.get_width()
     sh = screen.get_height()
-    character = Character("vault",speed=5)
+    character = Character("vault",speed=3)
     
     while running:
         
@@ -342,15 +342,22 @@ def upgrades(gulag):
                     btn3.play()
                     upg_list.remove(upgrade)
              
-        character.rep_visual(screen,(200,200),(200,200))           
+        character.rep_visual(screen,(swi(sw,.25),shi(sh,.45)),(swi(sw,.72),shi(sh,.3)))           
+        
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB or event.key == K_TAB:
                     running = False
+                if event.key == K_a:
+                    character.change_ani("happy")
+                if event.key == K_s:
+                    character.change_ani("angry")
+                if event.key == K_d:
+                    character.change_ani("general")
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
@@ -427,7 +434,7 @@ def options():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     running = False
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -499,7 +506,7 @@ def mostrar_info_gulag(gulag):
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     running = False
                 if event.key == K_m:
                     if pygame.mixer.music.get_volume()==0:
