@@ -7,6 +7,7 @@ from general_functions import *
 from buttons import *
 from calendario import Calendario
 from upgrades import upg_list
+from characters import Character
 import random
 import time
 import os
@@ -305,6 +306,7 @@ def upgrades(gulag):
     click = False
     sw = screen.get_width()
     sh = screen.get_height()
+    character = Character("vault")
     
     while running:
         
@@ -339,7 +341,8 @@ def upgrades(gulag):
                     upgrade.apply_effec(gulag)
                     btn3.play()
                     upg_list.remove(upgrade)
-                        
+             
+        character.rep_visual(screen,(200,200),(200,200))           
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -479,10 +482,6 @@ def mostrar_info_gulag(gulag):
         
         draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*.02))
         draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*.02))
-        
-        #Botão de escolher
-        #btn_iniciar = pygame.Rect(int(sw*.77) ,int(sh*.85), int(sw*.2), int(sh*.10))
-        #btn_iniciar=pygame.draw.rect(screen,vermelho,btn_iniciar)
         
         #Checa colisao com o mouse
         if btn_iniciar.isOver((mx,my)):
