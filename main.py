@@ -306,7 +306,7 @@ def upgrades(gulag):
     click = False
     sw = screen.get_width()
     sh = screen.get_height()
-    character = Character("vault")
+    character = Character("vault",speed=5)
     
     while running:
         

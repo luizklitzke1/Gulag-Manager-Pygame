@@ -5,17 +5,18 @@ from animations import Animation
 
 class Character():
     
-    def __init__(self,id):
+    def __init__(self,id,speed):
         
         self.id = id
+        self.speed = speed
         
         self.base_path = "imgs/characters/" + self.id + "/"
         
-        self.ani_general = Animation(self.base_path+"general/*png")
+        self.ani_general = Animation(self.base_path+"general/*png",speed=self.speed)
         
-        self.ani_happy = Animation(self.base_path+"happy/*png")
+        self.ani_happy = Animation(self.base_path+"happy/*png",speed=self.speed)
         
-        self.ani_angry = Animation(self.base_path+"angry/*png")
+        self.ani_angry = Animation(self.base_path+"angry/*png",speed=self.speed)
         
         self.current_ani = self.ani_general
         

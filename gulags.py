@@ -10,7 +10,7 @@ import time
 class Campo():
     
     #Valores do campo
-    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png", anim_speed=10):
+    def __init__(self,nome,nome_r,r_detec,recursos,extracao,r_nevasca,clima,minipos,mini="gulag3.png",foto="arnold.png"):
         
         #Infor básica - imutável
         self.nome = nome
@@ -43,9 +43,6 @@ class Campo():
         self.minipos = minipos
         
         #Velocidade para a animação das representações visuais
-        self.ani_speed_init = anim_speed
-        self.ani_speed = self.ani_speed_init
-        self.ani_pos = 0
         self.pause = False
         
         #Criação das estruturas do campo
@@ -74,11 +71,18 @@ class Campo():
     def set_vel(self,vel):
         if vel > 0:
             self.pause = False
-            self.ani_speed_init = 10/vel
+            new_vel = 10/vel
+            self.Est_Recur.current_ani.set_vel(new_vel)
+            self.Est_Aloj.current_ani.set_vel(new_vel)
+            self.Est_Medic.current_ani.set_vel(new_vel)
+            self.Est_Segur.current_ani.set_vel(new_vel)
+            
         else:
             self.pause = True
-            self.ani_speed_init = 0
-        
+            self.Est_Recur.current_ani.set_vel(0)
+            self.Est_Aloj.current_ani.set_vel(0)
+            self.Est_Medic.current_ani.set_vel(0)
+            self.Est_Segur.current_ani.set_vel(0)
     
     #Redefine as imagens que serão utilizadas para a representação
     #(Apenas chamada quando o campo for inicializado como jogavel)    
@@ -99,19 +103,12 @@ class Campo():
     def demo_visual(self,screen,sw,sh,pos):   
         
         escala_geral = (swi(sw,.75),shi(sh,.68))
-         
         if self.pause == False:
-            self.ani_speed -= 1
             
-            if self.ani_speed == 0:
-            
-                self.Est_Aloj.update_frame()
-                self.Est_Recur.update_frame()
-                self.Est_Medic.update_frame()
-                self.Est_Segur.update_frame()
-                
-                #Reset do contador
-                self.ani_speed = self.ani_speed_init 
+            self.Est_Aloj.update_frame()
+            self.Est_Recur.update_frame()
+            self.Est_Medic.update_frame()
+            self.Est_Segur.update_frame()
             
         self.Est_Aloj.rep_visual(screen,escala_geral,pos)
         self.Est_Recur.rep_visual(screen,escala_geral,pos)
