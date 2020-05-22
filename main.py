@@ -7,7 +7,7 @@ from general_functions import *
 from buttons import *
 from calendario import Calendario
 from upgrades import upg_list
-from characters import Character
+from characters import lista_char
 import random
 import time
 import os
@@ -226,7 +226,7 @@ def game(gulag):
                     elif btn.text == "Recursos":
                         pass
                     elif btn.text == "Upgrades":
-                            upgrades(gulag)
+                            upgrades_choose(gulag)
                                 
         click = False 
         for event in pygame.event.get():
@@ -300,13 +300,60 @@ def pause():
         pygame.display.update()
         mainClock.tick(60)
 
-#Tela de upgrades    
-def upgrades(gulag):
+#Tela de upgrades - escolha de div  
+def upgrades_choose(gulag):
     running = True
     click = False
     sw = screen.get_width()
     sh = screen.get_height()
-    character = Character("secur",speed=3)
+    
+    while running:
+        
+        #Pega constantemente a posição do mouse 
+        mx, my = pygame.mouse.get_pos()
+        
+        sw = screen.get_width()
+        sh = screen.get_height()
+        
+        screen.fill((0,0,0))
+        draw_text("Upgrades - Escolha a área: ",vermelho,screen,tamanho=swi(sw,.02),
+                  x= swi(sw,.05), y = shi(sh,.11)) 
+
+        margem_y = shi(sh,.23)
+        
+        for char in lista_char[:-1]:
+            
+            larg = swi(sw,.21)
+            esp_x = swi(sw,.05) +larg*lista_char.index(char)*1.1
+            draw_section(screen,esp_x,margem_y,larg,shi(sh,.6),5)
+            
+            btn_y = margem_y + shi(sh,.5)
+            char.rep_visual(screen,(larg,shi(sh,.5)),(esp_x,margem_y))
+            char.btn_chs.draw2(screen,esp_x,btn_y,larg,shi(sh,0.1))
+            
+        
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE or event.key == K_TAB:
+                    running = False
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+    
+        pygame.display.flip()
+        mainClock.tick(60)
+            
+
+#Tela de upgrades específicos   
+def upgrades_esp(gulag,div):
+    running = True
+    click = False
+    sw = screen.get_width()
+    sh = screen.get_height()
     
     while running:
         
@@ -350,7 +397,7 @@ def upgrades(gulag):
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE or event.key == K_TAB or event.key == K_TAB:
+                if event.key == K_ESCAPE or event.key == K_TAB:
                     running = False
                 if event.key == K_a:
                     character.change_ani("happy")

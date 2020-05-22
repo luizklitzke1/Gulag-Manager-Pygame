@@ -33,7 +33,21 @@ class Button():
             draw_text(self.text_rus,preto,screen,center=rect.center,tamanho=self.text_size)
         else:
             draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
+         
+    #Desenha o botão na tela - pede as dimensões a cada iter
+    def draw2(self,screen,x,y,w,h,rus=False,outline=None):
+        
+        if outline:
+            pygame.draw.rect(screen, outline, (x-4,y-4,w+8,h+8),0)
             
+        rect = pygame.draw.rect(screen, self.color, (x,y,w,h),0)
+        
+        if rus:
+            draw_text(self.text_rus,preto,screen,center=rect.center,tamanho=self.text_size)
+        else:
+            draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
+            
+        print(x,y,w,h) 
 
     #Testa colisão 
     def isOver(self, pos):

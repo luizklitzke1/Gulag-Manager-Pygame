@@ -2,26 +2,24 @@ import pygame
 from pygame.locals import *
 from general_functions import *
 from animations import Animation
+from buttons import Button
 
 class Character():
     
-    def __init__(self,id,speed):
+    def __init__(self,id,div,speed=10):
         
         self.id = id
+        self.div = div
         self.speed = speed
-        
-        self.test_text = Text_Bubble("Arthur é guei...",
-                                     sound = "sans")
         
         self.base_path = "imgs/characters/" + self.id + "/"
         
         self.ani_general = Animation(self.base_path+"general/*png",speed=self.speed)
-        
         self.ani_happy = Animation(self.base_path+"happy/*png",speed=self.speed)
-        
         self.ani_angry = Animation(self.base_path+"angry/*png",speed=self.speed)
-        
         self.current_ani = self.ani_general
+        
+        self.btn_chs = Button(verde,0,0,0,0,self.div,text_size=20)
         
     #Muda a animação
     def change_ani(self,ani):
@@ -33,7 +31,6 @@ class Character():
     #Mostra o frame na tela
     def rep_visual(self,screen,escala,pos):
         
-        self.test_text.rep_visual()
         self.current_ani.update_frame()
         self.current_ani.rep_visual(screen,escala,pos)
 
@@ -66,4 +63,13 @@ class Text_Bubble():
         print(self.text_render)
     
     
-    
+##------------------[Declaração dos personagens em si] ------------------##  
+ 
+char_Construct = Character("construct","Countruções")
+char_Medic = Character("medic","Médico")
+char_Recur = Character("recur","Recursos")
+char_Secur = Character("secur","Segurança")
+char_Benny = Character("benny","Benny")
+ 
+lista_char = [char_Construct,char_Medic,char_Recur,char_Secur,char_Benny]
+ 
