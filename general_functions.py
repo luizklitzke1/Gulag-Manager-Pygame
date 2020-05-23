@@ -97,9 +97,10 @@ def shi(sh,per,dif=0):
     return int(sh*per)+dif
 
 #Método para impressão de texto na tela
-def draw_text(text, color, screen,tamanho=None, font=None, x=None, y=None, center=None):
+def draw_text(text, color, screen,tamanho=None,font=None, x=None, y=None, center=None):
     if not tamanho:
         tamanho =int(screen.get_width()*0.01)
+
     font = pygame.font.Font("fonts/cmd2.ttf", tamanho)
     textobj = font.render(str(text), 20, color)
     textrect = textobj.get_rect()

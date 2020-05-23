@@ -24,6 +24,7 @@ SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))#,FULLSCREEN | HWSURFACE | DOUBLEBUF)
+global sh, sw
 sh= screen.get_height()
 sw = screen.get_width() 
 
@@ -42,26 +43,6 @@ Altayskiy  = Campo("Altayskiy","Алтаыскиы",10,0,"Não",0,"Frio",((int(s
 
 lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, Altayskiy]
 
-#Definição dos botões para os Gulags
-margem_x = int(sw*.03)
-
-#Criação dos botões usados ao longo do jogo - Feito aqui devido a mudanças de res
-#Apenas chamados pelas telas posteriormente
-def setup_botoes_geral(sw,sh):
-    global lista_btn_res
-    global lista_btn_pause
-    global lista_botoes_gulags
-    global btn_bk
-    global btn_iniciar
-    
-    btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                         "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
-    lista_btn_res = setup_botoes_res(sh,sw)
-    lista_btn_pause = setup_botoes_pause(sh,sw)
-    lista_botoes_gulags = setup_botoes_inicial(sh,sw)
-    btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
-    
-setup_botoes_geral(sw,sh)
 
 #Criação do calendário
 calendario = Calendario()
@@ -70,12 +51,26 @@ click = False
    
 def menu_selecao():
     
+    global sh, sw
+    
+    #Setup dos botões
+    margem_x = swi(sw,.03)
+    w_botao = swi(sw,.15)
+    h_botao = shi(sh,.08)
+    btn_Trofimovsk = Button(branco,margem_x,shi(sh,.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
+    btn_Solovetsky = Button(branco,margem_x,shi(sh,.3),w_botao,h_botao,"Solovetsky","Соловетскы")
+    btn_Norilsk = Button(branco,margem_x,shi(sh,.4),w_botao,h_botao,"Norilsk","Норилск")
+    btn_Sevvostlag = Button(branco,margem_x,shi(sh,.5),w_botao,h_botao,"Sevvostlag","Севвостлаг")
+    btn_Pechorlag = Button(branco,margem_x,shi(sh,.6),w_botao,h_botao,"Pechorlag","Печорлаг")
+    btn_Karlag = Button(branco,margem_x,shi(sh,.7),w_botao,h_botao,"Karlag","Карлаг")
+    btn_Altayskiy = Button(branco,margem_x,shi(sh,.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
+    
+    lista_botoes_gulags = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
+
+    
     while True:
         
         screen.fill((0,0,0))
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
         
         draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*.02), x=margem_x, y=int(sh*.09))
         
@@ -88,32 +83,30 @@ def menu_selecao():
         #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
         #Utiliza o num_gulag para bater a relação entre os índices
 
+        w_botao = swi(sw,.15)
+        h_botao = shi(sh,.08)
         for botao_gulag in lista_botoes_gulags:
+            
+            num_gulag = lista_botoes_gulags.index(botao_gulag)
+            
             mini = pygame.image.load('imgs/'+lista_gulags[num_gulag].mini)
             
             #Checa colisao com o mouse
             if botao_gulag.isOver((mx,my)):
                 
-                botao_gulag.draw(screen,rus=True)    
+                botao_gulag.draw(screen,margem_x,shi(sh,(.2+.1*num_gulag)),w_botao,h_botao,rus=True)    
                 mini = pygame.transform.scale(mini, (swi(sw,.08),shi(sh,.14)))
                 
                 if click == True:
                     btn1.play() 
                     mostrar_info_gulag(lista_gulags[num_gulag])
             else:
-                botao_gulag.draw(screen)
+                botao_gulag.draw(screen,margem_x,shi(sh,(.2+.1*num_gulag)),w_botao,h_botao)
                 mini = pygame.transform.scale(mini, (swi(sw,.04),shi(sh,.07)))
                 
             #Cria um rect com a img para poder reposicionar corretamente
             mini_rect = mini.get_rect(center=lista_gulags[num_gulag].minipos)
             screen.blit(mini, mini_rect)
-            
-        
-        
-        #Reseta o índice caso passe de 6
-        if num_gulag >= 6:
-            num_gulag = 0  
-            
                 
         click = False
         
@@ -141,8 +134,7 @@ def game(gulag):
     running = True
     click = False
     
-    sw = screen.get_width()
-    sh = screen.get_height()
+    global sh, sw
     
     #Setup dos botões gerais
     margem_x = swi(sw,.015)
@@ -168,9 +160,6 @@ def game(gulag):
     
     
     while running:
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
@@ -228,7 +217,8 @@ def game(gulag):
                 (calendario.ciclo==5 and btn.text=="2x") or 
                 (calendario.ciclo==2 and btn.text=="5x")):
                 
-                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013),outline=vermelho)
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013)
+                         ,outline=vermelho)
 
             else:
                 
@@ -287,12 +277,12 @@ def game(gulag):
 def pause():
     paused = True 
     click = False
+    global sh, sw
+    global lista_btn_pause
+    lista_btn_pause = setup_botoes_pause(sh,sw)
     
     while paused:
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
-        
+    
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
         
@@ -340,16 +330,12 @@ def pause():
 def upgrades_choose(gulag):
     running = True
     click = False
-    sw = screen.get_width()
-    sh = screen.get_height()
+    global sh, sw
     
     while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
         
         screen.fill((0,0,0))
         draw_text("Upgrades - Escolha a área: ",vermelho,screen,tamanho=swi(sw,.02),
@@ -390,16 +376,12 @@ def upgrades_choose(gulag):
 def upgrades_esp(gulag,div):
     running = True
     click = False
-    sw = screen.get_width()
-    sh = screen.get_height()
+    global sh, sw
     
     while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
         
         screen.fill((0,0,0))
         margem_x = swi(sw,.03)
@@ -455,17 +437,28 @@ def upgrades_esp(gulag,div):
 def options():
     running = True
     click = False
-    sw = screen.get_width()
-    sh = screen.get_height()
+    
+    global lista_btn_pause
+    global sh, sw
+    
+    #Setup dos botões
     checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),swi(sw,0.019),swi(sw,0.019))
+    margem_x = swi(sw,.07)
+    margem_y = shi(sh,.4)
+    w_botao = swi(sw,.13)
+    h_botao = shi(sh,.08)
+    btn_1 = Button(branco,margem_x,margem_y,w_botao,h_botao,"1280x720",text_size=swi(sw,.013))
+    btn_2 = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"1365x768",text_size=swi(sw,.013))
+    btn_3 = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"1600x900",text_size=swi(sw,.013))
+    btn_4 = Button(branco,margem_x+w_botao*3+30,margem_y,w_botao,h_botao,"1920x1080",text_size=swi(sw,.013))
+    btn_5 = Button(branco,margem_x+w_botao*4+40,margem_y,w_botao,h_botao,"2560x1080",text_size=swi(sw,.013))
+
+    lista_btn_res = [btn_1,btn_2,btn_3,btn_4,btn_5]
     
     while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
         
         screen.fill((0,0,0))
         margem_x = swi(sw,.07)
@@ -487,15 +480,23 @@ def options():
         
         draw_text("Resolução da tela: " + str(screen.get_width()) +" X " +str(screen.get_height()),branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.8)) 
         
+        margem_x = swi(sw,.07)
+        margem_y = shi(sh,.4)
+        w_botao = swi(sw,.13)
+        h_botao = shi(sh,.08)
         #screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
         for btn in lista_btn_res:
             
             res = btn.text.split("x")
-                
+            
+            num_btn = lista_btn_res.index(btn)
+            x_btn = margem_x+ (w_botao*num_btn)+(10*num_btn)
+            
             if screen.get_width() == int(res[0]):
-                btn.draw(screen,outline=vermelho)
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,
+                         outline=vermelho)
             else:
-                btn.draw(screen)
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao)
             
             if btn.isOver((mx,my)):
                 if click == True:
@@ -506,7 +507,8 @@ def options():
                         pygame.display.set_mode((int(res[0]),int(res[1])))
                     sw = screen.get_width()
                     sh = screen.get_height()
-                    setup_botoes_geral(sw,sh)
+
+                    lista_btn_pause = setup_botoes_pause(sh,sw)
                     calendario.reload_x(screen,sw,sh)
                     checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
                                             swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
@@ -533,6 +535,10 @@ def mostrar_info_gulag(gulag):
 
     running = True
     click = False
+    global sh, sw
+    btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
+    btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                         "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
     
     while running == True:
         
@@ -540,20 +546,17 @@ def mostrar_info_gulag(gulag):
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-        
-        sw = screen.get_width()
-        sh = screen.get_height()
             
         #Painel lateral esquerda
         sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
     
         if btn_bk.isOver((mx,my)):
-            btn_bk.draw(screen,rus=True)
+            btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),rus=True)
             if click == True:  
                 btn1.play()
                 running = False
         else:
-            btn_bk.draw(screen)
+            btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08))
         w_bar = sw*.08
         #Gráfico para a detecção
         draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),480,"dec","Detecção")
@@ -577,13 +580,16 @@ def mostrar_info_gulag(gulag):
         
         #Checa colisao com o mouse
         if btn_iniciar.isOver((mx,my)):
-            btn_iniciar.draw(screen,rus=True) 
+            
+            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                             text_size=swi(sw,.02),rus=True) 
             if click == True:
                 btn2.play() 
                 gulag.load_imgs()
                 game(gulag)
         else:
-            btn_iniciar.draw(screen) 
+            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                             text_size=swi(sw,.02)) 
         
         click = False
         for event in pygame.event.get():
@@ -605,7 +611,7 @@ def mostrar_info_gulag(gulag):
         pygame.display.update()
         mainClock.tick(30)
 
-#menu_selecao()
-lista_gulags[0].load_imgs()
-game(lista_gulags[0])
+menu_selecao()
+#lista_gulags[0].load_imgs()
+#game(lista_gulags[0])
     

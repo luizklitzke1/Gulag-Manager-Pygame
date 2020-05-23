@@ -85,21 +85,6 @@ class Checkbox():
         self.hover = False
         return False
     
-#Setup separado dos botões utilizados na tela de seleção inicial
-def setup_botoes_inicial(sh,sw):
-    margem_x = swi(sw,.03)
-    w_botao = swi(sw,.15)
-    h_botao = shi(sh,.05)
-    btn_Trofimovsk = Button(branco,margem_x,shi(sh,.2),w_botao,h_botao,"Trofimovsk","Трофимовск")
-    btn_Solovetsky = Button(branco,margem_x,shi(sh,.3),w_botao,h_botao,"Solovetsky","Соловетскы")
-    btn_Norilsk = Button(branco,margem_x,shi(sh,.4),w_botao,h_botao,"Norilsk","Норилск")
-    btn_Sevvostlag = Button(branco,margem_x,shi(sh,.5),w_botao,h_botao,"Sevvostlag","Севвостлаг")
-    btn_Pechorlag = Button(branco,margem_x,shi(sh,.6),w_botao,h_botao,"Pechorlag","Печорлаг")
-    btn_Karlag = Button(branco,margem_x,shi(sh,.7),w_botao,h_botao,"Karlag","Карлаг")
-    btn_Altayskiy = Button(branco,margem_x,shi(sh,.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
-    
-    return [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
-
 def setup_botoes_pause(sh,sw):
     margem_x = swi(sw,.31)
     margem_y = shi(sh,.3)
