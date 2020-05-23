@@ -72,13 +72,13 @@ def menu_selecao():
         
         screen.fill((0,0,0))
         
-        draw_text('Selecione um Gulag', vermelho, screen, tamanho=int(sw*.02), x=margem_x, y=int(sh*.09))
+        draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
 
         #Mostrar a imagem do mapa
-        draw_img(screen,'map2.png',(int(sw*.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
+        draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
         
         #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
         #Utiliza o num_gulag para bater a relação entre os índices
@@ -351,7 +351,7 @@ def upgrades_choose(gulag):
             
             btn_y = margem_y + shi(sh,.5)
             char.rep_visual(screen,(larg,shi(sh,.5)),(esp_x,margem_y))
-            char.btn_chs.draw(screen,esp_x,btn_y,larg,shi(sh,0.1))
+            char.btn_chs.draw(screen,esp_x,btn_y,larg,shi(sh,0.1),outline=branco)
             
             char.btn_chs.isOver((mx,my))
             
@@ -558,25 +558,26 @@ def mostrar_info_gulag(gulag):
         else:
             btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08))
         w_bar = sw*.08
+        y_bar = shi(sh,.55)
         #Gráfico para a detecção
-        draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),480,"dec","Detecção")
+        draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),y_bar,"dec","Detecção")
         #Gráfico para a nevasca
-        draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,int(sw*.05*3.8),480,"dec","Nevasca")
+        draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,swi(sw,(.05*3.8)),y_bar,"dec","Nevasca")
         #Gráfico para os recursos
-        draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,int(sw*.05*6.5),480,"cres","Recursos")
+        draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,swi(sw,(.05*6.5)),y_bar,"cres","Recursos")
         
-        draw_text("Clima: "+str(gulag.clima), branco, screen, x=int(sw*.05), y=int(sh*.7), tamanho=int(sw*.013))
+        draw_text("Clima: "+str(gulag.clima), branco, screen, x=swi(sw,.05), y=shi(sh,.7), tamanho=swi(sw,.013))
         
-        draw_text("Tipo de extração: ", branco, screen, x=int(sw*.05), y=int(sh*.8), tamanho=int(sw*.013))
-        draw_text(str(gulag.extracao), branco, screen, x=int(sw*.05), y=int(sh*.8+40), tamanho=int(sw*.013))
+        draw_text("Tipo de extração: ", branco, screen, x=swi(sw,.05), y=shi(sh,.8), tamanho=swi(sw,.013))
+        draw_text(str(gulag.extracao), branco, screen, x=swi(sw,.05), y=shi(sh,.8,40), tamanho=swi(sw,.013))
         
         #Painel lateral direita
         sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
         
         draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
         
-        draw_text("Nome: "+str(gulag.nome),branco, screen, x=int(sw*.45+50), y=int(sh*.7), tamanho= int(sw*.02))
-        draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=int(sw*.45+50), y=int(sh*.75), tamanho= int(sw*.02))
+        draw_text("Nome: "+str(gulag.nome),branco, screen, x=swi(sw,.45+50), y=int(sh*.7), tamanho= swi(sw,.02))
+        draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=swi(sw,.45+50), y=int(sh*.75), tamanho= swi(sw,.02))
         
         #Checa colisao com o mouse
         if btn_iniciar.isOver((mx,my)):
