@@ -22,7 +22,16 @@ class Button():
         self.hover = False
 
     #Desenha o botão na tela
-    def draw(self,screen,rus=False,outline=None):
+    def draw(self,screen,x=None,y=None,w=None,h=None,text_size=None,rus=False,outline=None):
+        
+        #Testa se foi enviado o valor para o draw - usado para os principais
+        # (devido a mudança de res)
+        if x:
+            self.x=x
+            self.y=y
+            self.width=w
+            self.height=h
+            self.text_size=text_size
         
         if outline:
             pygame.draw.rect(screen, outline, (self.x-4,self.y-4,self.width+8,self.height+8),0)
@@ -34,21 +43,6 @@ class Button():
         else:
             draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
          
-    #Desenha o botão na tela - pede as dimensões a cada iter
-    def draw2(self,screen,x,y,w,h,rus=False,outline=None):
-        
-        if outline:
-            pygame.draw.rect(screen, outline, (x-4,y-4,w+8,h+8),0)
-            
-        rect = pygame.draw.rect(screen, self.color, (x,y,w,h),0)
-        
-        if rus:
-            draw_text(self.text_rus,preto,screen,center=rect.center,tamanho=self.text_size)
-        else:
-            draw_text(self.text,preto,screen,center=rect.center,tamanho=self.text_size)
-            
-        print(x,y,w,h) 
-
     #Testa colisão 
     def isOver(self, pos):
         if pos[0] > self.x and pos[0] < self.x + self.width:
@@ -105,33 +99,6 @@ def setup_botoes_inicial(sh,sw):
     btn_Altayskiy = Button(branco,margem_x,shi(sh,.8),w_botao,h_botao,"Altayskiy","Алтаыскиы")
     
     return [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
-
-def setup_botoes_game(sh,sw):
-
-    margem_x = swi(sw,.015)
-    w_botao = swi(sw,.17)
-    h_botao = shi(sh,.08)
-    btn_status= Button(branco,margem_x,shi(sh,.15)-8,w_botao,h_botao,"Status","Статус")
-    btn_recursos = Button(branco,margem_x,shi(sh,.25)-8,w_botao,h_botao,"Recursos","Рецурсос")
-    btn_upgrades= Button(branco,margem_x,shi(sh,.35)-8,w_botao,h_botao,"Upgrades","Упградес")
-    
-    lista_btns = [btn_status,btn_recursos,btn_upgrades]
-    
-    return lista_btns
-
-def setup_botoes_vel(sh,sw):
-    margem_x = swi(sw,.76)
-    margem_y = shi(sh,.85)
-    w_botao = swi(sw,.07)
-    h_botao = shi(sh,.08)
-    btn_0x = Button(branco,margem_x-w_botao-10,margem_y,w_botao,h_botao,"0x",text_size=swi(sw,.013))
-    btn_1x = Button(branco,margem_x,margem_y,w_botao,h_botao,"1x",text_size=swi(sw,.013))
-    btn_2x = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"2x",text_size=swi(sw,.013))
-    btn_5x = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"5x",text_size=swi(sw,.013))
-    
-    lista_btns = [btn_0x,btn_1x,btn_2x,btn_5x]
-    
-    return lista_btns
 
 def setup_botoes_pause(sh,sw):
     margem_x = swi(sw,.31)

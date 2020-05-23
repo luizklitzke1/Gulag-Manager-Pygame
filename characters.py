@@ -19,7 +19,16 @@ class Character():
         self.ani_angry = Animation(self.base_path+"angry/*png",speed=self.speed)
         self.current_ani = self.ani_general
         
-        self.btn_chs = Button(verde,0,0,0,0,self.div,text_size=20)
+        if self.id == "medic":
+            self.color = (255,0,255)
+        elif self.id == "secur":
+            self.color = (255,0,0)
+        elif self.id == "recur":
+            self.color = (0,255,0)
+        elif self.id == "construct":
+            self.color = (0,0,255)
+        
+        self.btn_chs = Button(self.color,0,0,0,0,self.div,text_size=20)
         
     #Muda a animação
     def change_ani(self,ani):
@@ -69,7 +78,6 @@ char_Construct = Character("construct","Countruções")
 char_Medic = Character("medic","Médico")
 char_Recur = Character("recur","Recursos")
 char_Secur = Character("secur","Segurança")
-char_Benny = Character("benny","Benny")
  
-lista_char = [char_Construct,char_Medic,char_Recur,char_Secur,char_Benny]
+lista_char = [char_Construct,char_Medic,char_Recur,char_Secur]
  

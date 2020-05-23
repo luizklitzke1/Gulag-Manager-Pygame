@@ -50,8 +50,6 @@ margem_x = int(sw*.03)
 def setup_botoes_geral(sw,sh):
     global lista_btn_res
     global lista_btn_pause
-    global lista_btns
-    global lista_vel
     global lista_botoes_gulags
     global btn_bk
     global btn_iniciar
@@ -60,8 +58,6 @@ def setup_botoes_geral(sw,sh):
                          "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
     lista_btn_res = setup_botoes_res(sh,sw)
     lista_btn_pause = setup_botoes_pause(sh,sw)
-    lista_btns = setup_botoes_game(sh,sw)
-    lista_vel = setup_botoes_vel(sh,sw)
     lista_botoes_gulags = setup_botoes_inicial(sh,sw)
     btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
     
@@ -139,10 +135,37 @@ def menu_selecao():
 
         pygame.display.update()
         mainClock.tick(60)
-        
+
+#Tela principal do jogo  
 def game(gulag):
     running = True
     click = False
+    
+    sw = screen.get_width()
+    sh = screen.get_height()
+    
+    #Setup dos botões gerais
+    margem_x = swi(sw,.015)
+    w_botao = swi(sw,.17)
+    h_botao = shi(sh,.08)
+    btn_status= Button(branco,margem_x,shi(sh,.15,-8),w_botao,h_botao,"Status","Статус")
+    btn_recursos = Button(branco,margem_x,shi(sh,.25,-8),w_botao,h_botao,"Recursos","Рецурсос")
+    btn_upgrades= Button(branco,margem_x,shi(sh,.35,-8),w_botao,h_botao,"Upgrades","Упградес")
+    
+    lista_btns = [btn_status,btn_recursos,btn_upgrades]
+    
+    #Setup dos botões de velocidade
+    margem_x = swi(sw,.675)
+    margem_y = shi(sh,.85)
+    w_botao = swi(sw,.07)
+    h_botao = shi(sh,.08)
+    btn_0x = Button(branco,margem_x,margem_y,w_botao,h_botao,"0x",text_size=swi(sw,.013))
+    btn_1x = Button(branco,margem_x+w_botao+10,margem_y,w_botao,h_botao,"1x",text_size=swi(sw,.013))
+    btn_2x = Button(branco,margem_x+w_botao*2+20,margem_y,w_botao,h_botao,"2x",text_size=swi(sw,.013))
+    btn_5x = Button(branco,margem_x+w_botao*3+30,margem_y,w_botao,h_botao,"5x",text_size=swi(sw,.013))
+    
+    lista_vel = [btn_0x,btn_1x,btn_2x,btn_5x]
+    
     
     while running:
         
@@ -180,23 +203,36 @@ def game(gulag):
 
         #Botões de ação da tela
         for btn in lista_btns:
+            w_botao = swi(sw,.17)
+            h_botao = shi(sh,.08)
+            margem_x = swi(sw,.015)
+            margem_y = shi(sh,(.15+0.1*lista_btns.index(btn)),-8)
             if btn.isOver((mx,my)):
                 btn.draw(screen,rus=True)
             else:
-                btn.draw(screen)
+                btn.draw(screen,margem_x,margem_y,w_botao,h_botao)
                 
         #Botões de velocidade
         for btn in lista_vel:
+            
+            margem_x = swi(sw,.675)
+            margem_y = shi(sh,.85)
+            w_botao = swi(sw,.07)
+            h_botao = shi(sh,.08)
+            pos = lista_vel.index(btn)
+            x_btn = (margem_x+(w_botao*pos)) + (10*(pos+1))
 
             #Verifica se a vel do btn está selecionada
             if ((calendario.pause==True and btn.text=="0x") or
                 (calendario.ciclo==10 and btn.text=="1x")or
                 (calendario.ciclo==5 and btn.text=="2x") or 
                 (calendario.ciclo==2 and btn.text=="5x")):
-                btn.draw(screen,outline=vermelho)
                 
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013),outline=vermelho)
+
             else:
-                btn.draw(screen)
+                
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013))
                 
             if btn.isOver((mx,my)):
                 if click == True:
@@ -317,11 +353,11 @@ def upgrades_choose(gulag):
         
         screen.fill((0,0,0))
         draw_text("Upgrades - Escolha a área: ",vermelho,screen,tamanho=swi(sw,.02),
-                  x= swi(sw,.05), y = shi(sh,.11)) 
+                  x= swi(sw,.05), y = shi(sh,.1)) 
 
         margem_y = shi(sh,.23)
         
-        for char in lista_char[:-1]:
+        for char in lista_char:
             
             larg = swi(sw,.21)
             esp_x = swi(sw,.05) +larg*lista_char.index(char)*1.1
@@ -329,7 +365,9 @@ def upgrades_choose(gulag):
             
             btn_y = margem_y + shi(sh,.5)
             char.rep_visual(screen,(larg,shi(sh,.5)),(esp_x,margem_y))
-            char.btn_chs.draw2(screen,esp_x,btn_y,larg,shi(sh,0.1))
+            char.btn_chs.draw(screen,esp_x,btn_y,larg,shi(sh,0.1))
+            
+            char.btn_chs.isOver((mx,my))
             
         
         click = False
