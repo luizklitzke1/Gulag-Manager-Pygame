@@ -224,35 +224,33 @@ def game(gulag):
                 
                 btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013))
                 
-            if btn.isOver((mx,my)):
-                if click == True:
-                    if btn.text == "0x":
-                        gulag.set_vel(0)
-                        calendario.set_vel(0)
-                    elif btn.text == "1x":
-                        gulag.set_vel(1)
-                        calendario.set_vel(1)
-                    elif btn.text == "2x":
-                        gulag.set_vel(2)
-                        calendario.set_vel(2)
-                    else:
-                        gulag.set_vel(5)
-                        calendario.set_vel(5)
-                    btn1.play()    
+            if btn.isOver((mx,my)) and click == True:
+                if btn.text == "0x":
+                    gulag.set_vel(0)
+                    calendario.set_vel(0)
+                elif btn.text == "1x":
+                    gulag.set_vel(1)
+                    calendario.set_vel(1)
+                elif btn.text == "2x":
+                    gulag.set_vel(2)
+                    calendario.set_vel(2)
+                else:
+                    gulag.set_vel(5)
+                    calendario.set_vel(5)
+                btn1.play()    
                     
         #Botões de gameplay
         for btn in lista_btns:
                 
             btn.draw(screen)
                 
-            if btn.isOver((mx,my)):
-                if click == True:
-                    if btn.text == "Status":
-                        pass
-                    elif btn.text == "Recursos":
-                        pass
-                    elif btn.text == "Upgrades":
-                            upgrades_choose(gulag)
+            if btn.isOver((mx,my)) and click == True:
+                if btn.text == "Status":
+                    pass
+                elif btn.text == "Recursos":
+                    pass
+                elif btn.text == "Upgrades":
+                        upgrades_choose(gulag)
                                 
         click = False 
         for event in pygame.event.get():
@@ -292,22 +290,20 @@ def pause():
         for btn in lista_btn_pause:
             btn.draw(screen)
             
-            if btn.isOver((mx,my)):
-                if click == True:
+            if btn.isOver((mx,my)) and click == True:
+
+                if btn.text == "Resume":
+                    paused = False
                     
-                    btn1.play()
-                    if btn.text == "Resume":
-                        paused = False
-                        
-                    elif btn.text == "Opções":
-                        options()
-                    
-                    if btn.text == "Menu inicial":
-                        menu_selecao()
-                    
-                    elif btn.text == "Sair do jogo":
-                        pygame.quit()
-                        sys.exit()
+                elif btn.text == "Opções":
+                    options()
+                
+                if btn.text == "Menu inicial":
+                    menu_selecao()
+                
+                elif btn.text == "Sair do jogo":
+                    pygame.quit()
+                    sys.exit()
                     
                 
         draw_text("Precione ESCAPE para voltar ao jogo",branco,screen,tamanho=swi(sw,.015),center=(swi(sw,.5),shi(sh,.85)))  
@@ -353,7 +349,8 @@ def upgrades_choose(gulag):
             char.rep_visual(screen,(larg,shi(sh,.5)),(esp_x,margem_y))
             char.btn_chs.draw(screen,esp_x,btn_y,larg,shi(sh,0.1),outline=branco)
             
-            char.btn_chs.isOver((mx,my))
+            if char.btn_chs.isOver((mx,my)) and click == True:
+                upgrades_esp(gulag,char)
             
         
         click = False
@@ -373,7 +370,7 @@ def upgrades_choose(gulag):
             
 
 #Tela de upgrades específicos   
-def upgrades_esp(gulag,div):
+def upgrades_esp(gulag,char):
     running = True
     click = False
     global sh, sw
@@ -385,7 +382,7 @@ def upgrades_esp(gulag,div):
         
         screen.fill((0,0,0))
         margem_x = swi(sw,.03)
-        draw_text("Upgrades",vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
+        draw_text(char.div,vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
 
         margem_y = shi(sh,.18)
         for upgrade in upg_list:
@@ -402,14 +399,13 @@ def upgrades_esp(gulag,div):
                 
             upgrade.rep_visual(screen,sw,sh,margem_x_up,margem_y_up)
             
-            if upgrade.botao.isOver((mx,my)):
-                if click == True:
-                    upgrade.botao.color = verde
-                    upgrade.apply_effec(gulag)
-                    btn3.play()
-                    upg_list.remove(upgrade)
+            if upgrade.botao.isOver((mx,my)) and click == True:
+                upgrade.botao.color = verde
+                upgrade.apply_effec(gulag)
+                btn3.play()
+                upg_list.remove(upgrade)
              
-        character.rep_visual(screen,(swi(sw,.25),shi(sh,.45)),(swi(sw,.72),shi(sh,.3)))           
+        char.rep_visual(screen,(swi(sw,.21),shi(sh,.5)),(swi(sw,.75),shi(sh,.18)))           
         
         click = False
         for event in pygame.event.get():
@@ -419,12 +415,6 @@ def upgrades_esp(gulag,div):
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE or event.key == K_TAB:
                     running = False
-                if event.key == K_a:
-                    character.change_ani("happy")
-                if event.key == K_s:
-                    character.change_ani("angry")
-                if event.key == K_d:
-                    character.change_ani("general")
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
@@ -467,14 +457,13 @@ def options():
         draw_text("Tela cheia: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.23)) 
         checkbox_fc.draw(screen)
         
-        if checkbox_fc.isOver((mx,my)):
-            if click == True:
-                checkbox_fc.checked = not(checkbox_fc.checked)
-                if checkbox_fc.checked == True:
-                    pygame.display.set_mode((sw,sh),FULLSCREEN)
-                else:
-                    pygame.display.set_mode((sw,sh))
-                
+        if checkbox_fc.isOver((mx,my)) and click == True:
+            checkbox_fc.checked = not(checkbox_fc.checked)
+            if checkbox_fc.checked == True:
+                pygame.display.set_mode((sw,sh),FULLSCREEN)
+            else:
+                pygame.display.set_mode((sw,sh))
+            
         
         draw_text("Resolução da tela: ",branco,screen,tamanho=swi(sw,.018),x=margem_x, y = shi(sh,.34)) 
         
@@ -498,20 +487,19 @@ def options():
             else:
                 btn.draw(screen,x_btn,margem_y,w_botao,h_botao)
             
-            if btn.isOver((mx,my)):
-                if click == True:
+            if btn.isOver((mx,my)) and click == True:
                     
-                    if checkbox_fc.checked == True:
-                        pygame.display.set_mode((int(res[0]),int(res[1])),FULLSCREEN)
-                    else:
-                        pygame.display.set_mode((int(res[0]),int(res[1])))
-                    sw = screen.get_width()
-                    sh = screen.get_height()
+                if checkbox_fc.checked == True:
+                    pygame.display.set_mode((int(res[0]),int(res[1])),FULLSCREEN)
+                else:
+                    pygame.display.set_mode((int(res[0]),int(res[1])))
+                sw = screen.get_width()
+                sh = screen.get_height()
 
-                    lista_btn_pause = setup_botoes_pause(sh,sw)
-                    calendario.reload_x(screen,sw,sh)
-                    checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
-                                            swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
+                lista_btn_pause = setup_botoes_pause(sh,sw)
+                calendario.reload_x(screen,sw,sh)
+                checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
+                                        swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
 
         pygame.display.flip()
                         
@@ -612,7 +600,7 @@ def mostrar_info_gulag(gulag):
         pygame.display.update()
         mainClock.tick(30)
 
-menu_selecao()
-#lista_gulags[0].load_imgs()
-#game(lista_gulags[0])
+#menu_selecao()
+lista_gulags[0].load_imgs()
+game(lista_gulags[0])
     

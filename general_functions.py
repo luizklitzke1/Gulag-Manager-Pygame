@@ -14,6 +14,7 @@ azul = (0,0,255)
 preto = (0,0,0)
 branco = (255,255,255)
 amarelo = (255,255,0)
+magenta = (255,0,255)
 
 #Sons dos botões
 btn1 = pygame.mixer.Sound("sounds/btn1.wav")

@@ -6,7 +6,7 @@ from buttons import Button
 
 class Character():
     
-    def __init__(self,id,div,speed=10):
+    def __init__(self,id,div,speed=20):
         
         self.id = id
         self.div = div
@@ -20,13 +20,13 @@ class Character():
         self.current_ani = self.ani_general
         
         if self.id == "medic":
-            self.color = (255,0,255)
+            self.color = magenta
         elif self.id == "secur":
-            self.color = (255,0,0)
+            self.color = vermelho
         elif self.id == "recur":
-            self.color = (0,255,0)
+            self.color = verde
         elif self.id == "construct":
-            self.color = (0,0,255)
+            self.color = azul
         
         self.btn_chs = Button(self.color,0,0,0,0,self.div,text_size=20)
         
