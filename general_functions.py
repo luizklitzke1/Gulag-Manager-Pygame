@@ -6,6 +6,9 @@ import pygame
 import glob 
 
 pygame.init()
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 #Cores padrão
 vermelho = (255,0,0)
@@ -21,12 +24,11 @@ btn1 = pygame.mixer.Sound("sounds/btn1.wav")
 btn2 = pygame.mixer.Sound("sounds/btn2.wav")
 btn3 = pygame.mixer.Sound("sounds/btn3.wav")
 
-#Split do texto em mais linhas
-
 def show_fps(screen,mainClock):
     
     fps = str(mainClock.get_fps())
-    
+
+    pygame.draw.rect(screen,preto,[30,screen.get_height()*.945,500,30])
     draw_text("FPS: "+fps,vermelho,screen,x=10,y=screen.get_height()*.95)
 
 def truncline(text, font, maxwidth):
@@ -91,9 +93,30 @@ def load_frames(path):
     lista = glob.glob(path)
     lista.sort()
     for frame in lista:
-        novo_frame = pygame.image.load(frame)
+        novo_frame = pygame.image.load(frame).convert_alpha()
         frames.append(novo_frame)
     return frames
+
+#Método para desenhar imagens na tela
+def draw_img(screen,path,dimensoes,pos):
+    img = pygame.image.load('imgs/'+path).convert_alpha()
+    img = pygame.transform.scale(img, dimensoes)
+    screen.blit(img, pos)
+    
+#Método para desenhar retângulos com texto na tela - Usado nos botões
+def draw_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
+    novo_rect = pygame.Rect(x, y, larg, alt)
+    pygame.draw.rect(screen, cor, novo_rect)
+    draw_text(texto, cor_texto, screen, center =novo_rect.center)
+
+
+#Método para desenhar uma seção preta com um contorno branco
+def draw_section(screen,x,y,larg,alt,esp,cor1=preto,cor2=branco):
+    contorno = pygame.Rect(x-esp, y-esp, larg+esp*2, alt+esp*2)
+    pygame.draw.rect(screen, cor2, contorno)
+    preenchimento = pygame.Rect(x, y, larg, alt)
+    pygame.draw.rect(screen, cor1, preenchimento)
+    
 
 #Facilitar cálculo de largura relativa a tela
 def swi(sw,per,dif=0):
@@ -105,11 +128,12 @@ def shi(sh,per,dif=0):
 
 #Método para impressão de texto na tela
 def draw_text(text, color, screen,tamanho=None,font=None, x=None, y=None, center=None):
+
     if not tamanho:
         tamanho =int(screen.get_width()*0.01)
 
     font = pygame.font.Font("fonts/cmd2.ttf", tamanho)
-    textobj = font.render(str(text), 20, color)
+    textobj = font.render(str(text), 0, color)
     textrect = textobj.get_rect()
     #Defina caso seja informado centralização
     if center:
@@ -120,28 +144,6 @@ def draw_text(text, color, screen,tamanho=None,font=None, x=None, y=None, center
         textrect.y = y
     screen.blit(textobj, textrect)
 
-#Método para desenhar imagens na tela
-def draw_img(screen,path,dimensoes,pos):
-    img = pygame.image.load('imgs/'+path)
-    img = pygame.transform.scale(img, dimensoes)
-    screen.blit(img, pos)
-    return img
-    #return img.get_rect(x = escala[0], y= escala[1])
-    
-#Método para desenhar retângulos com texto na tela - Usado nos botões
-def draw_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):
-    novo_rect = pygame.Rect(x, y, larg, alt)
-    pygame.draw.rect(screen, cor, novo_rect)
-    draw_text(texto, cor_texto, screen, center =novo_rect.center)
 
-    return novo_rect
-
-#Método para desenhar uma seção preta com um contorno branco
-def draw_section(screen,x,y,larg,alt,esp,cor1=preto,cor2=branco):
-    contorno = pygame.Rect(x-esp, y-esp, larg+esp*2, alt+esp*2)
-    pygame.draw.rect(screen, cor2, contorno)
-    preenchimento = pygame.Rect(x, y, larg, alt)
-    pygame.draw.rect(screen, cor1, preenchimento)
-    
 
 

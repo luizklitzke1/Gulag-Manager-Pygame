@@ -378,40 +378,55 @@ def upgrades_esp(gulag,char):
     running = True
     click = False
     global sh, sw
-    
+
+    screen.fill((0, 0, 0))
+    margem_x = swi(sw, .03)
+    margem_y = shi(sh, .18)
+    draw_text(char.div, vermelho, screen, tamanho=swi(
+        sw, .02), x=margem_x, y=shi(sh, .05))
+    for upgrade in upg_list:
+
+        if upg_list.index(upgrade) % 2 == 0:
+            margem_x_up = margem_x
+        else:
+            margem_x_up = margem_x + swi(sw, .34)
+
+        if upg_list.index(upgrade) < 2:
+            margem_y_up = margem_y
+        else:
+            margem_y_up = margem_y + shi(sh, .35)
+
+        upgrade.rep_visual(screen, sw, sh,margem_x_up,margem_y_up)
+        
     while running:
-        
-        
+
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-        
-        screen.fill((0,0,0))
-        margem_x = swi(sw,.03)
-        draw_text(char.div,vermelho,screen,tamanho=swi(sw,.02),x= margem_x, y = shi(sh,.05)) 
 
-        margem_y = shi(sh,.18)
         for upgrade in upg_list:
-            
-            if upg_list.index(upgrade) %2 == 0:
-                margem_x_up = margem_x
-            else:
-                margem_x_up = margem_x + swi(sw,.34)
-                
-            if upg_list.index(upgrade) <2:
-                margem_y_up = margem_y
-            else:
-                margem_y_up = margem_y + shi(sh,.35)
-                
-            upgrade.rep_visual(screen,sw,sh,margem_x_up,margem_y_up)
-            
             if upgrade.botao.isOver((mx,my)) and click == True:
                 upgrade.botao.color = verde
                 upgrade.apply_effec(gulag)
                 btn3.play()
                 upg_list.remove(upgrade)
-             
-        char.rep_visual(screen,(swi(sw,.21),shi(sh,.5)),(swi(sw,.75),shi(sh,.18)))           
-        
+                screen.fill((0, 0, 0))
+                draw_text(char.div, vermelho, screen, tamanho=swi(sw, .02), x=margem_x, y=shi(sh, .05))
+                for upgrade in upg_list:
+
+                    if upg_list.index(upgrade) % 2 == 0:
+                        margem_x_up = margem_x
+                    else:
+                        margem_x_up = margem_x + swi(sw, .34)
+
+                    if upg_list.index(upgrade) < 2:
+                        margem_y_up = margem_y
+                    else:
+                        margem_y_up = margem_y + shi(sh, .35)
+
+                    upgrade.rep_visual(screen, sw, sh, margem_x_up, margem_y_up)
+                    
+        char.rep_visual(screen, (swi(sw, .21), shi(sh, .5)),
+                        (swi(sw, .75), shi(sh, .18)))         
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -526,88 +541,103 @@ def options():
         
 #Mostra a informação básica do Gulag - Menu Geral 
 def mostrar_info_gulag(gulag):
+    
+    screen.fill((0, 0, 0))
 
     running = True
     click = False
     global sh, sw
-    btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
-    btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                         "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
-    
-    while running == True:
-        
-        screen.fill((0,0,0))
-        
-        #Pega constantemente a posição do mouse 
+    btn_bk = Button(branco, swi(sw, .03), shi(sh, .05), swi(
+        sw, .1), shi(sh, .08), "Voltar", text_rus="убирйс")
+    btn_iniciar = Button(vermelho, swi(sw, .77), shi(sh, .85), swi(sw, .2), shi(sh, .1),
+                         "Escolher", "выбирать", text_color=preto, text_size=swi(sw, .02))
+
+    # Painel lateral esquerda
+    sec_esq = draw_section(screen, 20, 20, swi(
+        sw, .45, -40), shi(sh, 1, -40), 8)
+
+    w_bar = sw*.08
+    y_bar = shi(sh, .55)
+    # Gráfico para a detecção
+    draw_graf_vert(screen, 0, 50, 25, gulag.r_detec, shi(sh, .4),
+                   w_bar, swi(sw, .05), y_bar, "dec", "Detecção")
+    # Gráfico para a nevasca
+    draw_graf_vert(screen, 0, 5, 3, gulag.r_nevasca, shi(sh, .4),
+                   w_bar, swi(sw, (.05*3.8)), y_bar, "dec", "Nevasca")
+    # Gráfico para os recursos
+    draw_graf_vert(screen, 0, 10, 5, gulag.recursos, shi(sh, .4),
+                   w_bar, swi(sw, (.05*6.5)), y_bar, "cres", "Recursos")
+
+    draw_text("Clima: "+str(gulag.clima), branco, screen,
+              x=swi(sw, .05), y=shi(sh, .7), tamanho=swi(sw, .013))
+
+    draw_text("Tipo de extração: ", branco, screen, x=swi(
+        sw, .05), y=shi(sh, .8), tamanho=swi(sw, .013))
+    draw_text(str(gulag.extracao), branco, screen, x=swi(
+        sw, .05), y=shi(sh, .8, 40), tamanho=swi(sw, .013))
+
+    # Painel lateral direita
+    sec_dir = draw_section(screen, swi(sw, .45, 20), 20,
+                           swi(sw, .55, -40), shi(sh, 1, -40), 8)
+
+    draw_img(screen, gulag.foto, (swi(sw, .55, -80),
+                                  shi(sh, .6)), (swi(sw, .45, 40), 40))
+
+    draw_text("Nome: "+str(gulag.nome), branco, screen,
+              x=swi(sw, .45+50), y=int(sh*.7), tamanho=swi(sw, .02))
+    draw_text("Номе: "+str(gulag.nome_r), vermelho, screen,
+              x=swi(sw, .45+50), y=int(sh*.75), tamanho=swi(sw, .02))
+
+    while running:
+
+        # Pega constantemente a posição do mouse
         mx, my = pygame.mouse.get_pos()
-            
-        #Painel lateral esquerda
-        sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
-    
-        if btn_bk.isOver((mx,my)):
-            btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),rus=True)
-            if click == True:  
-                btn1.play()
-                running = False
-        else:
-            btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08))
-        w_bar = sw*.08
-        y_bar = shi(sh,.55)
-        #Gráfico para a detecção
-        draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),y_bar,"dec","Detecção")
-        #Gráfico para a nevasca
-        draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,swi(sw,(.05*3.8)),y_bar,"dec","Nevasca")
-        #Gráfico para os recursos
-        draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,swi(sw,(.05*6.5)),y_bar,"cres","Recursos")
-        
-        draw_text("Clima: "+str(gulag.clima), branco, screen, x=swi(sw,.05), y=shi(sh,.7), tamanho=swi(sw,.013))
-        
-        draw_text("Tipo de extração: ", branco, screen, x=swi(sw,.05), y=shi(sh,.8), tamanho=swi(sw,.013))
-        draw_text(str(gulag.extracao), branco, screen, x=swi(sw,.05), y=shi(sh,.8,40), tamanho=swi(sw,.013))
-        
-        #Painel lateral direita
-        sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
-        
-        draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
-        
-        draw_text("Nome: "+str(gulag.nome),branco, screen, x=swi(sw,.45+50), y=int(sh*.7), tamanho= swi(sw,.02))
-        draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=swi(sw,.45+50), y=int(sh*.75), tamanho= swi(sw,.02))
-        
-        #Checa colisao com o mouse
-        if btn_iniciar.isOver((mx,my)):
-            
-            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                             text_size=swi(sw,.02),rus=True) 
+
+        # Checa colisao com o mouse
+        if btn_iniciar.isOver((mx, my)):
+
+            btn_iniciar.draw(screen, swi(sw, .77), shi(sh, .85), swi(sw, .2), shi(sh, .1),
+                             text_size=swi(sw, .02), rus=True)
             if click == True:
-                btn2.play() 
+                btn2.play()
                 gulag.load_imgs()
                 game(gulag)
         else:
-            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                             text_size=swi(sw,.02)) 
-        
+            btn_iniciar.draw(screen, swi(sw, .77), shi(sh, .85), swi(sw, .2), shi(sh, .1),
+                             text_size=swi(sw, .02))
+
+        if btn_bk.isOver((mx, my)):
+            btn_bk.draw(screen, swi(sw, .03), shi(sh, .05),
+                        swi(sw, .1), shi(sh, .08), rus=True)
+            if click == True:
+                btn1.play()
+                running = False
+        else:
+            btn_bk.draw(screen, swi(sw, .03), shi(
+                sh, .05), swi(sw, .1), shi(sh, .08))
+
         click = False
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE or event.key == K_TAB:
                     running = False
                 if event.key == K_m:
-                    if pygame.mixer.music.get_volume()==0:
+                    if pygame.mixer.music.get_volume() == 0:
                         pygame.mixer.music.set_volume(1)
                     else:
                         pygame.mixer.music.set_volume(0)
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-        
-        show_fps(screen,mainClock)      
-        pygame.display.update()
-        mainClock.tick(30)
 
-#menu_selecao()
+        show_fps(screen, mainClock)
+        pygame.display.flip()
+        mainClock.tick(60)
+
+menu_selecao()
 lista_gulags[0].load_imgs()
-game(lista_gulags[0])
+#game(lista_gulags[0])
     
