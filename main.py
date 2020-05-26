@@ -125,7 +125,7 @@ def menu_selecao():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-
+        show_fps(screen,mainClock)
         pygame.display.update()
         mainClock.tick(60)
 
@@ -268,6 +268,8 @@ def game(gulag):
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+                    
+        show_fps(screen,mainClock)
         pygame.display.update()
         mainClock.tick(60)
         
@@ -318,7 +320,8 @@ def pause():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-                    
+        
+        show_fps(screen,mainClock)     
         pygame.display.update()
         mainClock.tick(60)
 
@@ -365,9 +368,10 @@ def upgrades_choose(gulag):
                 if event.button == 1:
                     click = True
     
+        show_fps(screen,mainClock)
         pygame.display.flip()
         mainClock.tick(60)
-            
+        
 
 #Tela de upgrades específicos   
 def upgrades_esp(gulag,char):
@@ -376,6 +380,7 @@ def upgrades_esp(gulag,char):
     global sh, sw
     
     while running:
+        
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
@@ -418,7 +423,7 @@ def upgrades_esp(gulag,char):
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-    
+        show_fps(screen,mainClock)
         pygame.display.flip()
         mainClock.tick(60)
         
@@ -516,6 +521,7 @@ def options():
                     click = True
     
         pygame.display.flip()
+        show_fps(screen,mainClock)
         mainClock.tick(60)
         
 #Mostra a informação básica do Gulag - Menu Geral 
@@ -596,7 +602,8 @@ def mostrar_info_gulag(gulag):
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-                    
+        
+        show_fps(screen,mainClock)      
         pygame.display.update()
         mainClock.tick(30)
 

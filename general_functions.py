@@ -23,6 +23,12 @@ btn3 = pygame.mixer.Sound("sounds/btn3.wav")
 
 #Split do texto em mais linhas
 
+def show_fps(screen,mainClock):
+    
+    fps = str(mainClock.get_fps())
+    
+    draw_text("FPS: "+fps,vermelho,screen,x=10,y=screen.get_height()*.95)
+
 def truncline(text, font, maxwidth):
         real=len(text)       
         stext=text           

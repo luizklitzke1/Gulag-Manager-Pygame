@@ -6,7 +6,7 @@ from buttons import Button
 
 class Character():
     
-    def __init__(self,id,div,speed=20):
+    def __init__(self,id,div,speed=8):
         
         self.id = id
         self.div = div
