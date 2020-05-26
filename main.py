@@ -139,6 +139,7 @@ def menu_selecao():
 
 #Tela principal do jogo  
 def game(gulag):
+    
     running = True
     click = False
     
@@ -168,34 +169,37 @@ def game(gulag):
     
     lista_vel = [btn_0x,btn_1x,btn_2x,btn_5x]
     
+    draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.013), y=shi(sh,.05))
+    
+    #Quadro do preview visual do campo
+    sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
+    
+    #Display dos dados de dinheiros e populacao
+    tamanho_icones = (swi(sw,.045),swi(sw,.035))
+    img_hurt = pygame.transform.scale(gulag.img_hurt,tamanho_icones)
+    screen.blit(img_hurt,(swi(sw,.53),shi(sh,.05)))
+    
+    img_pop = pygame.transform.scale(gulag.img_pop,tamanho_icones)
+    screen.blit(img_pop,(swi(sw,.65), shi(sh,.05)))
+    
+    img_mon = pygame.transform.scale(gulag.img_mon,tamanho_icones)
+    screen.blit(img_mon,(swi(sw,.75), shi(sh,.05)))
     
     while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
         
-        draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.013), y=shi(sh,.05))
-        
-        #Quadro do preview visual do campo
-        sec_preview = draw_section(screen,swi(sw,.22,10),shi(sh,.15),swi(sw,.75),shi(sh,.68),8)
         gulag.demo_visual(screen,sw,sh,(swi(sw,.22,10),shi(sh,.15)))
         
         #Atualização do calendário
         calendario.update(screen,sw,sh)
-        calendario.rep_visual(screen,sw,sh)
         
-        #Display dos dados de dinheiros e populacao
-        tamanho_icones = (swi(sw,.045),swi(sw,.035))
-        img_hurt = pygame.transform.scale(gulag.img_hurt,tamanho_icones)
-        screen.blit(img_hurt,(swi(sw,.53),shi(sh,.05)))
+        
         draw_text(gulag.machucados, branco, screen, tamanho=swi(sw,.017), x=swi(sw,.59), y=shi(sh,.07))
         
-        img_pop = pygame.transform.scale(gulag.img_pop,tamanho_icones)
-        screen.blit(img_pop,(swi(sw,.65), shi(sh,.05)))
         draw_text(gulag.populacao, branco, screen, tamanho=swi(sw,.017),x=swi(sw,.71), y=shi(sh,.07))
         
-        img_mon = pygame.transform.scale(gulag.img_mon,tamanho_icones)
-        screen.blit(img_mon,(swi(sw,.75), shi(sh,.05)))
         draw_text(str(gulag.dinheiro)+"коп", amarelo, screen,tamanho=swi(sw,.017), x=swi(sw,.81), y=shi(sh,.07))
 
         #Botões de ação da tela
@@ -225,11 +229,11 @@ def game(gulag):
                 (calendario.ciclo==5 and btn.text=="2x") or 
                 (calendario.ciclo==2 and btn.text=="5x")):
                 
-                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013)
-                         ,outline=vermelho)
+                btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013),outline=vermelho)
 
             else:
                 
+                #pygame.draw.rect(screen,preto,[,screen.get_height()*.945,500,30])
                 btn.draw(screen,x_btn,margem_y,w_botao,h_botao,text_size=swi(sw,.013))
                 
             if btn.isOver((mx,my)) and click == True:
@@ -276,7 +280,7 @@ def game(gulag):
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-                    
+        
         show_fps(screen,mainClock)
         pygame.display.update()
         mainClock.tick(60)
@@ -549,8 +553,6 @@ def options():
 def mostrar_info_gulag(gulag):
     
     screen.fill((0, 0, 0))
-
-    screen.fill((0,0,0))
     
     running = True
     click = False
@@ -645,6 +647,6 @@ def mostrar_info_gulag(gulag):
         pygame.display.flip()
         mainClock.tick(60)
 
-#menu_selecao()
+menu_selecao()
 lista_gulags[0].load_imgs()
-game(lista_gulags[0])
+#game(lista_gulags[0])

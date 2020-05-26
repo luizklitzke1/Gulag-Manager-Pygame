@@ -19,7 +19,7 @@ class Calendario():
         self.ciclo_pos = ciclo
         self.pause = False
         
-        self.lista_x = []
+        self.lista_x = [(swi(sw,.025)+swi(sw,.0265),shi(sh,.556)+shi(sw,.023))]
         self.reload_x(screen,sw,sh)
         
     #Define a velocidad de atualização:
@@ -37,8 +37,9 @@ class Calendario():
         if self.pause == False:
             self.ciclo_pos -= 1
             
+            print(self.dia_pos == 0)
+            
             if self.ciclo_pos == 0:
-                
                 if self.dia_pos == 6:
                     self.dia_pos = 0
                     self.semana += 1
@@ -62,17 +63,23 @@ class Calendario():
                 pygame.draw.rect(screen,preto,[swi(sw,.01),shi(sh,.47),swi(sw,.205),int(swi(sw,.2)*1.036)])
                 screen.blit(self.img_calend,(swi(sw,.01),shi(sh,.47)))
                 
+                draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.495))
+            
+                draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.73))
+                    
+                draw_text("Velocidade - "+str(self.ciclo)+"tpd",branco,screen,x=swi(sw,.023),y=shi(sh,.795))
+                
                 x_dia=swi(sw,.025) + swi(sw,.0265)*self.dia_pos
                 y_dia = shi(sh,.556)  + shi(sw,.023)*self.semana 
                     
                 draw_text("O",verde,screen,x=x_dia,y=y_dia,tamanho=swi(sw,.019))
                 
-                if len(self.lista_x)== 0 or self.lista_x[-1] != (x_dia,y_dia):
+                if len(self.lista_x)== 0 or (self.lista_x[-1] != (x_dia,y_dia)):
                     self.lista_x.append((x_dia,y_dia))
 
                 for x in self.lista_x[0:-1]:
                     draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))
-            
+
     
     #Recarrega a posição do X no calend - caso ocorra mudança de res
     def reload_x(self,screen,sw,sh):
@@ -92,16 +99,7 @@ class Calendario():
                 
                 temp.append((x_dia,y_dia))
         
-            self.lista_x = temp 
-                
-    #Representação visual do calendário na tela
-    def rep_visual(self,screen,sw,sh):
-            
-        draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.495))
-            
-        draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.73))
-            
-        draw_text("Velocidade - "+str(self.ciclo)+"tpd",branco,screen,x=swi(sw,.023),y=shi(sh,.795))
+            self.lista_x = temp      
         
     #Print dos valores atuais            
     def __repr__(self):
