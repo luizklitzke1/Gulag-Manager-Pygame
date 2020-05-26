@@ -45,11 +45,14 @@ lista_gulags =[Trofimovsk, Solovetsky, Norilsk, Sevvostlag, Pechorlag, Karlag, A
 
 
 #Criação do calendário
-calendario = Calendario()
+calendario = Calendario(screen,sw,sh)
 
 click = False
-   
+
+#Seleção inicial de Gulag 
 def menu_selecao():
+    
+    screen.fill((0,0,0))
     
     global sh, sw
     
@@ -67,18 +70,14 @@ def menu_selecao():
     
     lista_botoes_gulags = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
 
-    
+    draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
+    #Mostrar a imagem do mapa
+    draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
+                    
     while True:
-        
-        screen.fill((0,0,0))
-        
-        draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
-
-        #Mostrar a imagem do mapa
-        draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
         
         #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
         #Utiliza o num_gulag para bater a relação entre os índices
@@ -100,6 +99,10 @@ def menu_selecao():
                 if click == True:
                     btn1.play() 
                     mostrar_info_gulag(lista_gulags[num_gulag])
+                    screen.fill((0,0,0))
+                    draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
+                    draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
+                    
             else:
                 botao_gulag.draw(screen,margem_x,shi(sh,(.2+.1*num_gulag)),w_botao,h_botao)
                 mini = pygame.transform.scale(mini, (swi(sw,.04),shi(sh,.07)))
@@ -134,6 +137,8 @@ def game(gulag):
     running = True
     click = False
     
+    screen.fill((0,0,0))
+    
     global sh, sw
     
     #Setup dos botões gerais
@@ -164,8 +169,6 @@ def game(gulag):
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
         
-        screen.fill((0,0,0))
-        
         draw_text(gulag.nome, vermelho, screen, tamanho=swi(sw,.02), x=swi(sw,.013), y=shi(sh,.05))
         
         #Quadro do preview visual do campo
@@ -173,7 +176,7 @@ def game(gulag):
         gulag.demo_visual(screen,sw,sh,(swi(sw,.22,10),shi(sh,.15)))
         
         #Atualização do calendário
-        calendario.update()
+        calendario.update(screen,sw,sh)
         calendario.rep_visual(screen,sw,sh)
         
         #Display dos dados de dinheiros e populacao
@@ -637,7 +640,7 @@ def mostrar_info_gulag(gulag):
         pygame.display.flip()
         mainClock.tick(60)
 
-menu_selecao()
+#menu_selecao()
 lista_gulags[0].load_imgs()
-#game(lista_gulags[0])
+game(lista_gulags[0])
     

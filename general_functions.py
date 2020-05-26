@@ -29,7 +29,7 @@ def show_fps(screen,mainClock):
     fps = str(mainClock.get_fps())
 
     pygame.draw.rect(screen,preto,[30,screen.get_height()*.945,500,30])
-    draw_text("FPS: "+fps,vermelho,screen,x=10,y=screen.get_height()*.95)
+    draw_text("FPS: "+fps,vermelho,screen,x=30,y=screen.get_height()*.95)
 
 def truncline(text, font, maxwidth):
         real=len(text)       

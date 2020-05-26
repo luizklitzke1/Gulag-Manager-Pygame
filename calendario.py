@@ -2,7 +2,7 @@ from general_functions import *
 
 class Calendario():
     
-    def __init__(self,ciclo=10,dia=1,mes=1,ano=1969):
+    def __init__(self,screen,sw,sh,ciclo=10,dia=1,mes=1,ano=1969):
         self.dia = 1
         self.dias = [
             "Segunda-Feira","Terça-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira",
@@ -20,6 +20,7 @@ class Calendario():
         self.pause = False
         
         self.lista_x = []
+        self.reload_x(screen,sw,sh)
         
     #Define a velocidad de atualização:
     def set_vel(self,vel):
@@ -31,7 +32,7 @@ class Calendario():
             self.ciclo = 0
         
     #Atualização dos dados a cada frame
-    def update(self):
+    def update(self,screen,sw,sh):
         
         if self.pause == False:
             self.ciclo_pos -= 1
@@ -57,11 +58,30 @@ class Calendario():
                     self.mes = 1
                 
                 self.ciclo_pos = self.ciclo
+                
+                pygame.draw.rect(screen,preto,[swi(sw,.01),shi(sh,.47),swi(sw,.205),int(swi(sw,.2)*1.036)])
+                screen.blit(self.img_calend,(swi(sw,.01),shi(sh,.47)))
+                
+                x_dia=swi(sw,.025) + swi(sw,.0265)*self.dia_pos
+                y_dia = shi(sh,.556)  + shi(sw,.023)*self.semana 
+                    
+                draw_text("O",verde,screen,x=x_dia,y=y_dia,tamanho=swi(sw,.019))
+                
+                if len(self.lista_x)== 0 or self.lista_x[-1] != (x_dia,y_dia):
+                    self.lista_x.append((x_dia,y_dia))
+
+                for x in self.lista_x[0:-1]:
+                    draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))
+            
     
     #Recarrega a posição do X no calend - caso ocorra mudança de res
     def reload_x(self,screen,sw,sh):
         
         temp = []
+        
+        #Recarrega o calendário em si
+        img_calend = pygame.image.load("imgs/calend2.png",).convert_alpha()
+        self.img_calend = pygame.transform.scale(img_calend, (swi(sw,.205),int(swi(sw,.2)*1.036)))
         
         if len(self.lista_x) > 0:
             for x in self.lista_x:
@@ -76,21 +96,8 @@ class Calendario():
                 
     #Representação visual do calendário na tela
     def rep_visual(self,screen,sw,sh):
-        
-        img_calend = draw_img(screen,"calend2.png",(swi(sw,.205),int(swi(sw,.2)*1.036)),(swi(sw,.01),shi(sh,.47)))
             
         draw_text(self.meses[self.mes-1]+" - "+str(self.ano),preto,screen,x=swi(sw,.018),y=shi(sh,.495))
-            
-        x_dia=swi(sw,.025) + swi(sw,.0265)*self.dia_pos
-        y_dia = shi(sh,.556)  + shi(sw,.023)*self.semana 
-            
-        draw_text("O",verde,screen,x=x_dia,y=y_dia,tamanho=swi(sw,.019))
-            
-        if len(self.lista_x)== 0 or self.lista_x[-1] != (x_dia,y_dia):
-            self.lista_x.append((x_dia,y_dia))
-
-        for x in self.lista_x[0:-1]:
-            draw_text("X",vermelho,screen,x=x[0],y=x[1], tamanho=swi(sw,.019))
             
         draw_text("Dia - "+str(self.dia),branco,screen,x=swi(sw,.023),y=shi(sh,.73))
             
