@@ -5,6 +5,11 @@ from itertools import chain
 import pygame
 import glob 
 
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
+
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+
 pygame.init()
 
 #Cores padrão
@@ -27,6 +32,7 @@ def show_fps(screen,mainClock):
     
     fps = str(mainClock.get_fps())
     
+    pygame.draw.rect(screen,preto,[30,screen.get_height()*.945,500,30])
     draw_text("FPS: "+fps,vermelho,screen,x=10,y=screen.get_height()*.95)
 
 def truncline(text, font, maxwidth):
@@ -91,7 +97,7 @@ def load_frames(path):
     lista = glob.glob(path)
     lista.sort()
     for frame in lista:
-        novo_frame = pygame.image.load(frame)
+        novo_frame = pygame.image.load(frame).convert_alpha()
         frames.append(novo_frame)
     return frames
 
@@ -124,9 +130,9 @@ def draw_text(text, color, screen,tamanho=None,font=None, x=None, y=None, center
 def draw_img(screen,path,dimensoes,pos):
     img = pygame.image.load('imgs/'+path)
     img = pygame.transform.scale(img, dimensoes)
+    img.convert_alpha()
     screen.blit(img, pos)
     return img
-    #return img.get_rect(x = escala[0], y= escala[1])
     
 #Método para desenhar retângulos com texto na tela - Usado nos botões
 def draw_botao(screen,cor,larg,alt,x,y,texto,cor_texto=branco):

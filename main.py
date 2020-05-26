@@ -53,6 +53,9 @@ def menu_selecao():
     
     global sh, sw
     
+    running = True
+    click = False
+    
     #Setup dos botões
     margem_x = swi(sw,.03)
     w_botao = swi(sw,.15)
@@ -67,24 +70,26 @@ def menu_selecao():
     
     lista_botoes_gulags = [btn_Trofimovsk,btn_Solovetsky,btn_Norilsk,btn_Sevvostlag,btn_Pechorlag,btn_Karlag,btn_Altayskiy]
 
+    screen.fill((0,0,0))
+        
+    draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
     
-    while True:
+    #Mostrar a imagem do mapa
+    draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
         
-        screen.fill((0,0,0))
         
-        draw_text('Selecione um Gulag', vermelho, screen, tamanho=swi(sw,.02), x=margem_x, y=int(sh*.09))
+    while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
 
-        #Mostrar a imagem do mapa
-        draw_img(screen,'map2.png',(swi(sw,.7),int(sh*.7 )),(sw*.25+10,int(sh*.2)))
         
         #Loop para mostrar os botões e miniatura no mapa, incluindo o fato de quando são selecionados
         #Utiliza o num_gulag para bater a relação entre os índices
 
         w_botao = swi(sw,.15)
         h_botao = shi(sh,.08)
+        
         for botao_gulag in lista_botoes_gulags:
             
             num_gulag = lista_botoes_gulags.index(botao_gulag)
@@ -100,6 +105,7 @@ def menu_selecao():
                 if click == True:
                     btn1.play() 
                     mostrar_info_gulag(lista_gulags[num_gulag])
+                    menu_selecao()
             else:
                 botao_gulag.draw(screen,margem_x,shi(sh,(.2+.1*num_gulag)),w_botao,h_botao)
                 mini = pygame.transform.scale(mini, (swi(sw,.04),shi(sh,.07)))
@@ -117,6 +123,7 @@ def menu_selecao():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE or event.key == K_TAB:
                     pause()
+                    menu_selecao()
                 if event.key == K_m:
                     if pygame.mixer.music.get_volume()==0:
                         pygame.mixer.music.set_volume(1)
@@ -369,7 +376,7 @@ def upgrades_choose(gulag):
                     click = True
     
         show_fps(screen,mainClock)
-        pygame.display.flip()
+        pygame.display.update()
         mainClock.tick(60)
         
 
@@ -505,8 +512,6 @@ def options():
                 calendario.reload_x(screen,sw,sh)
                 checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
                                         swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
-
-        pygame.display.flip()
                         
         click = False
         for event in pygame.event.get():
@@ -519,31 +524,66 @@ def options():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-    
-        pygame.display.flip()
-        show_fps(screen,mainClock)
+
+        show_fps(screen,mainClock)   
+        pygame.display.update()
         mainClock.tick(60)
         
 #Mostra a informação básica do Gulag - Menu Geral 
 def mostrar_info_gulag(gulag):
 
+    screen.fill((0,0,0))
+    
     running = True
     click = False
     global sh, sw
     btn_bk = Button(branco,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),"Voltar",text_rus="убирйс")
     btn_iniciar = Button(vermelho,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
                          "Escolher","выбирать",text_color=preto,text_size=swi(sw,.02))
-    
-    while running == True:
         
-        screen.fill((0,0,0))
+    #Painel lateral esquerda
+    sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
+
+    w_bar = sw*.08
+    y_bar = shi(sh,.55)
+    #Gráfico para a detecção
+    draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),y_bar,"dec","Detecção")
+    #Gráfico para a nevasca
+    draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,swi(sw,(.05*3.8)),y_bar,"dec","Nevasca")
+    #Gráfico para os recursos
+    draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,swi(sw,(.05*6.5)),y_bar,"cres","Recursos")
+    
+    draw_text("Clima: "+str(gulag.clima), branco, screen, x=swi(sw,.05), y=shi(sh,.7), tamanho=swi(sw,.013))
+    
+    draw_text("Tipo de extração: ", branco, screen, x=swi(sw,.05), y=shi(sh,.8), tamanho=swi(sw,.013))
+    draw_text(str(gulag.extracao), branco, screen, x=swi(sw,.05), y=shi(sh,.8,40), tamanho=swi(sw,.013))
+    
+    #Painel lateral direita
+    sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
+    
+    draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
+    
+    draw_text("Nome: "+str(gulag.nome),branco, screen, x=swi(sw,.45+50), y=int(sh*.7), tamanho= swi(sw,.02))
+    draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=swi(sw,.45+50), y=int(sh*.75), tamanho= swi(sw,.02))
+    
+    while running:
         
         #Pega constantemente a posição do mouse 
         mx, my = pygame.mouse.get_pos()
+        
+        #Checa colisao com o mouse
+        if btn_iniciar.isOver((mx,my)):
             
-        #Painel lateral esquerda
-        sec_esq = draw_section(screen,20,20,swi(sw,.45,-40),shi(sh,1,-40),8)
-    
+            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                                text_size=swi(sw,.02),rus=True) 
+            if click == True:
+                btn2.play() 
+                gulag.load_imgs()
+                game(gulag)
+        else:
+            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
+                                text_size=swi(sw,.02)) 
+        
         if btn_bk.isOver((mx,my)):
             btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08),rus=True)
             if click == True:  
@@ -551,40 +591,6 @@ def mostrar_info_gulag(gulag):
                 running = False
         else:
             btn_bk.draw(screen,swi(sw,.03),shi(sh,.05),swi(sw,.1),shi(sh,.08))
-        w_bar = sw*.08
-        y_bar = shi(sh,.55)
-        #Gráfico para a detecção
-        draw_graf_vert(screen,0,50,25,gulag.r_detec,shi(sh,.4),w_bar,swi(sw,.05),y_bar,"dec","Detecção")
-        #Gráfico para a nevasca
-        draw_graf_vert(screen,0,5,3,gulag.r_nevasca,shi(sh,.4),w_bar,swi(sw,(.05*3.8)),y_bar,"dec","Nevasca")
-        #Gráfico para os recursos
-        draw_graf_vert(screen,0,10,5,gulag.recursos,shi(sh,.4),w_bar,swi(sw,(.05*6.5)),y_bar,"cres","Recursos")
-        
-        draw_text("Clima: "+str(gulag.clima), branco, screen, x=swi(sw,.05), y=shi(sh,.7), tamanho=swi(sw,.013))
-        
-        draw_text("Tipo de extração: ", branco, screen, x=swi(sw,.05), y=shi(sh,.8), tamanho=swi(sw,.013))
-        draw_text(str(gulag.extracao), branco, screen, x=swi(sw,.05), y=shi(sh,.8,40), tamanho=swi(sw,.013))
-        
-        #Painel lateral direita
-        sec_dir = draw_section(screen,swi(sw,.45,20),20,swi(sw,.55,-40),shi(sh,1,-40),8)
-        
-        draw_img(screen,gulag.foto,(swi(sw,.55,-80),shi(sh,.6)),(swi(sw,.45,40),40))
-        
-        draw_text("Nome: "+str(gulag.nome),branco, screen, x=swi(sw,.45+50), y=int(sh*.7), tamanho= swi(sw,.02))
-        draw_text("Номе: "+str(gulag.nome_r),vermelho, screen, x=swi(sw,.45+50), y=int(sh*.75), tamanho= swi(sw,.02))
-        
-        #Checa colisao com o mouse
-        if btn_iniciar.isOver((mx,my)):
-            
-            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                             text_size=swi(sw,.02),rus=True) 
-            if click == True:
-                btn2.play() 
-                gulag.load_imgs()
-                game(gulag)
-        else:
-            btn_iniciar.draw(screen,swi(sw,.77),shi(sh,.85),swi(sw,.2),shi(sh,.1),
-                             text_size=swi(sw,.02)) 
         
         click = False
         for event in pygame.event.get():
@@ -604,10 +610,10 @@ def mostrar_info_gulag(gulag):
                     click = True
         
         show_fps(screen,mainClock)      
-        pygame.display.update()
-        mainClock.tick(30)
+        pygame.display.flip()
+        mainClock.tick(60)
 
-#menu_selecao()
+menu_selecao()
+
 lista_gulags[0].load_imgs()
-game(lista_gulags[0])
-    
+#game(lista_gulags[0])
