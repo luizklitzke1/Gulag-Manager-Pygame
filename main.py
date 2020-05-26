@@ -56,6 +56,9 @@ def menu_selecao():
     
     global sh, sw
     
+    running = True
+    click = False
+    
     #Setup dos botões
     margem_x = swi(sw,.03)
     w_botao = swi(sw,.15)
@@ -84,6 +87,7 @@ def menu_selecao():
 
         w_botao = swi(sw,.15)
         h_botao = shi(sh,.08)
+        
         for botao_gulag in lista_botoes_gulags:
             
             num_gulag = lista_botoes_gulags.index(botao_gulag)
@@ -120,6 +124,7 @@ def menu_selecao():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE or event.key == K_TAB:
                     pause()
+                    menu_selecao()
                 if event.key == K_m:
                     if pygame.mixer.music.get_volume()==0:
                         pygame.mixer.music.set_volume(1)
@@ -372,7 +377,7 @@ def upgrades_choose(gulag):
                     click = True
     
         show_fps(screen,mainClock)
-        pygame.display.flip()
+        pygame.display.update()
         mainClock.tick(60)
         
 
@@ -523,8 +528,6 @@ def options():
                 calendario.reload_x(screen,sw,sh)
                 checkbox_fc = Checkbox(swi(sw,.275),shi(sh,.226),
                                         swi(sw,0.019),swi(sw,0.019),checked=checkbox_fc.checked)
-
-        pygame.display.flip()
                         
         click = False
         for event in pygame.event.get():
@@ -537,9 +540,9 @@ def options():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-    
-        pygame.display.flip()
-        show_fps(screen,mainClock)
+
+        show_fps(screen,mainClock)   
+        pygame.display.update()
         mainClock.tick(60)
         
 #Mostra a informação básica do Gulag - Menu Geral 
@@ -547,6 +550,8 @@ def mostrar_info_gulag(gulag):
     
     screen.fill((0, 0, 0))
 
+    screen.fill((0,0,0))
+    
     running = True
     click = False
     global sh, sw
@@ -643,4 +648,3 @@ def mostrar_info_gulag(gulag):
 #menu_selecao()
 lista_gulags[0].load_imgs()
 game(lista_gulags[0])
-    

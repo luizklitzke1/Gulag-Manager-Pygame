@@ -5,6 +5,11 @@ from itertools import chain
 import pygame
 import glob 
 
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
+
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+
 pygame.init()
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
